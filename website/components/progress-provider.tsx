@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  useCallback,
   createContext,
   useContext,
   useEffect,
@@ -67,43 +68,52 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("storage", handleStorage);
   }, []);
 
+  const getStatus = useCallback(
+    (lessonId: number) => progress[lessonId],
+    [progress],
+  );
+
+  const setStatus = useCallback(
+    (lessonId: number, status: LessonProgressStatus) => {
+      setProgress((current) => {
+        const existing = current[lessonId];
+        if (existing && progressOrder[existing] >= progressOrder[status]) {
+          return current;
+        }
+
+        const next = {
+          ...current,
+          [lessonId]: status,
+        };
+        persistProgress(next);
+        return next;
+      });
+    },
+    [],
+  );
+
+  const ensureViewed = useCallback((lessonId: number) => {
+    setProgress((current) => {
+      const existing = current[lessonId];
+      if (existing) return current;
+
+      const next = {
+        ...current,
+        [lessonId]: "viewed" as const,
+      };
+      persistProgress(next);
+      return next;
+    });
+  }, []);
+
   const value = useMemo<ProgressContextValue>(
     () => ({
       progress,
-      getStatus: (lessonId) => progress[lessonId],
-      setStatus: (lessonId, status) => {
-        setProgress((current) => {
-          const existing = current[lessonId];
-          if (
-            existing &&
-            progressOrder[existing] >= progressOrder[status]
-          ) {
-            return current;
-          }
-
-          const next = {
-            ...current,
-            [lessonId]: status,
-          };
-          persistProgress(next);
-          return next;
-        });
-      },
-      ensureViewed: (lessonId) => {
-        setProgress((current) => {
-          const existing = current[lessonId];
-          if (existing) return current;
-
-          const next = {
-            ...current,
-            [lessonId]: "viewed" as const,
-          };
-          persistProgress(next);
-          return next;
-        });
-      },
+      getStatus,
+      setStatus,
+      ensureViewed,
     }),
-    [progress],
+    [ensureViewed, getStatus, progress, setStatus],
   );
 
   return (
@@ -124,10 +134,23 @@ export function useLessonProgress(lessonId: number) {
   const { getStatus, setStatus, ensureViewed } = useProgress();
   const status = getStatus(lessonId);
 
-  return {
-    status,
-    markViewed: () => ensureViewed(lessonId),
-    markStarted: () => setStatus(lessonId, "started"),
-    markCompleted: () => setStatus(lessonId, "completed"),
-  };
+  const markViewed = useCallback(() => ensureViewed(lessonId), [ensureViewed, lessonId]);
+  const markStarted = useCallback(
+    () => setStatus(lessonId, "started"),
+    [lessonId, setStatus],
+  );
+  const markCompleted = useCallback(
+    () => setStatus(lessonId, "completed"),
+    [lessonId, setStatus],
+  );
+
+  return useMemo(
+    () => ({
+      status,
+      markViewed,
+      markStarted,
+      markCompleted,
+    }),
+    [markCompleted, markStarted, markViewed, status],
+  );
 }

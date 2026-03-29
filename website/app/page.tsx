@@ -2,16 +2,15 @@ import Link from "next/link";
 import { LearningModeSummary } from "@/components/learning-mode";
 import { QuantumCoinFlip } from "@/components/quantum-coin-flip";
 import { FeaturedPaths } from "@/components/featured-paths";
-import { getLessonMetrics, getLessons } from "@/lib/lessons";
+import { getLessonById, getLessonMetrics, getLessons } from "@/lib/lessons";
 
 export default function HomePage() {
   const lessons = getLessons();
-  const lessonMap = new Map(lessons.map((lesson) => [lesson.lesson_id, lesson]));
   const metrics = getLessonMetrics(lessons);
 
-  const startLesson = lessonMap.get(1);
-  const sampleLesson = lessonMap.get(6);
-  const advancedLesson = lessonMap.get(26);
+  const startLesson = getLessonById(1);
+  const sampleLesson = getLessonById(6);
+  const advancedLesson = getLessonById(26);
   const atlasHref = "/lessons";
 
   const stageCards = [

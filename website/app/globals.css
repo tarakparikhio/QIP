@@ -1,5 +1,8 @@
 :root {
   color-scheme: light;
+  --font-body: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-heading: "Avenir Next Condensed", "Gill Sans", "Trebuchet MS", sans-serif;
+  --font-mono: "SF Mono", "Menlo", "Monaco", "Cascadia Mono", monospace;
   --bg:
     radial-gradient(circle at 12% 14%, rgba(146, 203, 255, 0.2), transparent 24%),
     radial-gradient(circle at 84% 10%, rgba(132, 240, 219, 0.16), transparent 22%),
@@ -61,7 +64,7 @@ html {
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-family: var(--font-body);
 }
 
 .sr-only {
@@ -82,17 +85,20 @@ a {
 }
 
 button,
-input,
+input {
+  font-family: var(--font-body);
+}
+
 code,
 pre {
-  font-family: "SF Mono", "Menlo", "Monaco", "Cascadia Mono", monospace;
+  font-family: var(--font-mono);
 }
 
 h1,
 h2,
 h3,
 h4 {
-  font-family: "Avenir Next Condensed", "Gill Sans", "Trebuchet MS", sans-serif;
+  font-family: var(--font-heading);
   letter-spacing: 0.01em;
 }
 

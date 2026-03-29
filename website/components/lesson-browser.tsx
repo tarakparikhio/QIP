@@ -15,6 +15,10 @@ import type { Lesson } from "@/lib/lessons";
 
 type ActivePathKey = "all" | CurriculumPathKey;
 
+function formatStageLabel(stage: Lesson["learning_order"]["stage"]) {
+  return stage.charAt(0).toUpperCase() + stage.slice(1);
+}
+
 export function LessonBrowser({ lessons }: { lessons: Lesson[] }) {
   const [stage, setStage] = useState<"all" | Lesson["learning_order"]["stage"]>(
     "all",
@@ -22,8 +26,27 @@ export function LessonBrowser({ lessons }: { lessons: Lesson[] }) {
   const [activePath, setActivePath] = useState<ActivePathKey>("all");
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
+
   const lessonById = useMemo(
     () => new Map(lessons.map((lesson) => [lesson.lesson_id, lesson])),
+    [lessons],
+  );
+  const searchableLessons = useMemo(
+    () =>
+      lessons.map((lesson) => ({
+        lesson,
+        searchText: [
+          lesson.title,
+          lesson.learning_objective,
+          lesson.slug,
+          lesson.intuition.analogy,
+          lesson.physics.concept,
+          lesson.applications.join(" "),
+          lesson.learning_order.stage,
+        ]
+          .join(" ")
+          .toLowerCase(),
+      })),
     [lessons],
   );
   const activePathConfig = useMemo(
@@ -41,29 +64,25 @@ export function LessonBrowser({ lessons }: { lessons: Lesson[] }) {
   const filteredLessons = useMemo(() => {
     const normalizedQuery = deferredQuery.trim().toLowerCase();
 
-    return lessons.filter((lesson) => {
-      const stageMatch = stage === "all" || lesson.learning_order.stage === stage;
-      const pathMatch =
-        !activePathConfig || activePathLessonIds.has(lesson.lesson_id);
-      const haystack = [
-        lesson.title,
-        lesson.learning_objective,
-        lesson.slug,
-        lesson.intuition.analogy,
-        lesson.physics.concept,
-        lesson.applications.join(" "),
-        lesson.learning_order.stage,
-      ]
-        .join(" ")
-        .toLowerCase();
+    return searchableLessons
+      .filter(({ lesson, searchText }) => {
+        const stageMatch = stage === "all" || lesson.learning_order.stage === stage;
+        const pathMatch =
+          !activePathConfig || activePathLessonIds.has(lesson.lesson_id);
+        const queryMatch = !normalizedQuery || searchText.includes(normalizedQuery);
 
-      const queryMatch = !normalizedQuery || haystack.includes(normalizedQuery);
-      return stageMatch && pathMatch && queryMatch;
-    });
-  }, [activePathConfig, activePathLessonIds, deferredQuery, lessons, stage]);
+        return stageMatch && pathMatch && queryMatch;
+      })
+      .map(({ lesson }) => lesson);
+  }, [
+    activePathConfig,
+    activePathLessonIds,
+    deferredQuery,
+    searchableLessons,
+    stage,
+  ]);
 
-  const stageLabel =
-    stage === "all" ? "All stages" : stage.charAt(0).toUpperCase() + stage.slice(1);
+  const stageLabel = stage === "all" ? "All stages" : formatStageLabel(stage);
 
   return (
     <section className="lesson-browser-shell">
