@@ -36,6 +36,10 @@ export function QuantumCoinFlip() {
     setMeasurement(null);
   };
 
+  const totalMeasurements = stats.zero + stats.one;
+  const zeroRatio = totalMeasurements > 0 ? (stats.zero / totalMeasurements) * 100 : 0;
+  const oneRatio = totalMeasurements > 0 ? (stats.one / totalMeasurements) * 100 : 0;
+
   const getStateLabel = () => {
     switch (state) {
       case "zero":
@@ -187,23 +191,23 @@ export function QuantumCoinFlip() {
             <span className="stat-value">{stats.one}</span>
           </div>
           <div className="stat-ratio">
-            {stats.zero + stats.one > 0 && (
+            {totalMeasurements > 0 && (
               <div className="ratio-bar">
                 <div
                   className="ratio-segment zero"
                   style={{
-                    width: `${(stats.zero / (stats.zero + stats.one)) * 100}%`,
+                    width: `${zeroRatio}%`,
                   }}
                   role="img"
-                  aria-label={`Zero: ${((stats.zero / (stats.zero + stats.one)) * 100).toFixed(1)}%`}
+                  aria-label={`Zero: ${zeroRatio.toFixed(1)}%`}
                 />
                 <div
                   className="ratio-segment one"
                   style={{
-                    width: `${(stats.one / (stats.zero + stats.one)) * 100}%`,
+                    width: `${oneRatio}%`,
                   }}
                   role="img"
-                  aria-label={`One: ${((stats.one / (stats.zero + stats.one)) * 100).toFixed(1)}%`}
+                  aria-label={`One: ${oneRatio.toFixed(1)}%`}
                 />
               </div>
             )}

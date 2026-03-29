@@ -31,12 +31,21 @@ export function CurriculumPathProgress({
   lessonIds: readonly number[];
 }) {
   const { progress } = useProgress();
-  const completed = lessonIds.filter((lessonId) => progress[lessonId] === "completed")
-    .length;
-  const started = lessonIds.filter((lessonId) => {
+  let completed = 0;
+  let started = 0;
+
+  for (const lessonId of lessonIds) {
     const status = progress[lessonId];
-    return status === "started" || status === "completed";
-  }).length;
+    if (status === "completed") {
+      completed += 1;
+      started += 1;
+      continue;
+    }
+
+    if (status === "started") {
+      started += 1;
+    }
+  }
 
   return (
     <div className="path-progress">
@@ -93,6 +102,7 @@ export function TrackLessonView({
   const { markViewed } = useLessonProgress(lessonId);
 
   useEffect(() => {
+    // Mark once when this lesson view mounts; provider callbacks keep this stable.
     markViewed();
   }, [markViewed]);
 
@@ -105,6 +115,21 @@ export function QuickLookButton({
   lesson: Lesson;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
 
   return (
     <>
