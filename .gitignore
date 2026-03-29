@@ -37,3 +37,9 @@ wheels/
 *.swp
 *.swo
 *~
+
+# Firebase
+.firebaserc
+.firebase/
+firebase-debug.log
+.runtimeconfig.json

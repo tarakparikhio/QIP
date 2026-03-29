@@ -1,3 +1,7 @@
 .next
 out
 node_modules
+.firebaserc
+.firebase/
+firebase-debug.log
+.runtimeconfig.json
