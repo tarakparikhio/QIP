@@ -1,0 +1,24 @@
+{
+  "name": "qcml-website",
+  "private": true,
+  "scripts": {
+    "predev": "python3 ../scripts/build_website_data.py && npm run validate:lessons",
+    "dev": "next dev",
+    "prebuild": "python3 ../scripts/build_website_data.py && npm run validate:lessons",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "validate:lessons": "node ./scripts/validate-lessons.mjs"
+  },
+  "dependencies": {
+    "katex": "0.16.25",
+    "next": "16.2.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@types/node": "25.5.0",
+    "@types/react": "19.2.14",
+    "typescript": "6.0.2"
+  }
+}

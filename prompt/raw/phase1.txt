@@ -1,0 +1,236 @@
+PROJECT: Quantum Intuition Platform (QCML)
+
+GOAL:
+Build a structured, production-ready quantum learning system (Lessons 1–35) that combines:
+- Intuition (analogy)
+- Mathematics (LaTeX)
+- Physics
+- Quantum Mechanics (formal)
+- Circuit Implementation (Qiskit)
+- Interactive Visualization (for web)
+
+The output must be usable directly for a React-based website.
+
+---
+
+CORE REQUIREMENTS:
+
+You are an expert in:
+- Quantum Computing
+- Mathematics
+- Physics
+- Software Engineering (Python, Qiskit, React)
+
+You must generate HIGH-QUALITY structured content.
+
+---
+
+LESSON GENERATION RULES:
+
+For each lesson (1–35), generate JSON using this structure:
+
+{
+  "lesson_id": number,
+  "title": "",
+  "slug": "",
+  "difficulty": "beginner | intermediate | advanced",
+
+  "learning_order": {
+    "stage": "foundation | intermediate | advanced",
+    "prerequisites": []
+  },
+
+  "learning_objective": "",
+
+  "intuition": {
+    "analogy": "",
+    "story": "",
+    "why_it_works": "",
+    "limitations": ""
+  },
+
+  "math": {
+    "equations": [
+      {
+        "latex": "",
+        "meaning": "",
+        "variables": {}
+      }
+    ],
+    "derivation": "",
+    "notes": ""
+  },
+
+  "physics": {
+    "concept": "",
+    "real_world_mapping": "",
+    "importance": ""
+  },
+
+  "quantum_mechanics": {
+    "formal_definition": "",
+    "state_space": "",
+    "operators_involved": []
+  },
+
+  "circuit": {
+    "description": "",
+    "gates": [],
+    "qiskit_code": "",
+    "expected_output": ""
+  },
+
+  "visualization": {
+    "type": "bloch_sphere | probability_chart | circuit_diagram",
+    "interactive": true,
+    "description": ""
+  },
+
+  "applications": [],
+
+  "interview_ready": {
+    "explanation": "",
+    "common_questions": []
+  }
+}
+
+---
+
+ANALOGY RULES (VERY IMPORTANT):
+
+- Replace weak analogies
+- Avoid overused ones like:
+  ❌ coin flip
+  ❌ dice
+
+- Prefer:
+  ✅ real systems
+  ✅ engineering systems
+  ✅ control systems
+  ✅ decision systems
+
+- Must include:
+  - why analogy works
+  - where it fails
+
+---
+
+MATH RULES:
+
+- Use LaTeX only
+- Keep minimal but correct
+- Include constraints (normalization etc.)
+- Do NOT overcomplicate
+
+---
+
+PHYSICS RULES:
+
+- Must connect to real-world systems
+- Explain what is physically happening
+- Avoid abstract-only explanations
+
+---
+
+QUANTUM DEPTH:
+
+- Must include:
+  - Hilbert space
+  - operators
+  - state evolution (where relevant)
+
+---
+
+QISKIT RULES:
+
+- Code must:
+  - run without errors
+  - include imports
+  - include measurement
+  - be minimal but correct
+
+Example format:
+
+from qiskit import QuantumCircuit
+qc = QuantumCircuit(1)
+qc.h(0)
+qc.measure_all()
+
+---
+
+VISUALIZATION RULES:
+
+Each lesson must define UI visualization:
+
+Examples:
+- Bloch sphere (rotation)
+- Probability bar chart
+- Circuit diagram
+
+---
+
+WEBSITE CONTEXT:
+
+This will be used in:
+
+Frontend:
+- React / Next.js
+
+Backend:
+- Python (FastAPI)
+
+Rendering:
+- KaTeX (math)
+- Code blocks
+- Interactive components
+
+So output must be:
+✅ clean JSON
+✅ structured
+✅ UI-friendly
+
+---
+
+LEARNING ORDER (IMPORTANT):
+
+You must ensure lessons follow proper progression:
+
+FOUNDATION:
+1–10 → Basics (qubit, superposition, gates)
+
+INTERMEDIATE:
+11–25 → noise, operators, circuits
+
+ADVANCED:
+26–35 → QFT, VQE, QAOA
+
+---
+
+QUALITY BAR:
+
+This is NOT a tutorial.
+
+This is:
+👉 a system for recruiters to evaluate deep thinking
+
+So ensure:
+- clarity
+- correctness
+- depth
+- clean structure
+
+---
+
+OUTPUT RULE:
+
+Return ONLY JSON  
+No explanation  
+No markdown  
+No comments  
+
+---
+
+TASK:
+
+Generate lesson: <LESSON_NUMBER>  
+Topic: <LESSON_TITLE>

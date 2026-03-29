@@ -1,0 +1,37 @@
+[
+  {
+    "lesson_id": 1,
+    "pdf_file": "quantum_midway_lessons_1_5.pdf",
+    "pdf_page": 1,
+    "title": "Birth of Quantum Information",
+    "raw_text": "Quantum Computing Lessons - Mid-Way Structured\nEdition\nLesson 1: Birth of Quantum Information\nQuantum Concept: A qubit is the basic unit of quantum information, richer than a classical bit. It exists\nin Hilbert space and can hold a combination of |0> and |1>. Amplitudes encode probability and phase,\nenabling smoother and reversible transformations. This foundation enables powerful algorithms.\nAnalogy: A classroom before attendance: students might be present, late, asleep, or absent. Multiple\npossibilities exist in the teacher's mind. The classroom is the Hilbert space containing all potential\nstates.\nCombined Insight: A qubit begins as a set of possible truths, just like attendance before roll-call.\nComputation organizes these possibilities; measurement collapses them into one outcome."
+  },
+  {
+    "lesson_id": 2,
+    "pdf_file": "quantum_midway_lessons_1_5.pdf",
+    "pdf_page": 2,
+    "title": "Superposition",
+    "raw_text": "Lesson 2: Superposition\nQuantum Concept: Superposition lets a qubit hold a mixture of |0> and |1>. Each amplitude carries\nprobability and phase. Both paths evolve simultaneously under gates. This parallel structure enables\nquantum speedups.\nAnalogy: A student before answering roll-call could be present, late, or absent - all possibilities exist\nmentally. That cloud of states is superposition.\nCombined Insight: A superposed qubit mirrors uncertain student status until called. Algorithms exploit\nthis mix to explore many possibilities at once."
+  },
+  {
+    "lesson_id": 3,
+    "pdf_file": "quantum_midway_lessons_1_5.pdf",
+    "pdf_page": 3,
+    "title": "Measurement",
+    "raw_text": "Lesson 3: Measurement\nQuantum Concept: Measurement collapses a qubit's superposition into a single definite state.\nQuantum measurement is probabilistic, governed by amplitude magnitudes. Once measured, previous\nquantum richness is lost. Measurement converts quantum information into classical output.\nAnalogy: Teacher asks the student's name during roll-call; the instant they answer, uncertainty\ndisappears. Before answering, multiple states existed; after responding, only one remains.\nCombined Insight: Measurement imposes classical truth on a quantum system, just as answering\ndetermines a student's real status."
+  },
+  {
+    "lesson_id": 4,
+    "pdf_file": "quantum_midway_lessons_1_5.pdf",
+    "pdf_page": 4,
+    "title": "Entanglement",
+    "raw_text": "Lesson 4: Entanglement\nQuantum Concept: Entanglement links qubits so their states correlate regardless of distance.\nMeasuring one instantly affects the other. It is the resource enabling teleportation and strong\nalgorithmic power. Entangled systems cannot be described independently.\nAnalogy: Marriage analogy: two people become emotionally or behaviourally linked. What affects one\ninfluences the other, even from far away. Their states are not independent after bonding.\nCombined Insight: Entangled qubits behave like deeply connected partners: individual outcomes\ncannot be separated; they form one system."
+  },
+  {
+    "lesson_id": 5,
+    "pdf_file": "quantum_midway_lessons_1_5.pdf",
+    "pdf_page": 5,
+    "title": "Interference",
+    "raw_text": "Lesson 5: Interference\nQuantum Concept: Interference is how quantum amplitudes reinforce or cancel each other.\nConstructive interference boosts probabilities; destructive interference suppresses them. Algorithms\nuse it to amplify correct answers while canceling wrong ones.\nAnalogy: Traffic signals: green waves reinforce smooth flow, red waves stop motion. Similarly, waves\nof permission or restriction shape movement patterns.\nCombined Insight: Quantum algorithms shape amplitude flow like traffic design - enhancing desired\npaths and blocking unwanted ones."
+  }
+]
