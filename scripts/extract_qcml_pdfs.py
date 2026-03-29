@@ -17,8 +17,9 @@ import zlib
 from pathlib import Path
 
 
-PDF_DIR = Path("pdf")
+PDF_DIR = Path("website/public/source-pdfs")
 OUT_DIR = Path("artifacts")
+META_DIR = Path("_metadata/source-context")
 
 PDF_ORDER = [
     "quantum_midway_lessons_1_5.pdf",
@@ -163,8 +164,9 @@ def extract_analogy_reference() -> dict:
 
 def write_outputs() -> None:
     raw_dir = OUT_DIR / "raw_lessons"
-    reference_dir = OUT_DIR / "references"
+    reference_dir = META_DIR / "references"
     raw_dir.mkdir(parents=True, exist_ok=True)
+    META_DIR.mkdir(parents=True, exist_ok=True)
     reference_dir.mkdir(parents=True, exist_ok=True)
 
     all_lessons = []
@@ -177,7 +179,7 @@ def write_outputs() -> None:
         batch_file = raw_dir / f"lessons_{start_lesson_id}_{start_lesson_id + 4}.json"
         batch_file.write_text(json.dumps(lessons, indent=2), encoding="utf-8")
 
-    inventory_file = OUT_DIR / "source_inventory.json"
+    inventory_file = META_DIR / "source_inventory.json"
     inventory_file.write_text(json.dumps(inventory, indent=2), encoding="utf-8")
 
     analogy_reference = extract_analogy_reference()
@@ -195,7 +197,7 @@ def write_outputs() -> None:
             f"| {lesson['lesson_id']} | {lesson['title']} | "
             f"{lesson['pdf_file']} | {lesson['pdf_page']} |"
         )
-    (OUT_DIR / "lesson_index.md").write_text(
+    (META_DIR / "lesson_index.md").write_text(
         "\n".join(lesson_index_lines) + "\n", encoding="utf-8"
     )
 
@@ -205,7 +207,7 @@ def main() -> None:
     parser.add_argument(
         "--write",
         action="store_true",
-        help="Write extracted artifacts under artifacts/.",
+        help="Write extracted lesson outputs under artifacts/ and source-context metadata under _metadata/.",
     )
     args = parser.parse_args()
 

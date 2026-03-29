@@ -2,7 +2,7 @@ import "./globals.css";
 import "katex/dist/katex.min.css";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { LearningModeToggle } from "@/components/learning-mode";
+import { LearningModeToggleIcon } from "@/components/learning-mode-toggle";
 import { ProgressProvider } from "@/components/progress-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
@@ -68,7 +68,7 @@ export default function RootLayout({
                 </nav>
               </div>
               <div className="header-controls">
-                <LearningModeToggle />
+                <LearningModeToggleIcon />
                 <ThemeToggle />
               </div>
             </header>

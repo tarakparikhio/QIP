@@ -1,0 +1,145 @@
+/* Quantum Semantics Color & Symbol Tokens */
+/* Foundation for consistent visual language across all 35 lessons */
+
+:root {
+  /* ==================== STATE REPRESENTATIONS ==================== */
+  /* Computational basis states */
+  --state-zero: #2d8ca8;          /* |0⟩ - cool blue (north pole) */
+  --state-one: #e11d48;           /* |1⟩ - warm red (south pole) */
+  --state-plus: #67c23a;          /* |+⟩ - green (equator, x-axis) */
+  --state-minus: #f39c12;         /* |-⟩ - orange (equator, -x-axis) */
+  --state-superposition: #9c27b0; /* mixed/superposed - purple */
+
+  /* ==================== PHASE & ROTATION ==================== */
+  /* Phase representation: hue-mapped angles */
+  --phase-zero: 0deg;             /* 0 rad = red hue */
+  --phase-pi-half: 90deg;         /* π/2 rad = yellow hue */
+  --phase-pi: 180deg;             /* π rad = cyan hue */
+  --phase-3pi-half: 270deg;       /* 3π/2 rad = magenta hue */
+  
+  /* Semantic phase colors (independent of angle) */
+  --phase-highlight: #667eea;    /* phase regions of interest - indigo */
+  --relative-phase: #764ba2;     /* relative phase difference - purple */
+
+  /* ==================== INTERFERENCE & PROBABILITY ==================== */
+  --constructive-interference: #84fab0;  /* bright green - + amplitude sum */
+  --destructive-interference: #f5576c;  /* coral red - amplitude cancellation */
+  --mixed-interference: #f5af19;       /* amber - partial cancellation */
+  
+  /* Measurement & amplitude */
+  --amplitude-high: #667eea;     /* large magnitude - indigo */
+  --amplitude-low: #d8d8d8;      /* small magnitude - light gray */
+
+  /* ==================== MEASUREMENT & BASIS ==================== */
+  --measurement-outcome-0: var(--state-zero);  /* computational |0⟩ */
+  --measurement-outcome-1: var(--state-one);   /* computational |1⟩ */
+  --measurement-basis-label: #142330;         /* basis name text - dark ink */
+  --measurement-uncertainty: #999999;         /* pre-measurement fog - muted */
+
+  /* ==================== CIRCUIT & CONTROLLED GATES ==================== */
+  --circuit-wire: #142330;        /* main quantum wire - dark */
+  --control-qubit-wire: #3b82f6; /* control line - blue */
+  --target-qubit-wire: #8b5cf6;  /* target line - purple */
+  --control-dot: #3b82f6;        /* filled control point - blue */
+  --target-oplus: #8b5cf6;       /* XOR/CNOT target - purple */
+  --target-phase-diamond: #667eea; /* CZ/CP target - indigo */
+
+  /* Gate box styling */
+  --gate-box-bg: #f9f9f9;        /* gate interior - off-white */
+  --gate-box-border: #142330;    /* gate outline - dark */
+  --gate-label-text: #142330;    /* H, X, Y, Z label - dark */
+  --gate-highlight: #667eea;    /* selected/active gate - indigo */
+
+  /* ==================== ERRORS, NOISE & CHANNELS ==================== */
+  --noise-bit-flip: #e74c3c;     /* X error - red */
+  --noise-phase-flip: #9b59b6;   /* Z error - purple */
+  --noise-depolarizing: #f39c12; /* general noise - orange */
+  --decoherence-fade: #cccccc;   /* coherence loss - light gray */
+  
+  /* Channel operations */
+  --channel-input: #667eea;      /* input state - indigo */
+  --channel-output: #764ba2;     /* output state - purple */
+  --channel-distortion: #f5576c; /* channel effect - coral */
+
+  /* ==================== MATHEMATICAL OBJECTS ==================== */
+  --ket-bracket: #142330;        /* |ψ⟩ notation - dark */
+  --bra-bracket: #5f7282;        /* ⟨ψ| notation - muted */
+  --matrix-cell-active: #667eea; /* highlighted matrix entry - indigo */
+  --matrix-cell-zero: #ffffff;   /* zero entry - white */
+  --complex-real-part: #3b82f6;  /* Re{z} component - blue */
+  --complex-imag-part: #8b5cf6;  /* Im{z} component - purple */
+
+  /* ==================== ALGORITHMIC FLOWS ==================== */
+  /* Grover's algorithm */
+  --grover-marked-state: #f5576c;    /* target state - coral */
+  --grover-amplitude-amp: #84fab0;   /* amplitude amplification - green */
+  
+  /* VQE / QAOA */
+  --optimizer-step: #667eea;     /* gradient step - indigo */
+  --energy-minimum: #84fab0;     /* converged minimum - green */
+  --energy-landscape: #f5af19;   /* objective surface - amber */
+  
+  /* QFT */
+  --fourier-frequency-peak: #f5576c;  /* dominant frequency - coral */
+  --fourier-phase-evolution: #667eea; /* phase accumulation - indigo */
+
+  /* ==================== VISUALIZATION HELPERS ==================== */
+  --text-primary: #142330;       /* main text - dark ink */
+  --text-secondary: #5f7282;     /* secondary text - muted */
+  --text-disabled: #cccccc;      /* disabled/grayed - light gray */
+  --border-color: #e0e0e0;       /* UI borders - light gray */
+  --bg-panel: #ffffff;           /* panel background - white */
+  --bg-panel-dark: #f9f9f9;     /* alternate panel - off-white */
+
+  /* Semantic alerts */
+  --alert-success: #27ae60;      /* ✓ correct/ready - green */
+  --alert-warning: #f39c12;      /* ⚠ caution needed - orange */
+  --alert-error: #e74c3c;        /* ✗ error/mismatch - red */
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --state-zero: #7fd4e7;
+    --state-one: #ff6b9d;
+    --state-superposition: #c77dff;
+    
+    --constructive-interference: #84fab0;
+    --destructive-interference: #ff6b9d;
+    --mixed-interference: #ffd60a;
+    
+    --circuit-wire: #edf7ff;
+    --control-qubit-wire: #90caf9;
+    --target-qubit-wire: #ce93d8;
+    
+    --text-primary: #edf7ff;
+    --text-secondary: #a7b8c8;
+    --text-disabled: #666666;
+    --border-color: #444444;
+    --bg-panel: #1a1a1a;
+    --bg-panel-dark: #2a2a2a;
+  }
+}
+
+/* ==================== BLOCH SPHERE CONVENTION ==================== */
+/* |0⟩ = North Pole (top), |1⟩ = South Pole (bottom) */
+/* X-axis: |+⟩ right, |-⟩ left */
+/* Y-axis: |+i⟩ front, |-i⟩ back (for 3D views) */
+/* Right-hand rule: fingers curl from +Z to +X to +Y */
+
+/* ==================== CIRCUIT NOTATION STANDARDS ==================== */
+/* Wire direction: left to right (time/causality flow) */
+/* Gate symbols: */
+/*   - H: Hadamard box */
+/*   - X/Y/Z: Pauli boxes */
+/*   - S: Phase gate (square) */
+/*   - T: π/8 gate (smaller square) */
+/*   - ⊕: CNOT target (XOR symbol) */
+/*   - ◆: CZ target (filled diamond) */
+/*   - ●: Control qubit (filled dot) */
+/*   - SWAP: × symbol */
+
+/* ==================== MEASUREMENT BASIS SYMBOLS ==================== */
+/* |0⟩, |1⟩: computational basis */
+/* |+⟩, |-⟩ (Hadamard basis): H-rotated from computational */
+/* Custom basis: rotated angle θ from Z-axis */

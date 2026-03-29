@@ -11,7 +11,9 @@
     "validate:lessons": "node ./scripts/validate-lessons.mjs"
   },
   "dependencies": {
+    "framer-motion": "^10.16.0",
     "katex": "0.16.25",
+    "lucide-react": "^0.292.0",
     "next": "16.2.1",
     "react": "19.2.4",
     "react-dom": "19.2.4"

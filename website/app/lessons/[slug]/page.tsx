@@ -11,6 +11,7 @@ import {
   LessonProgressPanel,
   TrackLessonView,
 } from "@/components/progress-ui";
+import { getLessonWidget } from "@/components/lesson-widgets";
 import {
   getAdjacentLessons,
   getLessonsByIds,
@@ -284,6 +285,17 @@ export default async function LessonPage({
               </ul>
             </section>
           </div>
+
+          {lesson.visualization.interactive && getLessonWidget(lesson.lesson_id) && (() => {
+            const Widget = getLessonWidget(lesson.lesson_id);
+            return Widget ? (
+              <section className="section-card lesson-mode-group lesson-mode-group--neutral">
+                <h3>Try It</h3>
+                <p className="body-copy">Interact with the quantum concept below to build intuition:</p>
+                <Widget />
+              </section>
+            ) : null;
+          })()}
 
           <section className="section-card lesson-mode-card lesson-mode-card--neutral">
             <h3>Interview Ready</h3>

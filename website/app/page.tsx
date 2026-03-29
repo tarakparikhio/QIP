@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { LearningModeSummary } from "@/components/learning-mode";
 import { LessonBrowser } from "@/components/lesson-browser";
+import { QuantumCoinFlip } from "@/components/quantum-coin-flip";
+import { TranslatorShowcase } from "@/components/translator-showcase";
+import { FeaturedPaths } from "@/components/featured-paths";
 import {
   CurriculumPathProgress,
   LessonProgressBadge,
@@ -143,6 +146,31 @@ export default function HomePage() {
           </div>
           <LearningModeSummary scope="home" />
         </aside>
+      </section>
+
+      {/* Interactive H-Gate Widget Section */}
+      <section className="quantum-demo-panel">
+        <div className="panel-heading">
+          <p className="eyebrow">Try It First</p>
+          <h3>Hadamard Gate: Intuition in Action</h3>
+        </div>
+        <div className="quantum-demo-intro">
+          <p className="body-copy">
+            This interactive widget demonstrates one of the core ideas in quantum computing:
+            a Hadamard gate creates superposition, and measurement collapses it randomly to |0⟩ or |1⟩.
+          </p>
+        </div>
+        <div className="quantum-demo-widget">
+          <QuantumCoinFlip />
+        </div>
+        <div className="section-links compact-links">
+          <Link className="lesson-link" href="#translator-layer">
+            Continue to translator
+          </Link>
+          <Link className="lesson-link" href="#featured-paths">
+            View learning paths
+          </Link>
+        </div>
       </section>
 
       <section className="why-panel mode-surface mode-surface--intuition" id="why-qcml">
@@ -320,6 +348,11 @@ export default function HomePage() {
           </div>
           <LessonBrowser lessons={lessons} />
         </div>
+      </section>
+
+      {/* Featured Learning Paths */}
+      <section className="featured-paths-panel" id="featured-paths">
+        <FeaturedPaths />
       </section>
 
       <section className="guided-panel" id="guided-entry">
