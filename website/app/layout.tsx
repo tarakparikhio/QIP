@@ -11,9 +11,24 @@ import {
 } from "@/lib/learning-mode";
 
 export const metadata: Metadata = {
-  title: "QCML Quantum Intuition Platform",
+  title: {
+    default: "QCML | Quantum Intuition Platform",
+    template: "%s | QCML",
+  },
   description:
-    "A structured quantum computing learning system with intuition, mathematics, physics, formal quantum mechanics, circuits, and interview-ready explanations.",
+    "A portfolio-grade quantum computing learning platform that connects intuition, mathematics, physics, formal quantum mechanics, and interactive lesson widgets in one structured curriculum.",
+  openGraph: {
+    title: "QCML | Quantum Intuition Platform",
+    description:
+      "A structured quantum curriculum for software-minded learners, built as a reviewable product with source provenance, lesson architecture, and interactive teaching demos.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "QCML | Quantum Intuition Platform",
+    description:
+      "A portfolio-grade quantum learning platform with 35 lessons, interactive widgets, and audit-driven corrections.",
+  },
 };
 
 const preferenceScript = `
@@ -63,7 +78,7 @@ export default function RootLayout({
                 <nav className="site-nav" aria-label="Primary">
                   <Link href="/">Home</Link>
                   <Link href="/#learning-arc">Learning Arc</Link>
-                  <Link href="/#curriculum-atlas">Lesson Atlas</Link>
+                  <Link href="/lessons">Lesson Atlas</Link>
                   <Link href="/#guided-entry">Guided Paths</Link>
                 </nav>
               </div>

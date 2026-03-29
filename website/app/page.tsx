@@ -1,16 +1,8 @@
 import Link from "next/link";
 import { LearningModeSummary } from "@/components/learning-mode";
-import { LessonBrowser } from "@/components/lesson-browser";
 import { QuantumCoinFlip } from "@/components/quantum-coin-flip";
-import { TranslatorShowcase } from "@/components/translator-showcase";
 import { FeaturedPaths } from "@/components/featured-paths";
-import {
-  CurriculumPathProgress,
-  LessonProgressBadge,
-} from "@/components/progress-ui";
-import { translatorExamples } from "@/config/translator";
-import { curriculumPaths } from "@/lib/curriculum-paths";
-import { getLessonMetrics, getLessons, getLessonsByIds } from "@/lib/lessons";
+import { getLessonMetrics, getLessons } from "@/lib/lessons";
 
 export default function HomePage() {
   const lessons = getLessons();
@@ -19,6 +11,8 @@ export default function HomePage() {
 
   const startLesson = lessonMap.get(1);
   const sampleLesson = lessonMap.get(6);
+  const advancedLesson = lessonMap.get(26);
+  const atlasHref = "/lessons";
 
   const stageCards = [
     {
@@ -41,42 +35,34 @@ export default function HomePage() {
     },
   ];
 
-  const featuredLessons = getLessonsByIds([1, 14, 28]);
-  const quickPathCards = curriculumPaths
-    .map((path) => ({
-      ...path,
-      firstLesson: lessonMap.get(path.lessonIds[0]),
-    }))
-    .filter((path) => path.firstLesson);
-
   const guidedPaths = [
     {
       label: "Start Learning",
       title: "Begin from zero",
       description:
         "Follow the lessons in order if you want the cleanest path from intuition to advanced algorithms.",
-      href: startLesson ? `/lessons/${startLesson.slug}` : "#curriculum-atlas",
-    },
-    {
-      label: "Engineer Bridge",
-      title: "Think from software first",
-      description:
-        "Use the homepage translator layer and analogy-heavy lessons to bridge classical programming intuition into quantum structure.",
-      href: "#translator-layer",
+      href: startLesson ? `/lessons/${startLesson.slug}` : atlasHref,
     },
     {
       label: "Preview Mode",
       title: "Sample the teaching style",
       description:
         "Open a representative lesson first if you want a quick sense of how the platform explains concepts before committing to the full arc.",
-      href: sampleLesson ? `/lessons/${sampleLesson.slug}` : "#curriculum-atlas",
+      href: sampleLesson ? `/lessons/${sampleLesson.slug}` : atlasHref,
     },
     {
       label: "Advanced Route",
       title: "Jump to algorithmic depth",
       description:
         "If you already know the basics, move directly into the advanced sequence and use prerequisites as your backtrack map.",
-      href: "#curriculum-atlas",
+      href: advancedLesson ? `/lessons/${advancedLesson.slug}` : atlasHref,
+    },
+    {
+      label: "Engineer Bridge",
+      title: "Start from software intuition",
+      description:
+        "Use the translator section to connect control flow, state, and debugging instincts to quantum mechanics before diving into the full atlas.",
+      href: "#translator-layer",
     },
   ];
 
@@ -94,11 +80,11 @@ export default function HomePage() {
           <div className="hero-actions">
             <Link
               className="primary-link accent-link"
-              href={startLesson ? `/lessons/${startLesson.slug}` : "#curriculum-atlas"}
+              href={startLesson ? `/lessons/${startLesson.slug}` : atlasHref}
             >
               Start Learning
             </Link>
-            <Link className="primary-link ghost-link" href="#curriculum-atlas">
+            <Link className="primary-link ghost-link" href={atlasHref}>
               Explore Atlas
             </Link>
           </div>
@@ -108,7 +94,7 @@ export default function HomePage() {
             </Link>
             <Link
               className="lesson-link"
-              href={sampleLesson ? `/lessons/${sampleLesson.slug}` : "#curriculum-atlas"}
+              href={sampleLesson ? `/lessons/${sampleLesson.slug}` : atlasHref}
             >
               View Sample Lesson
             </Link>
@@ -123,12 +109,8 @@ export default function HomePage() {
               <span className="hero-summary-text">Linked lessons</span>
             </article>
             <article className="hero-summary-item">
-              <span className="hero-summary-value">4</span>
-              <span className="hero-summary-text">Teaching layers</span>
-            </article>
-            <article className="hero-summary-item">
-              <span className="hero-summary-value">1</span>
-              <span className="hero-summary-text">Continuous curriculum</span>
+              <span className="hero-summary-value">4 layers</span>
+              <span className="hero-summary-text">Intuition to rigor</span>
             </article>
             <article className="hero-summary-item">
               <span className="hero-summary-value">0</span>
@@ -204,7 +186,7 @@ export default function HomePage() {
               <Link className="lesson-link" href="#translator-layer">
                 Open translator section
               </Link>
-              <Link className="lesson-link" href="#curriculum-atlas">
+              <Link className="lesson-link" href={atlasHref}>
                 Browse lesson atlas
               </Link>
             </div>
@@ -230,31 +212,13 @@ export default function HomePage() {
             <Link className="lesson-link" href="#why-qcml">
               Back to why QCML
             </Link>
-            <Link className="lesson-link" href="#curriculum-atlas">
+            <Link className="lesson-link" href={atlasHref}>
               Continue to the atlas
             </Link>
           </div>
         </div>
         <div className="translator-grid">
-          {translatorExamples.map((card) => (
-            <article className="translator-card" key={card.id}>
-              <div className="translator-card-meta">
-                <span className="tag">{card.lens}</span>
-                <span className="tag">
-                  Best in{" "}
-                  {card.bestFor === "both"
-                    ? "both modes"
-                    : `${card.bestFor} mode`}
-                </span>
-              </div>
-              <p className="metric-label">Classical</p>
-              <h4>{card.classical}</h4>
-              <p className="translator-arrow">maps to</p>
-              <p className="metric-label">Quantum</p>
-              <h4>{card.quantum}</h4>
-              <p className="body-copy">{card.explanation}</p>
-            </article>
-          ))}
+          <FeaturedTranslatorGrid />
         </div>
       </section>
 
@@ -276,77 +240,53 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div className="featured-strip">
-          {featuredLessons.map((lesson) => (
-            <article className="featured-card" key={lesson.lesson_id}>
-              <div className="card-topline">
-                <p className="eyebrow">
-                  Lesson {lesson.lesson_id} • {lesson.learning_order.stage}
-                </p>
-                <LessonProgressBadge lessonId={lesson.lesson_id} />
-              </div>
-              <h4>{lesson.title}</h4>
-              <p className="body-copy">{lesson.learning_objective}</p>
-              <div className="card-tags">
-                <span className="tag">Difficulty: {lesson.difficulty}</span>
-                <span className="tag">
-                  Visualization: {lesson.visualization.type}
-                </span>
-              </div>
-              <Link className="lesson-link" href={`/lessons/${lesson.slug}`}>
-                Open featured lesson
-              </Link>
-            </article>
-          ))}
-        </div>
-
-        <div className="quick-path-strip">
-          {quickPathCards.map((path) => (
-            <article className="path-card" key={path.key}>
-              <p className="metric-label">{path.label}</p>
-              <h4>{path.firstLesson?.title}</h4>
-              <p className="body-copy">{path.description}</p>
-              <CurriculumPathProgress lessonIds={path.lessonIds} />
-              <div className="card-tags">
-                <span className="tag">
-                  Starts at lesson {path.firstLesson?.lesson_id}
-                </span>
-                <span className="tag">{path.lessonIds.length} lessons highlighted</span>
-              </div>
-              <div className="section-links compact-links">
-                <Link className="lesson-link" href={`/#curriculum-atlas`}>
-                  Open in atlas
-                </Link>
-                {path.firstLesson ? (
-                  <Link
-                    className="lesson-link"
-                    href={`/lessons/${path.firstLesson.slug}`}
-                  >
-                    Jump to first lesson
-                  </Link>
-                ) : null}
-              </div>
-            </article>
-          ))}
-        </div>
-
-        <div className="atlas-preview-shell" id="curriculum-atlas">
+        <div className="atlas-preview-shell">
           <div className="panel-heading compact-heading">
             <p className="eyebrow">Lesson Atlas</p>
-            <h3>Search, filter, and enter any lesson</h3>
+            <h3>Keep discovery in its own focused workspace</h3>
+          </div>
+          <p className="body-copy atlas-preview-copy">
+            The dedicated atlas page holds search, stage filters, and curated
+            path filters so the homepage can stay focused on orientation rather
+            than behaving like a dashboard.
+          </p>
+          <div className="atlas-preview-grid">
+            <article className="atlas-preview-card">
+              <p className="metric-label">Search</p>
+              <h4>Find by lesson title or concept</h4>
+              <p className="body-copy">
+                Jump straight to the lesson you already have in mind instead of
+                scanning the whole curriculum from the landing page.
+              </p>
+            </article>
+            <article className="atlas-preview-card">
+              <p className="metric-label">Filter</p>
+              <h4>Slice by stage and curated path</h4>
+              <p className="body-copy">
+                Narrow the lesson list by foundation, intermediate, advanced,
+                or by the teaching routes surfaced across the site.
+              </p>
+            </article>
+            <article className="atlas-preview-card">
+              <p className="metric-label">Navigate</p>
+              <h4>Open any lesson from one place</h4>
+              <p className="body-copy">
+                Use the atlas as the central browse screen, then move into the
+                left-rail lesson experience once you pick a topic.
+              </p>
+            </article>
           </div>
           <div className="section-links compact-links">
-            <Link className="lesson-link" href="#guided-entry">
-              View guided entry points
+            <Link className="lesson-link" href={atlasHref}>
+              Open lesson atlas
             </Link>
             <Link
               className="lesson-link"
-              href={startLesson ? `/lessons/${startLesson.slug}` : "/#curriculum-atlas"}
+              href={startLesson ? `/lessons/${startLesson.slug}` : atlasHref}
             >
               Open the first lesson
             </Link>
           </div>
-          <LessonBrowser lessons={lessons} />
         </div>
       </section>
 
@@ -357,8 +297,8 @@ export default function HomePage() {
 
       <section className="guided-panel" id="guided-entry">
         <div className="panel-heading">
-          <p className="eyebrow">Guided Entry Points</p>
-          <h3>Choose a way into the platform that matches your goal</h3>
+          <p className="eyebrow">Quick Ways In</p>
+          <h3>Choose an entry point that matches your immediate goal</h3>
         </div>
         <div className="path-grid">
           {guidedPaths.map((path) => (
@@ -378,7 +318,7 @@ export default function HomePage() {
           </Link>
           <Link
             className="lesson-link"
-            href={sampleLesson ? `/lessons/${sampleLesson.slug}` : "#curriculum-atlas"}
+            href={sampleLesson ? `/lessons/${sampleLesson.slug}` : atlasHref}
           >
             Open sample lesson
           </Link>
@@ -386,4 +326,50 @@ export default function HomePage() {
       </section>
     </main>
   );
+}
+
+function FeaturedTranslatorGrid() {
+  const cards = [
+    {
+      lens: "Control flow",
+      classical: "if / branch / dependency",
+      quantum: "controlled operation",
+      explanation:
+        "QCML uses familiar control-flow intuition to explain why one qubit can conditionally change another without measuring it.",
+      bestFor: "both modes",
+    },
+    {
+      lens: "Debugging intuition",
+      classical: "inspect state directly",
+      quantum: "infer from repeated measurement",
+      explanation:
+        "This shift is one of the core bridges for engineers: in quantum systems, observation changes the state, so evidence comes from statistics.",
+      bestFor: "intuition",
+    },
+    {
+      lens: "State representation",
+      classical: "bit or vector value",
+      quantum: "state vector in Hilbert space",
+      explanation:
+        "QCML keeps the formal state-space story close to the intuition so amplitudes and phase feel motivated rather than dropped in from nowhere.",
+      bestFor: "rigor",
+    },
+  ];
+
+  return cards.map((card) => (
+    <article className="translator-card" key={card.lens}>
+      <div className="translator-card-meta">
+        <span className="tag">{card.lens}</span>
+        <span className="tag">
+          Best in {card.bestFor === "both" ? "both modes" : `${card.bestFor} mode`}
+        </span>
+      </div>
+      <p className="metric-label">Classical</p>
+      <h4>{card.classical}</h4>
+      <p className="translator-arrow">maps to</p>
+      <p className="metric-label">Quantum</p>
+      <h4>{card.quantum}</h4>
+      <p className="body-copy">{card.explanation}</p>
+    </article>
+  ));
 }

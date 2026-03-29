@@ -12,6 +12,7 @@ import {
   TrackLessonView,
 } from "@/components/progress-ui";
 import { getLessonWidget } from "@/components/lesson-widgets";
+import { LessonSidebar } from "@/components/lesson-sidebar";
 import {
   getAdjacentLessons,
   getLessonsByIds,
@@ -53,87 +54,91 @@ export default async function LessonPage({
   const prerequisiteLessons = getLessonsByIds(
     lesson.learning_order.prerequisites,
   );
+  const lessons = getLessons();
 
   return (
     <main className="page-shell lesson-page">
       <TrackLessonView lessonId={lesson.lesson_id} />
-      <section className="lesson-shell">
-        <nav className="crumbs">
-          <Link href="/">All Lessons</Link>
-          <span>/</span>
-          <span>{lesson.title}</span>
-        </nav>
+      <section className="lesson-layout">
+        <LessonSidebar currentLesson={lesson} lessons={lessons} />
 
-        <div className="section-links">
-          <Link className="lesson-link" href="/">
-            Home
-          </Link>
-          <Link className="lesson-link" href="/#curriculum-atlas">
-            Lesson Atlas
-          </Link>
-          <Link className="lesson-link" href="/#learning-arc">
-            Learning Arc
-          </Link>
-        </div>
+        <section className="lesson-shell lesson-main">
+          <nav className="crumbs">
+            <Link href="/lessons">All Lessons</Link>
+            <span>/</span>
+            <span>{lesson.title}</span>
+          </nav>
 
-        <section className="lesson-header">
-          <div className="lesson-header-grid">
-            <div>
-              <p className="eyebrow">
-                Lesson {lesson.lesson_id} • {lesson.learning_order.stage} •{" "}
-                {lesson.difficulty}
-              </p>
-              <h2>{lesson.title}</h2>
-              <p className="lead-copy">
-                <MathText text={lesson.learning_objective} />
-              </p>
-              <div className="hero-tags">
-                <LessonProgressBadge lessonId={lesson.lesson_id} />
-                <span className="tag">Slug: {lesson.slug}</span>
-                <span className="tag">Stage: {lesson.learning_order.stage}</span>
-                <span className="tag">Difficulty: {lesson.difficulty}</span>
-                <span className="tag">
-                  Visualization: {lesson.visualization.type}
-                </span>
-              </div>
-            </div>
-            <aside className="lesson-aside">
-              <p className="metric-label">Lesson Focus</p>
-              <p className="body-copy">
-                This page keeps the flow centered on intuition, math, physics,
-                and formal QM, with the visual learning cue preserved. Use the
-                atlas to jump sideways and the prerequisite links to backtrack
-                when needed.
-              </p>
-              <div className="lesson-nav-mini">
-                {previous ? (
-                  <Link className="lesson-link" href={`/lessons/${previous.slug}`}>
-                    Previous: {previous.title}
-                  </Link>
-                ) : (
-                  <span className="body-copy">Start of curriculum</span>
-                )}
-                {next ? (
-                  <Link className="lesson-link" href={`/lessons/${next.slug}`}>
-                    Next: {next.title}
-                  </Link>
-                ) : (
-                  <span className="body-copy">End of curriculum</span>
-                )}
-              </div>
-              <div className="lesson-nav-mini">
-                <Link className="lesson-link" href="/#curriculum-atlas">
-                  Browse atlas
-                </Link>
-                <Link className="lesson-link" href="/#guided-entry">
-                  Guided paths
-                </Link>
-              </div>
-            </aside>
+          <div className="section-links">
+            <Link className="lesson-link" href="/">
+              Home
+            </Link>
+            <Link className="lesson-link" href="/lessons">
+              Lesson Atlas
+            </Link>
+            <Link className="lesson-link" href="/#learning-arc">
+              Learning Arc
+            </Link>
           </div>
-        </section>
 
-        <div className="lesson-flow">
+          <section className="lesson-header">
+            <div className="lesson-header-grid">
+              <div>
+                <p className="eyebrow">
+                  Lesson {lesson.lesson_id} • {lesson.learning_order.stage} •{" "}
+                  {lesson.difficulty}
+                </p>
+                <h2>{lesson.title}</h2>
+                <p className="lead-copy">
+                  <MathText text={lesson.learning_objective} />
+                </p>
+                <div className="hero-tags">
+                  <LessonProgressBadge lessonId={lesson.lesson_id} />
+                  <span className="tag">Slug: {lesson.slug}</span>
+                  <span className="tag">Stage: {lesson.learning_order.stage}</span>
+                  <span className="tag">Difficulty: {lesson.difficulty}</span>
+                  <span className="tag">
+                    Visualization: {lesson.visualization.type}
+                  </span>
+                </div>
+              </div>
+              <aside className="lesson-aside">
+                <p className="metric-label">Lesson Focus</p>
+                <p className="body-copy">
+                  This page keeps the flow centered on intuition, math, physics,
+                  and formal QM, with the visual learning cue preserved. Use the
+                  left rail to jump sideways and the prerequisite links to
+                  backtrack when needed.
+                </p>
+                <div className="lesson-nav-mini">
+                  {previous ? (
+                    <Link className="lesson-link" href={`/lessons/${previous.slug}`}>
+                      Previous: {previous.title}
+                    </Link>
+                  ) : (
+                    <span className="body-copy">Start of curriculum</span>
+                  )}
+                  {next ? (
+                    <Link className="lesson-link" href={`/lessons/${next.slug}`}>
+                      Next: {next.title}
+                    </Link>
+                  ) : (
+                    <span className="body-copy">End of curriculum</span>
+                  )}
+                </div>
+                <div className="lesson-nav-mini">
+                  <Link className="lesson-link" href="/lessons">
+                    Browse atlas
+                  </Link>
+                  <Link className="lesson-link" href="/#featured-paths">
+                    Learning paths
+                  </Link>
+                </div>
+              </aside>
+            </div>
+          </section>
+
+          <div className="lesson-flow">
           <LearningModeSummary scope="lesson" />
           <LessonProgressPanel lessonId={lesson.lesson_id} />
 
@@ -172,7 +177,7 @@ export default async function LessonPage({
                 you want to re-enter by stage, topic, or curated path.
               </p>
               <div className="section-links compact-links">
-                <Link className="lesson-link" href="/#curriculum-atlas">
+                <Link className="lesson-link" href="/lessons">
                   Open lesson atlas
                 </Link>
                 <Link className="lesson-link" href="/#learning-arc">
@@ -310,33 +315,34 @@ export default async function LessonPage({
               ))}
             </ul>
           </section>
-        </div>
+          </div>
 
-        <section className="lesson-footer-nav">
-          {previous ? (
-            <Link className="footer-nav-card" href={`/lessons/${previous.slug}`}>
-              <span className="metric-label">Previous Lesson</span>
-              <LessonProgressBadge lessonId={previous.lesson_id} />
-              <strong>{previous.title}</strong>
-            </Link>
-          ) : (
-            <div className="footer-nav-card muted-card">
-              <span className="metric-label">Previous Lesson</span>
-              <strong>Beginning of the atlas</strong>
-            </div>
-          )}
-          {next ? (
-            <Link className="footer-nav-card" href={`/lessons/${next.slug}`}>
-              <span className="metric-label">Next Lesson</span>
-              <LessonProgressBadge lessonId={next.lesson_id} />
-              <strong>{next.title}</strong>
-            </Link>
-          ) : (
-            <div className="footer-nav-card muted-card">
-              <span className="metric-label">Next Lesson</span>
-              <strong>End of the atlas</strong>
-            </div>
-          )}
+          <section className="lesson-footer-nav">
+            {previous ? (
+              <Link className="footer-nav-card" href={`/lessons/${previous.slug}`}>
+                <span className="metric-label">Previous Lesson</span>
+                <LessonProgressBadge lessonId={previous.lesson_id} />
+                <strong>{previous.title}</strong>
+              </Link>
+            ) : (
+              <div className="footer-nav-card muted-card">
+                <span className="metric-label">Previous Lesson</span>
+                <strong>Beginning of the atlas</strong>
+              </div>
+            )}
+            {next ? (
+              <Link className="footer-nav-card" href={`/lessons/${next.slug}`}>
+                <span className="metric-label">Next Lesson</span>
+                <LessonProgressBadge lessonId={next.lesson_id} />
+                <strong>{next.title}</strong>
+              </Link>
+            ) : (
+              <div className="footer-nav-card muted-card">
+                <span className="metric-label">Next Lesson</span>
+                <strong>End of the atlas</strong>
+              </div>
+            )}
+          </section>
         </section>
       </section>
     </main>

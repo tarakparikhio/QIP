@@ -576,6 +576,8 @@ h4 {
 }
 
 .signal-panel,
+.about-project-panel,
+.evidence-panel,
 .why-panel,
 .curriculum-panel,
 .guided-panel,
@@ -599,6 +601,8 @@ h4 {
 }
 
 .why-panel,
+.about-project-panel,
+.evidence-panel,
 .translator-panel,
 .curriculum-panel,
 .guided-panel {
@@ -620,8 +624,13 @@ h4 {
 }
 
 .mode-surface--intuition,
-.mode-surface--rigor {
+.mode-surface--rigor,
+.mode-surface--neutral {
   position: relative;
+}
+
+.evidence-intro {
+  max-width: 68ch;
 }
 
 [data-learning-mode="intuition"] .mode-surface--intuition {
@@ -723,6 +732,36 @@ h4 {
 .atlas-preview-shell {
   display: grid;
   gap: 16px;
+}
+
+.atlas-preview-copy {
+  max-width: 68ch;
+  margin: 0;
+}
+
+.atlas-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.atlas-preview-card {
+  display: grid;
+  gap: 10px;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--panel-solid) 84%, var(--accent-soft));
+}
+
+.atlas-preview-card h4 {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+.atlas-preview-card p {
+  margin: 0;
 }
 
 .compact-heading {
@@ -1094,6 +1133,104 @@ h4 {
 .lesson-shell {
   display: grid;
   gap: 18px;
+}
+
+.lesson-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 320px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.lesson-main {
+  min-width: 0;
+}
+
+.lesson-sidebar {
+  min-width: 0;
+}
+
+.lesson-sidebar-card {
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+  background: var(--panel);
+}
+
+.lesson-sidebar-card--sticky {
+  position: sticky;
+  top: 18px;
+  max-height: calc(100vh - 36px);
+  overflow: auto;
+}
+
+.lesson-sidebar-intro {
+  display: grid;
+  gap: 8px;
+}
+
+.lesson-sidebar-intro h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.lesson-sidebar-paths,
+.lesson-sidebar-groups,
+.lesson-sidebar-group,
+.lesson-sidebar-list {
+  display: grid;
+  gap: 10px;
+}
+
+.sidebar-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lesson-sidebar-link {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--panel-solid) 86%, transparent);
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease,
+    background 180ms ease;
+}
+
+.lesson-sidebar-link:hover {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent-soft) 36%, var(--panel-solid));
+  transform: translateY(-1px);
+}
+
+.lesson-sidebar-link.is-current {
+  border-color: transparent;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+  color: white;
+}
+
+[data-theme="dark"] .lesson-sidebar-link.is-current {
+  color: #07141d;
+}
+
+.lesson-sidebar-link-topline {
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.82;
 }
 
 .lesson-flow {
@@ -1507,14 +1644,17 @@ h4 {
 
 .featured-paths-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: stretch;
   gap: 18px;
 }
 
 .featured-path-card {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-column: span 2;
+  grid-template-rows: auto auto auto 1fr auto;
   gap: 14px;
+  height: 100%;
   padding: 20px;
   border-radius: 18px;
   border: 1.5px solid var(--line);
@@ -1575,8 +1715,48 @@ h4 {
   line-height: 1;
 }
 
+.path-card-header,
+.path-meta-row,
+.path-lesson-pills,
+.path-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.path-card-header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.path-meta-row {
+  justify-content: flex-start;
+}
+
+.path-content {
+  display: grid;
+  gap: 10px;
+}
+
+.path-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--path-accent, var(--accent)) 28%, var(--line));
+  background: color-mix(in srgb, var(--path-accent, var(--accent)) 10%, var(--panel-solid));
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .path-content h3 {
-  margin: 0 0 8px;
+  margin: 0;
   font-size: 1.1rem;
   font-weight: 600;
 }
@@ -1592,6 +1772,45 @@ h4 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.path-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.path-detail-block {
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--path-accent, var(--accent)) 16%, var(--line));
+  background: color-mix(in srgb, var(--path-accent, var(--accent)) 6%, var(--panel-solid));
+}
+
+.path-detail-block p,
+.path-lesson-preview {
+  margin: 0;
+}
+
+.path-detail-label {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.path-lesson-preview {
+  display: grid;
+  gap: 10px;
+}
+
+.path-cta-row {
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
 }
 
 .path-count {
@@ -1612,6 +1831,28 @@ h4 {
 
 .featured-path-card:hover .path-cta {
   transform: translateX(4px);
+}
+
+@media (max-width: 1200px) {
+  .featured-paths-grid,
+  .atlas-preview-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .featured-path-card {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 700px) {
+  .featured-paths-grid,
+  .atlas-preview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .path-card-header {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Quantum Coin Flip Widget */
@@ -2198,10 +2439,21 @@ h4 {
 
   .signal-track,
   .arc-grid,
+  .lesson-layout,
   .lesson-header-grid,
   .why-grid,
   .translator-grid {
     grid-template-columns: 1fr;
+  }
+
+  .path-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lesson-sidebar-card--sticky {
+    position: static;
+    max-height: none;
+    overflow: visible;
   }
 }
 
