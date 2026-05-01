@@ -1,0 +1,38 @@
+export const meta = {
+  title: "Birth of Quantum Information",
+  analogy: "A classroom before attendance",
+};
+
+## The Analogy
+
+Imagine a classroom before the teacher calls attendance. Each student might be **present**, **late**, **asleep**, or **absent** — multiple possibilities exist simultaneously in the teacher's mind. The moment a name is called and answered, all that uncertainty collapses into one definitive record.
+
+A **qubit** is exactly that classroom, before roll-call.
+
+> Before measurement, a qubit holds a *structured cloud* of possible states — not just ignorance, but a real physical configuration described by amplitudes.
+
+## What Makes a Qubit Different from a Bit?
+
+A classical bit is always exactly 0 or 1 — like a light switch. A qubit holds two **complex amplitudes**, $\alpha$ and $\beta$:
+
+$$
+|\psi\rangle = \alpha |0\rangle + \beta |1\rangle
+$$
+
+These amplitudes obey the **normalization rule**:
+
+$$
+|\alpha|^2 + |\beta|^2 = 1
+$$
+
+This is not probability — it is **amplitude**. The probabilities only emerge when you measure.
+
+## Why Phase Matters
+
+Even when two qubits have identical probabilities ($|0\rangle$ with 50%, $|1\rangle$ with 50%), the **relative phase** between $\alpha$ and $\beta$ can be completely different. That phase becomes physically meaningful when the qubit goes through more gates before measurement — it determines how amplitudes **interfere**.
+
+## Try It: Build Your First Circuit
+
+Apply a **Hadamard (H)** gate to the qubit below and watch the probabilities change from $|0\rangle = 100\%$ to an equal superposition.
+
+The Hadamard gate puts a qubit exactly on the equator of the Bloch sphere — a perfect 50/50 split.
