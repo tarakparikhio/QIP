@@ -2,23 +2,20 @@
 import { motion } from 'framer-motion';
 import { useCircuitStore } from '@/lib/store/circuitStore';
 
-const BASIS_LABELS: Record<number, Record<number, string>> = {
-  1: { 0: '|0⟩', 1: '|1⟩' },
-  2: { 0: '|00⟩', 1: '|01⟩', 2: '|10⟩', 3: '|11⟩' },
-};
+function basisLabel(i: number, n: number): string {
+  return '|' + i.toString(2).padStart(n, '0') + '⟩';
+}
 
 export default function ProbabilityBars() {
   const { probabilities, numQubits } = useCircuitStore();
-  const labels = BASIS_LABELS[numQubits] ?? {};
 
   return (
     <div className="rounded-xl border border-border/50 bg-card/50 p-4 space-y-3">
-      <p className="text-xs text-muted font-mono uppercase tracking-widest">State Probabilities</p>
-      <div className="space-y-2.5">
+      <div className="space-y-2.5 max-h-[260px] overflow-y-auto">
         {probabilities.map((prob, i) => (
           <div key={i} className="space-y-1">
             <div className="flex justify-between text-xs font-mono">
-              <span className="text-foreground/80">{labels[i] ?? `|${i}⟩`}</span>
+              <span className="text-foreground/80">{basisLabel(i, numQubits)}</span>
               <span className="text-primary">{(prob * 100).toFixed(1)}%</span>
             </div>
             <div className="h-2 rounded-full bg-border/40 overflow-hidden">

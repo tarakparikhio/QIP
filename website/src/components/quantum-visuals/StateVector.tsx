@@ -3,24 +3,21 @@ import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useCircuitStore } from '@/lib/store/circuitStore';
 
-const BASIS_LABELS: Record<number, Record<number, string>> = {
-  1: { 0: '|0⟩', 1: '|1⟩' },
-  2: { 0: '|00⟩', 1: '|01⟩', 2: '|10⟩', 3: '|11⟩' },
-};
+function basisLabel(i: number, n: number): string {
+  return '|' + i.toString(2).padStart(n, '0') + '⟩';
+}
 
 export default function StateVector() {
   const { amplitudes, numQubits } = useCircuitStore();
 
   const displayAmplitudes = useMemo(() => {
-    const labels = BASIS_LABELS[numQubits] ?? {};
     return amplitudes.map((amp, i) => {
       const magnitude = Math.sqrt(amp.re * amp.re + amp.im * amp.im);
       const phase = Math.atan2(amp.im, amp.re) * (180 / Math.PI);
       const phase360 = phase < 0 ? phase + 360 : phase;
-      
       return {
         index: i,
-        label: labels[i] ?? `|${i}⟩`,
+        label: basisLabel(i, numQubits),
         magnitude,
         phase: phase360,
         re: amp.re,
@@ -31,7 +28,6 @@ export default function StateVector() {
 
   return (
     <div className="rounded-xl border border-border/50 bg-card/50 p-4 space-y-3">
-      <p className="text-xs text-muted font-mono uppercase tracking-widest">State Vector ({numQubits} qubit{numQubits > 1 ? 's' : ''})</p>
       <div className="space-y-3 max-h-[300px] overflow-y-auto">
         {displayAmplitudes.map((amp) => (
           <div key={amp.index} className="space-y-1 p-2 rounded border border-border/30 bg-background/20">
