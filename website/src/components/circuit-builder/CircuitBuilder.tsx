@@ -1,5 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import GatePalette from './GatePalette';
 import CircuitGrid from './CircuitGrid';
 import ProbabilityBars from '@/components/quantum-visuals/ProbabilityBars';
@@ -7,6 +8,11 @@ import BlochSphere from '@/components/quantum-visuals/BlochSphere';
 import StateVector from '@/components/quantum-visuals/StateVector';
 import { useCircuitStore } from '@/lib/store/circuitStore';
 import { GateOperation } from '@/lib/quantum-engine/run';
+
+const MultiQubitBlochPanel = dynamic(
+  () => import('@/components/quantum-visuals/MultiQubitBlochPanel'),
+  { ssr: false },
+);
 
 type Props = {
   allowedGates: string[];
@@ -91,19 +97,16 @@ export default function CircuitBuilder({
           </div>
         </div>
 
-        {/* ── Bottom: Bloch sphere (single qubit) or State vector + bloch (multi) ── */}
-        <div className="border-t border-border/30 pt-5 space-y-2">
+        {/* ── Bottom: Bloch sphere (single qubit) or State vector + multi-qubit Bloch ── */}
+        <div className="border-t border-border/30 pt-5 space-y-4">
           {isMultiQubit ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <>
               <div className="space-y-2">
                 <p className="text-xs font-mono text-muted uppercase tracking-widest">State Vector</p>
                 <StateVector />
               </div>
-              <div className="space-y-2">
-                <p className="text-xs font-mono text-muted uppercase tracking-widest">Bloch Sphere</p>
-                <BlochSphere />
-              </div>
-            </div>
+              <MultiQubitBlochPanel />
+            </>
           ) : (
             <div className="space-y-2">
               <p className="text-xs font-mono text-muted uppercase tracking-widest">Bloch Sphere</p>

@@ -77,7 +77,7 @@ export default function Lesson04Content() {
 
       <h2>4.3 — Why Entanglement Is Not Classical Correlation</h2>
       <p>
-        A classical analogy might be: "one glove is left-handed, the other right-handed — when I see one, I know the other." But this classical correlation exists because the gloves were always in definite states. Entangled qubits are not: before measurement, neither qubit has a definite value.
+        A classical analogy might be: &ldquo;one glove is left-handed, the other right-handed — when I see one, I know the other.&rdquo; But this classical correlation exists because the gloves were always in definite states. Entangled qubits are not: before measurement, neither qubit has a definite value.
       </p>
       <p>
         The four <strong>Bell states</strong> are the maximally entangled two-qubit states:

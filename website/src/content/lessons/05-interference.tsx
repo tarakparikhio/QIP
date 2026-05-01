@@ -70,12 +70,12 @@ export default function Lesson05Content() {
       </p>
       <BlockMath math="H^{\otimes 2}\,U_f\,H^{\otimes 2}\,|0\rangle|-\rangle" />
       <p>
-        Interference causes the output qubit's first register to be <InlineMath math="|0\rangle" /> if <InlineMath math="f" /> is constant, and <InlineMath math="|1\rangle" /> if balanced — in one shot.
+        Interference causes the output qubit&apos;s first register to be <InlineMath math="|0\rangle" /> if <InlineMath math="f" /> is constant, and <InlineMath math="|1\rangle" /> if balanced — in one shot.
       </p>
 
       <h2>5.4 — Phase Kickback (Advanced)</h2>
       <p>
-        Many quantum algorithms exploit <strong>phase kickback</strong>: when a control qubit in superposition applies a gate to a target qubit, the phase of the target's eigenvalue is "kicked back" onto the control qubit's amplitude. This is the mechanism behind Grover's search and Shor's factoring algorithm.
+        Many quantum algorithms exploit <strong>phase kickback</strong>: when a control qubit in superposition applies a gate to a target qubit, the phase of the target&apos;s eigenvalue is &ldquo;kicked back&rdquo; onto the control qubit&apos;s amplitude. This is the mechanism behind Grover&apos;s search and Shor&apos;s factoring algorithm.
       </p>
       <BlockMath math="(H|0\rangle) \xrightarrow{U_f} e^{i\phi}(H|0\rangle)" />
 

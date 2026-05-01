@@ -24,7 +24,7 @@ export default function Lesson02Content() {
             <h3 className="font-semibold mb-2 text-foreground">Superposition vs. Classical Mixture</h3>
             <ul className="space-y-1.5 text-foreground/70 text-xs">
               <li><strong className="text-foreground">Pure superposition:</strong> <InlineMath math="|\psi\rangle = \alpha|0\rangle + \beta|1\rangle" /> — a single definite quantum state. Can interfere.</li>
-              <li><strong className="text-foreground">Classical mixture:</strong> "The qubit is 0 with probability <InlineMath math="p" />, else 1." No phase structure. Cannot interfere.</li>
+              <li><strong className="text-foreground">Classical mixture:</strong> &ldquo;The qubit is 0 with probability <InlineMath math="p" />, else 1.&rdquo; No phase structure. Cannot interfere.</li>
             </ul>
           </div>
 
@@ -44,7 +44,7 @@ export default function Lesson02Content() {
       </p>
       <BlockMath math="|\psi\rangle = \alpha|0\rangle + \beta|1\rangle, \quad |\alpha|^2 + |\beta|^2 = 1" />
       <p>
-        This is not a statement of ignorance about which basis state the qubit "really" is in. The qubit has no definite value prior to measurement. This is confirmed experimentally by interference: a qubit in superposition produces interference patterns that a classical mixed state cannot.
+        This is not a statement of ignorance about which basis state the qubit &ldquo;really&rdquo; is in. The qubit has no definite value prior to measurement. This is confirmed experimentally by interference: a qubit in superposition produces interference patterns that a classical mixed state cannot.
       </p>
 
       <h2>2.2 — The Hadamard Gate and Superposition</h2>

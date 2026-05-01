@@ -38,7 +38,7 @@ export default function Lesson10Content() {
       </p>
       <BlockMath math="C\text{-}U\,|c, t\rangle = \begin{cases}|0\rangle \otimes |t\rangle & \text{if } c = 0 \\|1\rangle \otimes U|t\rangle & \text{if } c = 1\end{cases}" />
       <p>
-        This can be written compactly as <InlineMath math="|0\rangle\langle 0| \otimes I + |1\rangle\langle 1| \otimes U" />. When the control is in a superposition, the gate creates an entangled superposition of "U applied" and "U not applied" branches.
+        This can be written compactly as <InlineMath math="|0\rangle\langle 0| \otimes I + |1\rangle\langle 1| \otimes U" />. When the control is in a superposition, the gate creates an entangled superposition of &ldquo;U applied&rdquo; and &ldquo;U not applied&rdquo; branches.
       </p>
       <p>
         The CNOT gate is the special case <InlineMath math="U = X" />. The controlled-Z (CZ) gate is the case <InlineMath math="U = Z" />.
@@ -53,7 +53,7 @@ export default function Lesson10Content() {
       <BlockMath math="= \alpha|0\rangle\otimes|\lambda\rangle + \beta e^{i\phi}|1\rangle\otimes|\lambda\rangle" />
       <BlockMath math="= (\alpha|0\rangle + \beta e^{i\phi}|1\rangle)\otimes|\lambda\rangle" />
       <p>
-        The target qubit is unchanged — it remains <InlineMath math="|\lambda\rangle" />. The eigenvalue <InlineMath math="e^{i\phi}" /> has been transferred as a <strong>relative phase</strong> to the control qubit's <InlineMath math="|1\rangle" /> amplitude. This is the phase kickback mechanism.
+        The target qubit is unchanged — it remains <InlineMath math="|\lambda\rangle" />. The eigenvalue <InlineMath math="e^{i\phi}" /> has been transferred as a <strong>relative phase</strong> to the control qubit&apos;s <InlineMath math="|1\rangle" /> amplitude. This is the phase kickback mechanism.
       </p>
 
       <h2>10.3 — Phase Kickback Derivation</h2>
@@ -81,7 +81,7 @@ export default function Lesson10Content() {
         </li>
       </ol>
       <p>
-        Result: the target is unchanged at <InlineMath math="|{-}\rangle" />, and the control qubit has acquired a relative phase of <InlineMath math="-1" /> on its <InlineMath math="|1\rangle" /> component. The eigenvalue <InlineMath math="-1" /> of the X gate has been "kicked back" to the control.
+        Result: the target is unchanged at <InlineMath math="|{-}\rangle" />, and the control qubit has acquired a relative phase of <InlineMath math="-1" /> on its <InlineMath math="|1\rangle" /> component. The eigenvalue <InlineMath math="-1" /> of the X gate has been &ldquo;kicked back&rdquo; to the control.
       </p>
 
       <h2>10.4 — Application: The Identity HZH = X</h2>
@@ -97,7 +97,7 @@ export default function Lesson10Content() {
         Algebraically: <InlineMath math="(H \otimes I)\,\text{CNOT}_{0\to1}\,(H \otimes I) = \text{CNOT}_{1\to0}" />. Control and target are swapped.
       </p>
       <p>
-        This identity is exploited in the Deutsch and Deutsch-Jozsa algorithms: placing the target qubit in <InlineMath math="|{-}\rangle" /> before querying an oracle transfers the oracle's phase response back to the control register, allowing global information about the function to be extracted in a single query.
+        This identity is exploited in the Deutsch and Deutsch-Jozsa algorithms: placing the target qubit in <InlineMath math="|{-}\rangle" /> before querying an oracle transfers the oracle&apos;s phase response back to the control register, allowing global information about the function to be extracted in a single query.
       </p>
 
       <TryIt heading="10.5 — Try It: Observe Phase Kickback">

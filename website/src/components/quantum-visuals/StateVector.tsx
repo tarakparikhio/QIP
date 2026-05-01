@@ -10,9 +10,9 @@ const BASIS_LABELS: Record<number, Record<number, string>> = {
 
 export default function StateVector() {
   const { amplitudes, numQubits } = useCircuitStore();
-  const labels = BASIS_LABELS[numQubits] ?? {};
 
   const displayAmplitudes = useMemo(() => {
+    const labels = BASIS_LABELS[numQubits] ?? {};
     return amplitudes.map((amp, i) => {
       const magnitude = Math.sqrt(amp.re * amp.re + amp.im * amp.im);
       const phase = Math.atan2(amp.im, amp.re) * (180 / Math.PI);
@@ -27,7 +27,7 @@ export default function StateVector() {
         im: amp.im,
       };
     });
-  }, [amplitudes, labels]);
+  }, [amplitudes, numQubits]);
 
   return (
     <div className="rounded-xl border border-border/50 bg-card/50 p-4 space-y-3">
