@@ -84,18 +84,21 @@ export default function LessonPageClient({ lesson, children }: Props) {
         {children}
       </motion.article>
 
-      {/* Playground section - Explicitly separated */}
-      <section className="mb-12">
-        <div className="mb-4">
-          <h2 className="text-2xl font-bold mb-2">Interactive Playground</h2>
-          <p className="text-muted text-sm">Build and test circuits with the gates available for this lesson.</p>
-        </div>
-        <CircuitBuilder
-          allowedGates={lesson.allowedGates}
-          numQubits={lesson.id >= 4 ? 2 : 1}
-          title={`Playground — ${lesson.title}`}
-        />
-      </section>
+      {/* Playground section */}
+        <section className="mb-12">
+          <div className="mb-4">
+            <h2 className="text-2xl font-bold mb-2">Interactive Playground</h2>
+            <p className="text-muted text-sm">
+              Build and run circuits with the gates available for this lesson. An example circuit is pre-loaded — experiment freely.
+            </p>
+          </div>
+          <CircuitBuilder
+            allowedGates={lesson.allowedGates}
+            numQubits={lesson.allowedGates.includes('CNOT') ? 2 : 1}
+            title={`Playground — ${lesson.title}`}
+            demoOps={lesson.demoOps}
+          />
+        </section>
 
       {/* Complete lesson button */}
       {!isCompleted && (

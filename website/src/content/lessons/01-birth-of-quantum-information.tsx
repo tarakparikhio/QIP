@@ -1,4 +1,5 @@
 'use client';
+'use client';
 import { InlineMath, BlockMath } from '@/components/math';
 import { NotationBox, TryIt } from '@/components/lesson';
 

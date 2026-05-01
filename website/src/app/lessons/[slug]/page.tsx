@@ -7,6 +7,11 @@ import Lesson02 from '@/content/lessons/02-superposition';
 import Lesson03 from '@/content/lessons/03-measurement';
 import Lesson04 from '@/content/lessons/04-entanglement';
 import Lesson05 from '@/content/lessons/05-interference';
+import Lesson06 from '@/content/lessons/06-quantum-gates-unitarity';
+import Lesson07 from '@/content/lessons/07-bloch-sphere';
+import Lesson08 from '@/content/lessons/08-multi-qubit-systems';
+import Lesson09 from '@/content/lessons/09-quantum-circuits';
+import Lesson10 from '@/content/lessons/10-phase-kickback';
 
 export function generateStaticParams() {
   return LESSONS.filter((l) => !l.upcoming).map((l) => ({ slug: l.slug }));
@@ -42,6 +47,11 @@ const LESSON_CONTENT: Record<string, React.ComponentType> = {
   'measurement': Lesson03,
   'entanglement': Lesson04,
   'interference': Lesson05,
+  'quantum-gates-unitarity': Lesson06,
+  'bloch-sphere': Lesson07,
+  'multi-qubit-systems': Lesson08,
+  'quantum-circuits': Lesson09,
+  'phase-kickback': Lesson10,
 };
 
 export default function LessonPage({ params }: { params: { slug: string } }) {

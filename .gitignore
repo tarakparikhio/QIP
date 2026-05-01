@@ -3,6 +3,8 @@ website/node_modules/
 website/.next/
 website/out/
 website/__pycache__/
+website/tsconfig.tsbuildinfo
+QC/
 
 # Environment
 .env

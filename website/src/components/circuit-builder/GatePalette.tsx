@@ -13,14 +13,14 @@ const GATE_COLORS: Record<string, string> = {
   CNOT: 'bg-violet-500/20 border-violet-400/60 text-violet-300 hover:bg-violet-500/30',
 };
 
-const GATE_LABELS: Record<string, string> = {
-  H: 'Hadamard',
-  X: 'Pauli-X',
-  Y: 'Pauli-Y',
-  Z: 'Pauli-Z',
-  S: 'Phase S',
-  T: 'T Gate',
-  CNOT: 'CNOT',
+const GATE_INFO: Record<string, { label: string; desc: string }> = {
+  H:    { label: 'H',    desc: 'Hadamard — creates superposition' },
+  X:    { label: 'X',    desc: 'Pauli-X — bit flip (NOT gate)' },
+  Y:    { label: 'Y',    desc: 'Pauli-Y — bit + phase flip' },
+  Z:    { label: 'Z',    desc: 'Pauli-Z — phase flip (−1 on |1⟩)' },
+  S:    { label: 'S',    desc: 'Phase S — rotates phase by π/2' },
+  T:    { label: 'T',    desc: 'T gate — rotates phase by π/4' },
+  CNOT: { label: 'CNOT', desc: 'CNOT — flips target if control=|1⟩' },
 };
 
 type Props = { allowedGates: string[] };
@@ -29,39 +29,44 @@ export default function GatePalette({ allowedGates }: Props) {
   const { addOperation, numQubits } = useCircuitStore();
 
   return (
-    <div className="space-y-2">
-      <p className="text-xs text-muted font-mono uppercase tracking-widest mb-3">Gate Palette</p>
-      <div className="flex flex-wrap gap-2">
-        {allowedGates.map((gateId) => (
-          <motion.button
-            key={gateId}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() =>
-              addOperation(
-                gateId === 'CNOT'
-                  ? { gateId, targetQubit: 1, controlQubit: 0 }
-                  : { gateId, targetQubit: 0 }
-              )
-            }
-            draggable
-            onDragStart={(e: any) => {
-              e.dataTransfer.effectAllowed = 'copy';
-              e.dataTransfer.setData('gateId', gateId);
-              e.dataTransfer.setData('numQubits', numQubits.toString());
-            }}
-            className={cn(
-              'px-3 py-1.5 rounded-lg border text-xs font-mono font-semibold transition-all cursor-move',
-              GATE_COLORS[gateId] ?? 'bg-card border-border text-foreground hover:border-primary/40'
-            )}
-            title={GATE_LABELS[gateId]}
-          >
-            {gateId}
-          </motion.button>
-        ))}
+    <div className="space-y-3">
+      <p className="text-xs text-muted font-mono uppercase tracking-widest">Gate Palette — click to add, drag to position</p>
+      <div className="flex flex-wrap gap-3">
+        {allowedGates.map((gateId) => {
+          const info = GATE_INFO[gateId] ?? { label: gateId, desc: '' };
+          return (
+            <motion.div key={gateId} className="flex flex-col items-center gap-1">
+              <motion.button
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.93 }}
+                onClick={() =>
+                  addOperation(
+                    gateId === 'CNOT'
+                      ? { gateId, targetQubit: 1, controlQubit: 0 }
+                      : { gateId, targetQubit: 0 }
+                  )
+                }
+                draggable
+                onDragStart={(e: any) => {
+                  e.dataTransfer.effectAllowed = 'copy';
+                  e.dataTransfer.setData('gateId', gateId);
+                  e.dataTransfer.setData('numQubits', numQubits.toString());
+                }}
+                className={cn(
+                  'w-12 h-10 rounded-lg border text-sm font-mono font-bold transition-all cursor-move',
+                  GATE_COLORS[gateId] ?? 'bg-card border-border text-foreground hover:border-primary/40'
+                )}
+                title={info.desc}
+              >
+                {info.label}
+              </motion.button>
+              <span className="text-[10px] text-muted/60 font-mono text-center max-w-[64px] leading-tight">{info.desc.split(' — ')[0]}</span>
+            </motion.div>
+          );
+        })}
       </div>
-      <p className="text-xs text-muted/50 mt-2">
-        Click gate to add, or drag onto qubit wire. {numQubits > 1 ? 'CNOT uses qubit 0→1.' : ''}
+      <p className="text-xs text-muted/40 font-mono">
+        Right-click a gate in the circuit to remove it.{numQubits > 1 ? ' CNOT: control q0 → target q1.' : ''}
       </p>
     </div>
   );
