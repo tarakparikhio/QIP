@@ -32,11 +32,7 @@ export default function CircuitBuilder({
 
   useEffect(() => {
     setNumQubits(numQubits);
-    // Auto-load demo on first mount so beginners see a working circuit immediately
-    if (demoOps && demoOps.length > 0) {
-      loadOps(demoOps);
-      setDemoLoaded(true);
-    }
+    setDemoLoaded(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numQubits]);
 
@@ -73,7 +69,7 @@ export default function CircuitBuilder({
         <div className="px-5 py-2.5 bg-primary/5 border-b border-primary/10 flex items-start gap-2 text-xs text-primary/80">
           <span className="mt-px shrink-0">💡</span>
           <span>
-            An example circuit is loaded. Click gates in the palette to add more, right-click a gate to remove it, or press <strong>Load Example</strong> to reset.
+            Example circuit loaded. Click gates in the palette to add more, right-click a gate to remove it, or press <strong>Load Example</strong> again to reset.
           </span>
         </div>
       )}

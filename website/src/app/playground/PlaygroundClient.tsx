@@ -11,7 +11,7 @@ import { useCircuitStore } from '@/lib/store/circuitStore';
 const BlochSphere = dynamic(() => import('@/components/quantum-visuals/BlochSphere'), { ssr: false });
 const MultiQubitBlochPanel = dynamic(() => import('@/components/quantum-visuals/MultiQubitBlochPanel'), { ssr: false });
 
-const ALL_GATES = ['H', 'X', 'Y', 'Z', 'S', 'T', 'CNOT'];
+const ALL_GATES = ['H', 'X', 'Y', 'Z', 'S', 'T', 'RX', 'RY', 'RZ', 'CNOT', 'CZ', 'SWAP'];
 const MAX_QUBITS = 10;
 
 const PRESET_CIRCUITS: { label: string; qubits: number; ops: { gateId: string; targetQubit: number; controlQubit?: number }[]; desc: string }[] = [
@@ -61,21 +61,57 @@ const PRESET_CIRCUITS: { label: string; qubits: number; ops: { gateId: string; t
       { gateId: 'H', targetQubit: 0 },
     ],
   },
+  {
+    label: 'Controlled-Z Phase',
+    qubits: 2,
+    desc: 'Applies phase only on |11⟩ via CZ',
+    ops: [
+      { gateId: 'H', targetQubit: 0 },
+      { gateId: 'H', targetQubit: 1 },
+      { gateId: 'CZ', targetQubit: 1, controlQubit: 0 },
+    ],
+  },
+  {
+    label: 'Swap Register',
+    qubits: 2,
+    desc: 'Move state between qubits using SWAP',
+    ops: [
+      { gateId: 'X', targetQubit: 0 },
+      { gateId: 'SWAP', targetQubit: 1, controlQubit: 0 },
+    ],
+  },
+  {
+    label: 'Rotation Stack',
+    qubits: 1,
+    desc: 'Compose RX, RY, and RZ quarter-turns',
+    ops: [
+      { gateId: 'RX', targetQubit: 0 },
+      { gateId: 'RY', targetQubit: 0 },
+      { gateId: 'RZ', targetQubit: 0 },
+    ],
+  },
 ];
 
 export default function PlaygroundClient() {
   const { setNumQubits, clearCircuit, loadOps, numQubits } = useCircuitStore();
   const [localQubits, setLocalQubits] = useState(1);
+  const [pendingPreset, setPendingPreset] = useState<{ qubits: number; ops: { gateId: string; targetQubit: number; controlQubit?: number }[] } | null>(null);
 
   // Sync local qubit count into store
   useEffect(() => {
     setNumQubits(localQubits);
   }, [localQubits, setNumQubits]);
 
+  useEffect(() => {
+    if (!pendingPreset) return;
+    if (numQubits !== pendingPreset.qubits) return;
+    loadOps(pendingPreset.ops);
+    setPendingPreset(null);
+  }, [pendingPreset, numQubits, loadOps]);
+
   function loadPreset(preset: (typeof PRESET_CIRCUITS)[number]) {
     setLocalQubits(preset.qubits);
-    // slight delay so setNumQubits settles before loadOps
-    setTimeout(() => loadOps(preset.ops), 30);
+    setPendingPreset({ qubits: preset.qubits, ops: preset.ops });
   }
 
   const isMultiQubit = localQubits > 1;
@@ -184,7 +220,7 @@ export default function PlaygroundClient() {
               </>
             ) : (
               <>
-                <p className="text-xs font-mono text-muted uppercase tracking-widest mb-2">Bloch Sphere — click ⛶ to expand, scroll to zoom</p>
+                <p className="text-xs font-mono text-muted uppercase tracking-widest mb-2">Bloch Sphere — resize with +/- slider, scroll to zoom</p>
                 <BlochSphere />
               </>
             )}
@@ -196,8 +232,8 @@ export default function PlaygroundClient() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-mono text-muted/60">
         <div className="p-3 rounded-lg border border-border/30 bg-card/20 space-y-1">
           <p className="text-muted/90 font-semibold">Gates</p>
-          <p>H · X · Y · Z · S · T — single qubit unitary gates</p>
-          <p>CNOT — controlled NOT (any control/target pair)</p>
+          <p>H · X · Y · Z · S · T · RX · RY · RZ — single-qubit unitary gates</p>
+          <p>CNOT · CZ · SWAP — two-qubit gates (any valid pair)</p>
         </div>
         <div className="p-3 rounded-lg border border-border/30 bg-card/20 space-y-1">
           <p className="text-muted/90 font-semibold">Bloch Sphere</p>

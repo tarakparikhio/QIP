@@ -1,0 +1,165 @@
+{
+  "generatedAt": "2026-05-01T18:02:34.973Z",
+  "lessonCount": 10,
+  "tagsByLesson": {
+    "birth-of-quantum-information": [
+      "h2",
+      "li",
+      "ol",
+      "p",
+      "strong"
+    ],
+    "superposition": [
+      "div",
+      "h2",
+      "h3",
+      "li",
+      "ol",
+      "p",
+      "section",
+      "strong",
+      "ul"
+    ],
+    "measurement": [
+      "div",
+      "h2",
+      "h3",
+      "li",
+      "ol",
+      "p",
+      "section",
+      "strong",
+      "ul"
+    ],
+    "entanglement": [
+      "br",
+      "div",
+      "em",
+      "h2",
+      "h3",
+      "li",
+      "ol",
+      "p",
+      "section",
+      "strong",
+      "ul"
+    ],
+    "interference": [
+      "div",
+      "em",
+      "h2",
+      "h3",
+      "li",
+      "ol",
+      "p",
+      "section",
+      "strong",
+      "ul"
+    ],
+    "quantum-gates-unitarity": [
+      "h2",
+      "li",
+      "ol",
+      "p",
+      "strong"
+    ],
+    "bloch-sphere": [
+      "h2",
+      "li",
+      "ol",
+      "p",
+      "strong"
+    ],
+    "multi-qubit-systems": [
+      "em",
+      "h2",
+      "li",
+      "ol",
+      "p",
+      "strong"
+    ],
+    "quantum-circuits": [
+      "em",
+      "h2",
+      "li",
+      "ol",
+      "p",
+      "strong"
+    ],
+    "phase-kickback": [
+      "em",
+      "h2",
+      "li",
+      "ol",
+      "p",
+      "strong"
+    ]
+  },
+  "reusableWidgetUsageByLesson": {
+    "birth-of-quantum-information": [
+      "BlockMath",
+      "InlineMath",
+      "NotationBox",
+      "TryIt"
+    ],
+    "superposition": [
+      "BlockMath",
+      "InlineMath"
+    ],
+    "measurement": [
+      "BlockMath",
+      "InlineMath"
+    ],
+    "entanglement": [
+      "BlockMath",
+      "InlineMath"
+    ],
+    "interference": [
+      "BlockMath",
+      "InlineMath"
+    ],
+    "quantum-gates-unitarity": [
+      "BlockMath",
+      "InlineMath",
+      "NotationBox",
+      "TryIt"
+    ],
+    "bloch-sphere": [
+      "BlockMath",
+      "InlineMath",
+      "NotationBox",
+      "TryIt"
+    ],
+    "multi-qubit-systems": [
+      "BlockMath",
+      "InlineMath",
+      "NotationBox",
+      "TryIt"
+    ],
+    "quantum-circuits": [
+      "BlockMath",
+      "InlineMath",
+      "NotationBox",
+      "TryIt"
+    ],
+    "phase-kickback": [
+      "BlockMath",
+      "InlineMath",
+      "NotationBox",
+      "TryIt"
+    ]
+  },
+  "suggestedBlockTypes": [
+    "heading",
+    "paragraph",
+    "ordered-list",
+    "unordered-list",
+    "math-inline",
+    "math-block",
+    "callout",
+    "notation-box",
+    "try-it",
+    "code-inline",
+    "section"
+  ]
+}

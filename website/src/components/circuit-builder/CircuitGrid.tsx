@@ -11,7 +11,12 @@ const GATE_COLORS: Record<string, string> = {
   Z: 'bg-amber-500/30 border-amber-400 text-amber-200',
   S: 'bg-cyan-500/30 border-cyan-400 text-cyan-200',
   T: 'bg-orange-500/30 border-orange-400 text-orange-200',
+  RX: 'bg-sky-500/30 border-sky-400 text-sky-200',
+  RY: 'bg-teal-500/30 border-teal-400 text-teal-200',
+  RZ: 'bg-lime-500/30 border-lime-400 text-lime-200',
   CNOT: 'bg-violet-500/30 border-violet-400 text-violet-200',
+  CZ: 'bg-fuchsia-500/30 border-fuchsia-400 text-fuchsia-200',
+  SWAP: 'bg-rose-500/30 border-rose-400 text-rose-200',
 };
 
 export default function CircuitGrid() {
@@ -49,8 +54,9 @@ export default function CircuitGrid() {
     const numQubitsVal = parseInt(numQubitsStr);
 
     if (gateId) {
+      const isControlled = gateId === 'CNOT' || gateId === 'CZ' || gateId === 'SWAP';
       addOperation(
-        gateId === 'CNOT' && numQubitsVal > 1
+        isControlled && numQubitsVal > 1
           ? { gateId, targetQubit: wireIdx, controlQubit: (wireIdx + 1) % numQubitsVal }
           : { gateId, targetQubit: wireIdx }
       );
@@ -139,8 +145,11 @@ export default function CircuitGrid() {
                   </motion.button>
                 ) : (
                   <div key={`slot-${stepIdx}`} className="relative z-10 w-9 h-9 shrink-0 flex items-center justify-center">
-                    {op.controlQubit === wireIdx && (
+                    {op.controlQubit === wireIdx && op.gateId !== 'SWAP' && (
                       <div className="w-2.5 h-2.5 rounded-full bg-violet-400 border border-violet-300" />
+                    )}
+                    {op.controlQubit === wireIdx && op.gateId === 'SWAP' && (
+                      <div className="text-rose-300 text-sm font-mono leading-none">x</div>
                     )}
                   </div>
                 )

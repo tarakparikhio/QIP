@@ -89,7 +89,7 @@ export default function LessonPageClient({ lesson, children }: Props) {
           <div className="mb-4">
             <h2 className="text-2xl font-bold mb-2">Interactive Playground</h2>
             <p className="text-muted text-sm">
-              Build and run circuits with the gates available for this lesson. An example circuit is pre-loaded — experiment freely.
+              Build and run circuits with the gates available for this lesson. Use <strong>Load Example</strong> when needed, and your current state stays in place while resizing visual panels.
             </p>
           </div>
           <CircuitBuilder
