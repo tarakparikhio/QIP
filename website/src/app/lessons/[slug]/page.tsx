@@ -19,9 +19,9 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const lesson = getLessonBySlug(params.slug);
-  if (!lesson) return { title: 'Lesson Not Found — QC Path' };
+  if (!lesson) return { title: 'Lesson Not Found — Quantum Playground' };
 
-  const title = `${lesson.title} — QC Path`;
+  const title = `${lesson.title} — Quantum Playground`;
   const description = `${lesson.objective} Learn quantum computing step by step with interactive circuit simulations.`;
 
   return {
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
       title,
       description,
       type: 'article',
-      siteName: 'QC Path',
+      siteName: 'Quantum Playground',
     },
     twitter: {
       card: 'summary',

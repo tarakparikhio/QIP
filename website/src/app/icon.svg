@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Sphere background -->
+  <circle cx="32" cy="32" r="30" fill="#0f172a" stroke="#6366f1" stroke-width="2"/>
+  <!-- Sphere edge glow (inner ring) -->
+  <circle cx="32" cy="32" r="27" fill="none" stroke="#818cf8" stroke-width="0.5" opacity="0.3"/>
+  <!-- Equator ellipse -->
+  <ellipse cx="32" cy="32" rx="27" ry="8.5" fill="none" stroke="#4b5563" stroke-width="1" stroke-dasharray="3.5 2.5"/>
+  <!-- Z axis (vertical) -->
+  <line x1="32" y1="5" x2="32" y2="59" stroke="#374151" stroke-width="0.8"/>
+  <!-- X axis (horizontal) -->
+  <line x1="5" y1="32" x2="59" y2="32" stroke="#374151" stroke-width="0.8"/>
+  <!-- Y axis (perspective, angled) -->
+  <line x1="32" y1="32" x2="52" y2="43" stroke="#374151" stroke-width="0.8"/>
+  <!-- |0⟩ dot at north pole -->
+  <circle cx="32" cy="5" r="2" fill="#6366f1" opacity="0.7"/>
+  <!-- |1⟩ dot at south pole -->
+  <circle cx="32" cy="59" r="2" fill="#6366f1" opacity="0.4"/>
+  <!-- State vector line -->
+  <line x1="32" y1="32" x2="51" y2="16" stroke="#a5b4fc" stroke-width="2" stroke-linecap="round"/>
+  <!-- Arrow head -->
+  <polygon points="51,16 42,19 48,25" fill="#a5b4fc"/>
+  <!-- Origin dot -->
+  <circle cx="32" cy="32" r="2.2" fill="#818cf8"/>
+</svg>

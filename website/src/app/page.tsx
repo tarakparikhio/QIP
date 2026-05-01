@@ -15,7 +15,7 @@ export default function HomePage() {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-mono mb-6">
           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          35 Lessons · Interactive Circuit Builder
+          35 Lessons · Quantum Playground for Beginners
         </div>
 
         <h1 className="text-5xl md:text-6xl font-bold mb-5 leading-tight">
