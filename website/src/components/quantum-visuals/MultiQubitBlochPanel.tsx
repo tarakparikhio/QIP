@@ -1,7 +1,7 @@
 'use client';
 import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Line } from '@react-three/drei';
+import { OrbitControls, Line, Text } from '@react-three/drei';
 import * as THREE from 'three';
 import { useCircuitStore } from '@/lib/store/circuitStore';
 import { BlochVector } from '@/lib/quantum-engine/math';
@@ -10,11 +10,13 @@ import { BlochVector } from '@/lib/quantum-engine/math';
 function MiniVector({ bloch }: { bloch: BlochVector }) {
   const vectorRef = useRef<THREE.ArrowHelper>(null);
 
+  const isMixed = bloch.purity < 0.05; // Nearly maximally mixed → no well-defined axis
+
   // Map Bloch (x,y,z) → Three.js (x=bloch.x, y=bloch.z, z=bloch.y)
-  const targetVec = useMemo(
-    () => new THREE.Vector3(bloch.x, bloch.z, bloch.y).normalize(),
-    [bloch.x, bloch.y, bloch.z],
-  );
+  const targetVec = useMemo(() => {
+    if (isMixed) return new THREE.Vector3(0, 1, 0); // fallback: don't normalize zero vector
+    return new THREE.Vector3(bloch.x, bloch.z, bloch.y).normalize();
+  }, [bloch.x, bloch.y, bloch.z, isMixed]);
 
   const currentDirRef = useRef(new THREE.Vector3(0, 1, 0));
 
@@ -22,6 +24,9 @@ function MiniVector({ bloch }: { bloch: BlochVector }) {
     if (vectorRef.current) {
       currentDirRef.current.lerp(targetVec, 0.12).normalize();
       vectorRef.current.setDirection(currentDirRef.current);
+      // Fade arrow opacity when qubit is mixed (no well-defined Bloch point)
+      const mat = (vectorRef.current as any).line?.material;
+      if (mat) mat.opacity = isMixed ? 0.2 : 1;
     }
   });
 
@@ -39,7 +44,7 @@ function QubitBlochCard({ qubitIndex, bloch }: { qubitIndex: number; bloch: Bloc
   const isMixed = bloch.purity < 0.95;
 
   return (
-    <div className="flex-shrink-0 flex flex-col items-center rounded-xl border border-border/50 bg-card/50 p-3 gap-2 w-[160px]">
+    <div className="flex-shrink-0 flex flex-col items-center rounded-xl border border-border/50 bg-card/50 p-3 gap-2 w-[220px]">
       {/* Qubit label */}
       <div className="flex items-center justify-between w-full">
         <span className="text-xs font-mono font-semibold text-primary">q{qubitIndex}</span>
@@ -55,9 +60,9 @@ function QubitBlochCard({ qubitIndex, bloch }: { qubitIndex: number; bloch: Bloc
       </div>
 
       {/* Mini 3D Bloch sphere */}
-      <div className="w-full h-[130px] rounded-lg overflow-hidden cursor-move">
+      <div className="w-full h-[190px] rounded-lg overflow-hidden cursor-move">
         <Canvas
-          camera={{ position: [2, 1.2, 2], fov: 50 }}
+            camera={{ position: [2, 1.4, 2], fov: 45 }}
           gl={{ alpha: true }}
           style={{ background: 'transparent' }}
         >
@@ -94,16 +99,21 @@ function QubitBlochCard({ qubitIndex, bloch }: { qubitIndex: number; bloch: Bloc
             <meshBasicMaterial color="#374151" side={THREE.DoubleSide} />
           </mesh>
 
+          {/* Pole labels */}
+          <Text position={[0, 1.3, 0]} fontSize={0.13} color="#f8fafc">|0⟩</Text>
+          <Text position={[0, -1.3, 0]} fontSize={0.13} color="#f8fafc">|1⟩</Text>
+
           <MiniVector bloch={bloch} />
         </Canvas>
       </div>
 
-      {/* Bloch coordinates */}
-      <div className="w-full grid grid-cols-3 gap-1 text-center">
+      {/* Bloch coordinates + purity */}
+      <div className="w-full grid grid-cols-4 gap-1 text-center">
         {[
           { label: 'x', val: bloch.x },
           { label: 'y', val: bloch.y },
           { label: 'z', val: bloch.z },
+          { label: '|r|', val: bloch.purity },
         ].map(({ label, val }) => (
           <div key={label} className="flex flex-col">
             <span className="text-[9px] font-mono text-muted uppercase">{label}</span>
