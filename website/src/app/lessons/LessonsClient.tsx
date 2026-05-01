@@ -12,6 +12,15 @@ const DIFFICULTY_COLOR: Record<string, string> = {
   advanced: 'text-rose-400',
 };
 
+const STAGE_LABEL: Record<string, string> = {
+  foundation: 'Foundation',
+  core: 'Core Concepts',
+  algorithms: 'Algorithms',
+  advanced: 'Advanced Topics',
+};
+
+const STAGE_ORDER = ['foundation', 'core', 'algorithms', 'advanced'];
+
 export default function LessonsClient() {
   const { completedModules, currentUnlockedModule } = useProgressStore();
   const [mounted, setMounted] = useState(false);
@@ -20,6 +29,19 @@ export default function LessonsClient() {
   // Use safe defaults until client hydration is complete
   const completed = mounted ? completedModules : [];
   const current = mounted ? currentUnlockedModule : 'birth-of-quantum-information';
+
+  const available = LESSONS.filter((l) => !l.upcoming);
+  const upcoming = LESSONS.filter((l) => l.upcoming);
+
+  // Group upcoming by stage
+  const upcomingByStage = STAGE_ORDER.reduce<Record<string, typeof LESSONS>>(
+    (acc, stage) => {
+      const group = upcoming.filter((l) => l.stage === stage);
+      if (group.length > 0) acc[stage] = group;
+      return acc;
+    },
+    {}
+  );
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-16">
@@ -38,13 +60,13 @@ export default function LessonsClient() {
         </p>
       </motion.div>
 
-      {/* Vertical skill tree */}
-      <div className="relative">
+      {/* ── Available lessons ── */}
+      <div className="relative mb-16">
         {/* Connecting line */}
         <div className="absolute left-6 top-10 bottom-10 w-px bg-gradient-to-b from-primary/60 via-border to-transparent" />
 
         <div className="flex flex-col gap-4">
-          {LESSONS.map((lesson, i) => {
+          {available.map((lesson, i) => {
             const isCompleted = completed.includes(lesson.slug);
             const isCurrent = lesson.slug === current;
             const isLocked = !isCompleted && !isCurrent;
@@ -109,6 +131,52 @@ export default function LessonsClient() {
             );
           })}
         </div>
+      </div>
+
+      {/* ── Upcoming lessons ── */}
+      <div className="space-y-10">
+        <div className="flex items-center gap-3">
+          <div className="flex-1 h-px bg-border/30" />
+          <span className="text-xs font-mono text-muted/50 uppercase tracking-widest">Coming Soon</span>
+          <div className="flex-1 h-px bg-border/30" />
+        </div>
+
+        {Object.entries(upcomingByStage).map(([stage, lessons]) => (
+          <div key={stage}>
+            <div className="text-xs font-mono text-muted/50 uppercase tracking-widest mb-3 ml-1">
+              {STAGE_LABEL[stage] ?? stage}
+            </div>
+            <div className="flex flex-col gap-3">
+              {lessons.map((lesson, i) => (
+                <motion.div
+                  key={lesson.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3 + i * 0.05, duration: 0.4 }}
+                  className="relative flex items-start gap-4 pl-5 pr-5 py-3.5 rounded-xl border border-border/20 bg-card/20 cursor-not-allowed select-none"
+                >
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <span className={cn('text-xs font-mono', DIFFICULTY_COLOR[lesson.difficulty])}>
+                        {lesson.difficulty}
+                      </span>
+                      <span className="text-xs text-muted/50">·</span>
+                      <span className="text-xs text-muted/70 font-mono">{lesson.xp} XP</span>
+                      <span className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-[10px] font-mono font-semibold uppercase tracking-wider">
+                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-400/60" />
+                        upcoming
+                      </span>
+                    </div>
+                    <h3 className="font-semibold text-sm text-muted/60">
+                      {lesson.id}. {lesson.title}
+                    </h3>
+                    <p className="text-xs text-muted/40 mt-0.5 line-clamp-1">{lesson.objective}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

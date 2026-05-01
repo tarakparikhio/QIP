@@ -6,7 +6,6 @@ import ProbabilityBars from '@/components/quantum-visuals/ProbabilityBars';
 import BlochSphere from '@/components/quantum-visuals/BlochSphere';
 import StateVector from '@/components/quantum-visuals/StateVector';
 import { useCircuitStore } from '@/lib/store/circuitStore';
-import { motion } from 'framer-motion';
 
 type Props = {
   allowedGates: string[];
@@ -23,11 +22,7 @@ export default function CircuitBuilder({ allowedGates, numQubits = 1, title = 'C
   }, [numQubits]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="my-12 rounded-2xl border border-primary/20 bg-background/60 backdrop-blur-sm overflow-hidden"
-    >
+    <div className="rounded-2xl border border-primary/20 bg-background/60 backdrop-blur-sm overflow-hidden">
       {/* Header */}
       <div className="px-6 py-4 border-b border-border/50 flex items-center justify-between bg-background/40">
         <div className="flex items-center gap-3">
@@ -75,6 +70,6 @@ export default function CircuitBuilder({ allowedGates, numQubits = 1, title = 'C
           )}
         </section>
       </div>
-    </motion.div>
+    </div>
   );
 }

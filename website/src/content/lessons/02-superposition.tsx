@@ -1,3 +1,4 @@
+'use client';
 import { InlineMath, BlockMath } from '@/components/math';
 
 export default function Lesson02Content() {

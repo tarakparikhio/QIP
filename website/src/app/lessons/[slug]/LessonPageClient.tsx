@@ -26,8 +26,8 @@ export default function LessonPageClient({ lesson, children }: Props) {
   useEffect(() => setMounted(true), []);
   const isCompleted = mounted && completedModules.includes(lesson.slug);
 
-  const nextLesson = LESSONS.find((l) => l.id === lesson.id + 1);
-  const prevLesson = LESSONS.find((l) => l.id === lesson.id - 1);
+  const nextLesson = LESSONS.find((l) => l.id === lesson.id + 1 && !l.upcoming);
+  const prevLesson = LESSONS.find((l) => l.id === lesson.id - 1 && !l.upcoming);
 
   function handleComplete() {
     if (!isCompleted) {
@@ -67,15 +67,19 @@ export default function LessonPageClient({ lesson, children }: Props) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.1 }}
-        className="prose prose-invert prose-sm max-w-none
+        className="prose prose-invert max-w-none
           prose-headings:text-foreground prose-headings:font-bold
-          prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-3
-          prose-p:text-foreground/80 prose-p:leading-relaxed
+          prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-b prose-h2:border-border/30 prose-h2:pb-2
+          prose-h3:text-lg prose-h3:mt-8 prose-h3:mb-3
+          prose-p:text-foreground/80 prose-p:leading-relaxed prose-p:mb-6
+          prose-li:text-foreground/80 prose-li:leading-relaxed
+          prose-ol:my-6 prose-ol:space-y-3
+          prose-ul:my-6 prose-ul:space-y-2
           prose-strong:text-foreground
           prose-blockquote:border-l-primary prose-blockquote:text-muted
           prose-code:text-primary prose-code:bg-card prose-code:px-1 prose-code:rounded
           prose-pre:bg-card prose-pre:border prose-pre:border-border/50
-          mb-12"
+          mb-16"
       >
         {children}
       </motion.article>
