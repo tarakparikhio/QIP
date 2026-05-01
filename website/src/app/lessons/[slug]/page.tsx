@@ -7,7 +7,15 @@ import Lesson03 from '@/content/lessons/03-measurement';
 import Lesson04 from '@/content/lessons/04-entanglement';
 import Lesson05 from '@/content/lessons/05-interference';
 
-export const dynamic = 'force-dynamic';
+export function generateStaticParams() {
+  return [
+    { slug: 'birth-of-quantum-information' },
+    { slug: 'superposition' },
+    { slug: 'measurement' },
+    { slug: 'entanglement' },
+    { slug: 'interference' },
+  ];
+}
 
 const LESSON_CONTENT: Record<string, React.ComponentType> = {
   'birth-of-quantum-information': Lesson01,

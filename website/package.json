@@ -1,26 +1,37 @@
 {
-  "name": "qcml-website",
+  "name": "qcml-v2",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
-    "predev": "python3 ../scripts/build_website_data.py && npm run validate:lessons",
     "dev": "next dev",
-    "prebuild": "python3 ../scripts/build_website_data.py && npm run validate:lessons",
     "build": "next build",
     "start": "next start",
-    "typecheck": "tsc --noEmit",
-    "validate:lessons": "node ./scripts/validate-lessons.mjs"
+    "lint": "next lint"
   },
   "dependencies": {
-    "framer-motion": "^10.16.0",
-    "katex": "0.16.25",
-    "lucide-react": "^0.292.0",
-    "next": "16.2.1",
-    "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "@mdx-js/loader": "^3.0.1",
+    "@mdx-js/react": "^3.0.1",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
+    "@types/three": "^0.184.0",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.1.7",
+    "katex": "^0.16.10",
+    "next": "14.2.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-katex": "^3.0.1",
+    "tailwind-merge": "^2.3.0",
+    "three": "^0.184.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@types/node": "25.5.0",
-    "@types/react": "19.2.14",
-    "typescript": "6.0.2"
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5"
   }
 }

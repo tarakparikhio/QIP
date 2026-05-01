@@ -4,100 +4,86 @@ export default function Lesson05Content() {
   return (
     <>
       {/* Foundational Context Section */}
-      <section className="mb-12 p-6 rounded-lg bg-card border border-border/50">
-        <h2 className="text-lg font-semibold mb-4 text-primary">📚 Foundational Context & Notation</h2>
-        
-        <div className="space-y-4 text-sm">
-          <div>
-            <h3 className="font-semibold mb-2">Amplitude vs. Probability Interference</h3>
-            <p className="text-foreground/80 mb-2">
-              Unlike classical probability, quantum amplitudes can be <strong>negative or complex</strong>, allowing paths to interfere:
-            </p>
-            <ul className="list-disc list-inside space-y-1 text-foreground/70">
-              <li><strong>Constructive:</strong> Amplitudes align → higher probability</li>
-              <li><strong>Destructive:</strong> Amplitudes cancel → lower probability</li>
-            </ul>
-          </div>
+      <section className="mb-12 p-6 rounded-lg bg-card border border-border/50 not-prose">
+        <h2 className="text-base font-semibold mb-4 text-primary font-mono uppercase tracking-widest">Background & Notation</h2>
 
+        <div className="space-y-5 text-sm">
           <div>
-            <h3 className="font-semibold mb-2">Phase Relationships</h3>
-            <p className="text-foreground/80 mb-2">
-              A complex amplitude <InlineMath math="\alpha = re^{i\theta}" /> has:
+            <h3 className="font-semibold mb-2 text-foreground">Amplitude Addition</h3>
+            <p className="text-foreground/75 mb-3 leading-relaxed">
+              Quantum interference arises because amplitudes add <em>before</em> squaring into probabilities. For two paths with amplitudes <InlineMath math="\alpha_1" /> and <InlineMath math="\alpha_2" />:
             </p>
-            <ul className="list-disc list-inside space-y-1 text-foreground/70">
-              <li><InlineMath math="r = |\alpha|" />: magnitude (determines probability)</li>
-              <li><InlineMath math="\theta" />: phase angle (determines interference)</li>
-            </ul>
-            <p className="text-foreground/70 text-xs mt-2">
-              <strong>Relative phase</strong> between two amplitudes is what matters for interference.
+            <BlockMath math="P = |\alpha_1 + \alpha_2|^2 = |\alpha_1|^2 + |\alpha_2|^2 + 2\,\text{Re}(\alpha_1^*\alpha_2)" />
+            <p className="text-foreground/60 text-xs mt-1">
+              The cross term <InlineMath math="2\,\text{Re}(\alpha_1^*\alpha_2)" /> is the interference term — absent in classical probability.
             </p>
           </div>
 
           <div>
-            <h3 className="font-semibold mb-2">Quantum Advantage via Interference</h3>
-            <p className="text-foreground/80">
-              Quantum algorithms use interference to:
-            </p>
-            <ul className="list-disc list-inside space-y-1 text-foreground/70">
-              <li><strong>Amplify</strong> correct answer paths (constructive)</li>
-              <li><strong>Cancel</strong> wrong answer paths (destructive)</li>
+            <h3 className="font-semibold mb-2 text-foreground">Constructive vs. Destructive</h3>
+            <ul className="space-y-1.5 text-foreground/70 text-xs">
+              <li><strong className="text-foreground">Constructive:</strong> Amplitudes have the same sign/phase → <InlineMath math="|\alpha_1 + \alpha_2|^2 > |\alpha_1|^2 + |\alpha_2|^2" /></li>
+              <li><strong className="text-foreground">Destructive:</strong> Amplitudes have opposite phase → <InlineMath math="|\alpha_1 + \alpha_2|^2 < |\alpha_1|^2 + |\alpha_2|^2" />, can reach 0</li>
             </ul>
-            <p className="text-foreground/70 text-xs mt-2">
-              This is impossible classically—interference is the core of quantum speed.
+          </div>
+
+          <div>
+            <h3 className="font-semibold mb-2 text-foreground">Why Classical Probability Cannot Interfere</h3>
+            <p className="text-foreground/75 text-xs leading-relaxed">
+              Classical probabilities always add: <InlineMath math="P = P_1 + P_2" />. There is no cross term. This is why classical computing cannot exploit interference to cancel wrong answers.
             </p>
           </div>
         </div>
       </section>
 
-      <h2>The Analogy</h2>
+      <h2>5.1 — Interference: The Core Quantum Mechanism</h2>
       <p>
-        A traffic engineer can time traffic signals so that a green wave flows through a city —
-        cars that hit one green light arrive at the next one green too. The same road network, with
-        different <em>timing</em>, either <strong>amplifies</strong> flow or brings it to a halt.
+        Quantum interference is the mechanism by which quantum algorithms achieve their advantage. It allows the probability of correct answers to be amplified while the probability of wrong answers is suppressed — without ever explicitly evaluating all possibilities simultaneously.
       </p>
       <p>
-        Quantum interference works by the same logic: multiple amplitude paths combine, and their
-        timing (phase) determines whether they <strong>reinforce</strong> or{' '}
-        <strong>cancel</strong>.
+        Interference requires two ingredients:
+      </p>
+      <ol>
+        <li><strong>Superposition:</strong> The system must be in a state where multiple paths coexist as amplitudes.</li>
+        <li><strong>Phase structure:</strong> Different paths must have different complex phases so they can constructively or destructively combine.</li>
+      </ol>
+
+      <h2>5.2 — Step-by-Step: H → Z → H Circuit</h2>
+      <p>
+        This three-gate circuit demonstrates destructive interference eliminating the <InlineMath math="|1\rangle" /> outcome:
+      </p>
+      <ol>
+        <li>Start: <InlineMath math="|0\rangle = \begin{pmatrix}1\\0\end{pmatrix}" /></li>
+        <li>Apply H: <InlineMath math="|{+}\rangle = \frac{1}{\sqrt{2}}\begin{pmatrix}1\\1\end{pmatrix}" /></li>
+        <li>Apply Z (flips sign of <InlineMath math="|1\rangle" /> component): <InlineMath math="|{-}\rangle = \frac{1}{\sqrt{2}}\begin{pmatrix}1\\-1\end{pmatrix}" /></li>
+        <li>Apply H: compute <InlineMath math="H|{-}\rangle = \frac{1}{\sqrt{2}}\begin{pmatrix}1 & 1\\1 & -1\end{pmatrix}\frac{1}{\sqrt{2}}\begin{pmatrix}1\\-1\end{pmatrix} = \frac{1}{2}\begin{pmatrix}0\\2\end{pmatrix} = \begin{pmatrix}0\\1\end{pmatrix}" /></li>
+        <li>Result: <InlineMath math="|1\rangle" /> with certainty — the <InlineMath math="|0\rangle" /> amplitude cancelled (destructive), the <InlineMath math="|1\rangle" /> amplitude doubled (constructive).</li>
+      </ol>
+
+      <h2>5.3 — The Deutsch Algorithm: Interference in Action</h2>
+      <p>
+        The Deutsch algorithm is the simplest demonstration of quantum speedup via interference. Given a binary function <InlineMath math="f:\{0,1\}\to\{0,1\}" />, it determines whether <InlineMath math="f" /> is <em>constant</em> (<InlineMath math="f(0)=f(1)" />) or <em>balanced</em> (<InlineMath math="f(0)\neq f(1)" />) using a single query.
+      </p>
+      <p>
+        Classical solution: 2 queries minimum. Quantum: 1 query using interference. The key step is:
+      </p>
+      <BlockMath math="H^{\otimes 2}\,U_f\,H^{\otimes 2}\,|0\rangle|-\rangle" />
+      <p>
+        Interference causes the output qubit's first register to be <InlineMath math="|0\rangle" /> if <InlineMath math="f" /> is constant, and <InlineMath math="|1\rangle" /> if balanced — in one shot.
       </p>
 
-      <h2>Constructive vs Destructive Interference</h2>
-      <p>When two amplitude paths share the same phase, they reinforce:</p>
-      <BlockMath math="\frac{1}{\sqrt{2}} + \frac{1}{\sqrt{2}} = \sqrt{2} \quad \text{(constructive)}" />
-      <p>When they are opposite in phase, they cancel:</p>
-      <BlockMath math="\frac{1}{\sqrt{2}} - \frac{1}{\sqrt{2}} = 0 \quad \text{(destructive)}" />
+      <h2>5.4 — Phase Kickback (Advanced)</h2>
+      <p>
+        Many quantum algorithms exploit <strong>phase kickback</strong>: when a control qubit in superposition applies a gate to a target qubit, the phase of the target's eigenvalue is "kicked back" onto the control qubit's amplitude. This is the mechanism behind Grover's search and Shor's factoring algorithm.
+      </p>
+      <BlockMath math="(H|0\rangle) \xrightarrow{U_f} e^{i\phi}(H|0\rangle)" />
 
-      <h2>The H–Z–H Sequence</h2>
+      <h2>5.5 — Try It: Observe Interference</h2>
       <p>
-        Start from <InlineMath math="|0\rangle" />. Apply <InlineMath math="H" /> to get equal
-        superposition. Apply <InlineMath math="Z" /> to flip the phase of{' '}
-        <InlineMath math="|1\rangle" />:
+        Build the circuit <strong>H → Z → H</strong> in the playground. The initial H creates superposition; Z flips the relative phase; the final H converts phase difference into a probability difference. You will see the state collapse to <InlineMath math="|1\rangle" /> with 100% probability — complete constructive interference on one outcome, complete destructive on the other.
       </p>
-      <BlockMath math="\frac{|0\rangle + |1\rangle}{\sqrt{2}} \xrightarrow{Z} \frac{|0\rangle - |1\rangle}{\sqrt{2}}" />
       <p>
-        Apply <InlineMath math="H" /> again. The amplitudes now <strong>interfere</strong> and
-        collapse entirely into <InlineMath math="|1\rangle" />:
-      </p>
-      <BlockMath math="H\left(\frac{|0\rangle - |1\rangle}{\sqrt{2}}\right) = |1\rangle" />
-      <p>
-        The result is 100% <InlineMath math="|1\rangle" /> — a <em>certain</em> outcome engineered
-        entirely through interference.
-      </p>
-
-      <h2>Why This Matters for Algorithms</h2>
-      <p>
-        All major quantum speedups (Grover, Deutsch-Jozsa, QFT-based algorithms) work by designing
-        a circuit whose interference <strong>amplifies</strong> the probability of correct answers
-        while <strong>suppressing</strong> incorrect ones.
-      </p>
-
-      <h2>Try It: Witness Interference</h2>
-      <p>
-        Apply <code>H → Z → H</code> in sequence. After all three gates, the probability of{' '}
-        <InlineMath math="|1\rangle" /> should be 100%. This is not a coincidence — it is{' '}
-        <strong>constructive interference</strong> at work. Remove the <code>Z</code> and run{' '}
-        <code>H → H</code> instead. The qubit returns to <InlineMath math="|0\rangle" /> —
-        destructive interference on <InlineMath math="|1\rangle" />.
+        Compare with just <strong>H → H</strong> (no Z): the result is <InlineMath math="|0\rangle" /> with certainty. The only difference between the two circuits is the Z gate, which changed the phase — invisible to a single measurement, but revealed by the final H.
       </p>
     </>
   );
