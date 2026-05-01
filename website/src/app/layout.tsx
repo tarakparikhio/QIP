@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </div>
                 <div>
                   <span className="font-semibold text-sm tracking-wide">Quantum Playground</span>
-                  <span className="hidden sm:inline text-xs text-muted font-normal ml-2">A Beginner's Tool</span>
+                  <span className="hidden sm:inline text-xs text-muted font-normal ml-2">A Beginner&apos;s Tool</span>
                 </div>
               </a>
               <div className="flex items-center gap-4 text-sm text-muted">
@@ -36,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </main>
           <footer className="border-t border-border/30 py-6 text-center text-xs text-muted/60">
             <div className="flex flex-col items-center gap-2">
-              <span>Quantum Playground — A Beginner's Tool for Interactive Quantum Computing</span>
+              <span>Quantum Playground — A Beginner&apos;s Tool for Interactive Quantum Computing</span>
               <BuyMeCoffee />
             </div>
           </footer>
