@@ -31,6 +31,10 @@ var/
 wheels/
 *.egg-info/
 .installed.cfg
+
+# The Python ``lib/`` rule above must not hide website source modules.
+!website/src/lib/
+!website/src/lib/**
 *.egg
 
 # IDE

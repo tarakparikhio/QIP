@@ -68,7 +68,7 @@ export default function Lesson05Content() {
       <p>
         Classical solution: 2 queries minimum. Quantum: 1 query using interference. The key step is:
       </p>
-      <BlockMath math="H^{\otimes 2}\,U_f\,H^{\otimes 2}\,|0\rangle|-\rangle" />
+      <BlockMath math="|0\rangle|1\rangle \xrightarrow{H^{\otimes 2}} |{+}\rangle|{-}\rangle \xrightarrow{U_f} \frac{(-1)^{f(0)}|0\rangle+(-1)^{f(1)}|1\rangle}{\sqrt{2}}|{-}\rangle \xrightarrow{H\otimes I} \text{constant or balanced result}" />
       <p>
         Interference causes the output qubit&apos;s first register to be <InlineMath math="|0\rangle" /> if <InlineMath math="f" /> is constant, and <InlineMath math="|1\rangle" /> if balanced — in one shot.
       </p>
@@ -77,7 +77,7 @@ export default function Lesson05Content() {
       <p>
         Many quantum algorithms exploit <strong>phase kickback</strong>: when a control qubit in superposition applies a gate to a target qubit, the phase of the target&apos;s eigenvalue is &ldquo;kicked back&rdquo; onto the control qubit&apos;s amplitude. This is the mechanism behind Grover&apos;s search and Shor&apos;s factoring algorithm.
       </p>
-      <BlockMath math="(H|0\rangle) \xrightarrow{U_f} e^{i\phi}(H|0\rangle)" />
+      <BlockMath math="(\alpha|0\rangle+\beta|1\rangle)|\lambda\rangle \xrightarrow{C\text{-}U} (\alpha|0\rangle+\beta e^{i\phi}|1\rangle)|\lambda\rangle" />
 
       <h2>5.5 — Try It: Observe Interference</h2>
       <p>

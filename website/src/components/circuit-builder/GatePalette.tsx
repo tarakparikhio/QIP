@@ -71,6 +71,7 @@ export default function GatePalette({ allowedGates }: Props) {
                   GATE_COLORS[gateId] ?? 'bg-card border-border text-foreground hover:border-primary/40'
                 )}
                 title={disabled ? `${info.desc} (requires 2+ qubits)` : info.desc}
+                aria-label={disabled ? `${info.desc}; unavailable because it requires two qubits` : `Add ${info.desc}`}
                 disabled={disabled}
               >
                 {info.label}

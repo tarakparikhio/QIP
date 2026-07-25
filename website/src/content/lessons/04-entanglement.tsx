@@ -49,7 +49,7 @@ export default function Lesson04Content() {
 
       <h2>4.1 — What Is Entanglement?</h2>
       <p>
-        Two qubits are <strong>entangled</strong> when their joint quantum state cannot be written as a product of two independent single-qubit states. This means the qubits share correlations that have no classical explanation — measuring one qubit instantaneously determines the outcome of measuring the other, regardless of distance.
+        Two qubits are <strong>entangled</strong> when their joint quantum state cannot be written as a product of two independent single-qubit states. Entanglement can produce correlations stronger than any classical local model allows. For the Bell state below, measurements in the same computational basis are perfectly correlated; these correlations cannot be used to send information faster than light.
       </p>
       <p>
         The canonical example is the <strong>Bell state</strong> <InlineMath math="|\Phi^+\rangle" />:

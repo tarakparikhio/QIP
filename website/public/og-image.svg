@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Quantum Playground</title>
+  <desc id="desc">Learn quantum computing visually with lessons and interactive circuit simulations.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#07101f" offset="0"/>
+      <stop stop-color="#111a3d" offset="1"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="76%" cy="24%" r="62%">
+      <stop stop-color="#6366f1" stop-opacity=".38" offset="0"/>
+      <stop stop-color="#07101f" stop-opacity="0" offset="1"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <g fill="none" stroke="#67e8f9" stroke-opacity=".28" stroke-width="2">
+    <circle cx="1000" cy="145" r="108"/>
+    <circle cx="1000" cy="145" r="58"/>
+    <path d="M892 145h216M1000 37v216"/>
+  </g>
+  <rect x="78" y="78" width="14" height="14" rx="7" fill="#a5b4fc"/>
+  <text x="112" y="91" fill="#a5b4fc" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" letter-spacing="3">INTERACTIVE QUANTUM LEARNING</text>
+  <text x="78" y="250" fill="#edf2ff" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="700" letter-spacing="-3">Quantum Playground</text>
+  <text x="78" y="325" fill="#b6c2d8" font-family="Arial, Helvetica, sans-serif" font-size="32">Learn quantum computing one concept at a time—with</text>
+  <text x="78" y="370" fill="#b6c2d8" font-family="Arial, Helvetica, sans-serif" font-size="32">visual lessons and live circuit simulations.</text>
+  <text x="78" y="525" fill="#7dd3fc" font-family="Arial, Helvetica, sans-serif" font-size="25" font-weight="700">15 PUBLISHED LESSONS · MORE EVERY WEEKEND</text>
+</svg>

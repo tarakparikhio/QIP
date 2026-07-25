@@ -44,7 +44,7 @@ export default function Lesson02Content() {
       </p>
       <BlockMath math="|\psi\rangle = \alpha|0\rangle + \beta|1\rangle, \quad |\alpha|^2 + |\beta|^2 = 1" />
       <p>
-        This is not a statement of ignorance about which basis state the qubit &ldquo;really&rdquo; is in. The qubit has no definite value prior to measurement. This is confirmed experimentally by interference: a qubit in superposition produces interference patterns that a classical mixed state cannot.
+        This is not a statement of ignorance about which basis state the qubit &ldquo;really&rdquo; is in. Operationally, a superposition is a coherent state with a measurable relative phase, as interference experiments distinguish it from a classical mixed state.
       </p>
 
       <h2>2.2 — The Hadamard Gate and Superposition</h2>

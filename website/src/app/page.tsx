@@ -15,7 +15,7 @@ export default function HomePage() {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-xs font-mono mb-6">
           <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-          35 Lessons · Quantum Playground for Beginners
+          15 Published Lessons · New lessons every weekend
         </div>
 
         <h1 className="text-5xl md:text-6xl font-bold mb-5 leading-tight">
@@ -26,7 +26,7 @@ export default function HomePage() {
         </h1>
 
         <p className="text-muted text-lg mb-8 leading-relaxed max-w-lg mx-auto">
-          For engineers, architects, and the curious — learn quantum computing through vivid analogies, live circuit simulations, and gated progression.
+          For engineers, architects, and the curious — learn quantum computing through vivid analogies, interactive circuit simulations, and a growing weekend curriculum.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -47,7 +47,7 @@ export default function HomePage() {
         {/* Feature grid */}
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 text-left">
           {[
-            { icon: '⚡', label: 'Live Simulator', desc: 'Build circuits and see quantum state probabilities update in real time.' },
+            { icon: '⚡', label: 'Interactive Simulator', desc: 'Build circuits and see ideal quantum-state probabilities update in real time.' },
             { icon: '🎯', label: 'Sequential Gating', desc: 'Master each concept before the next module unlocks — no skipping ahead.' },
             { icon: '🧠', label: 'Analogy-First', desc: 'Every lesson starts with a concrete real-world analogy before the math.' },
           ].map((f) => (

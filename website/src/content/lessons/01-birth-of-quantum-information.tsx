@@ -60,12 +60,12 @@ export default function Lesson01Content() {
       <p>
         The <strong>global phase</strong> of a state is unobservable — multiplying <InlineMath math="|\psi\rangle" /> by <InlineMath math="e^{i\phi}" /> does not change any measurement outcome. However, the <strong>relative phase</strong> between <InlineMath math="\alpha" /> and <InlineMath math="\beta" /> is physically significant.
       </p>
-      <p>Step-by-step, here is how phase affects a two-gate sequence:</p>
+      <p>Step-by-step, here is how phase affects the sequence <InlineMath math="H \to Z \to H" />:</p>
       <ol>
         <li>Start: <InlineMath math="|\psi\rangle = \frac{1}{\sqrt{2}}(|0\rangle + |1\rangle)" /> — equal amplitudes, zero relative phase.</li>
         <li>Apply a Z gate (flips sign of <InlineMath math="|1\rangle" />): <InlineMath math="|\psi'\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle)" /></li>
-        <li>Apply a second H gate: amplitudes interfere. The <InlineMath math="|1\rangle" /> component cancels out.</li>
-        <li>Result: <InlineMath math="|\psi''\rangle = |0\rangle" /> — the qubit returns to the ground state deterministically.</li>
+        <li>Apply a second H gate: amplitudes interfere. The <InlineMath math="|0\rangle" /> component cancels out.</li>
+        <li>Result: <InlineMath math="|\psi''\rangle = |1\rangle" /> — the qubit reaches the excited state deterministically.</li>
       </ol>
       <p>
         Without phase, interference is impossible. Without interference, quantum computing has no advantage over classical.

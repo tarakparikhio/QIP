@@ -131,6 +131,7 @@ export default function CircuitGrid() {
                       }
                     }}
                     title="Drag to reorder • Right-click to remove • Click to remove"
+                    aria-label={`${op.gateId} gate at circuit step ${stepIdx + 1}; click to remove`}
                     className={cn(
                       'relative z-10 w-9 h-9 rounded-md border text-xs font-bold font-mono flex items-center justify-center shrink-0 hover:opacity-70 transition-opacity',
                       dragTargetIdx === stepIdx && draggedGateIdx !== null

@@ -49,9 +49,9 @@ export default function Lesson08Content() {
 
       <h2>8.2 — The Two-Qubit Computational Basis</h2>
       <p>
-        The four basis states <InlineMath math="|00\rangle, |01\rangle, |10\rangle, |11\rangle" /> are the eigenstates of simultaneous measurement of both qubits in the computational basis. In the convention used here, the <em>right</em> index is qubit 0 (the least significant bit):
+        The four basis states <InlineMath math="|00\rangle, |01\rangle, |10\rangle, |11\rangle" /> are the eigenstates of simultaneous measurement of both qubits in the computational basis. In the playground convention, the <em>left</em> index is qubit 0 and the right index is qubit 1:
       </p>
-      <BlockMath math="|10\rangle \equiv \text{qubit 0 is } |0\rangle \text{ and qubit 1 is } |1\rangle" />
+      <BlockMath math="|01\rangle \equiv \text{qubit 0 is } |0\rangle \text{ and qubit 1 is } |1\rangle" />
       <p>
         This matches binary counting: <InlineMath math="|00\rangle = 0, |01\rangle = 1, |10\rangle = 2, |11\rangle = 3" />.
       </p>
@@ -80,13 +80,13 @@ export default function Lesson08Content() {
       <p>
         Single-qubit gates acting on one qubit of a 2-qubit system are extended to 4×4 matrices via tensor product with the identity on the other qubit. If gate <InlineMath math="U" /> acts on qubit 1 and qubit 0 is untouched:
       </p>
-      <BlockMath math="U \otimes I = \begin{pmatrix}u_{00}I & u_{01}I \\ u_{10}I & u_{11}I\end{pmatrix}" />
+      <BlockMath math="I \otimes U" />
       <p>
         For example, applying X to qubit 1 only:
       </p>
-      <BlockMath math="X \otimes I = \begin{pmatrix}0&0&1&0\\0&0&0&1\\1&0&0&0\\0&1&0&0\end{pmatrix}" />
+      <BlockMath math="I \otimes X = \begin{pmatrix}0&1&0&0\\1&0&0&0\\0&0&0&1\\0&0&1&0\end{pmatrix}" />
       <p>
-        This maps <InlineMath math="|00\rangle \to |10\rangle" />, <InlineMath math="|01\rangle \to |11\rangle" />, etc., flipping qubit 1 while leaving qubit 0 unchanged.
+        This maps <InlineMath math="|00\rangle \to |01\rangle" />, <InlineMath math="|10\rangle \to |11\rangle" />, etc., flipping qubit 1 while leaving qubit 0 unchanged.
       </p>
 
       <TryIt heading="8.5 — Try It: Build a Two-Qubit Product State">
@@ -94,12 +94,12 @@ export default function Lesson08Content() {
           In the playground, add a second qubit row. Apply <strong>X</strong> to qubit 1 only, leaving qubit 0 in <InlineMath math="|0\rangle" />.
         </p>
         <p>
-          The resulting state is the product state <InlineMath math="|10\rangle = |0\rangle \otimes |1\rangle" /> — separable, with qubit 0 in the ground state and qubit 1 flipped.
+          The resulting state is the product state <InlineMath math="|01\rangle = |0\rangle \otimes |1\rangle" /> — separable, with qubit 0 in the ground state and qubit 1 flipped.
         </p>
         <ol>
           <li>Initial: <InlineMath math="|00\rangle" /> — amplitude 1 on the first basis state.</li>
-          <li>Apply X to qubit 1: <InlineMath math="(X \otimes I)|00\rangle = |10\rangle" />.</li>
-          <li>Probability bars: 100% on <InlineMath math="|10\rangle" />, 0% elsewhere.</li>
+          <li>Apply X to qubit 1: <InlineMath math="(I \otimes X)|00\rangle = |01\rangle" />.</li>
+          <li>Probability bars: 100% on <InlineMath math="|01\rangle" />, 0% elsewhere.</li>
         </ol>
       </TryIt>
     </>

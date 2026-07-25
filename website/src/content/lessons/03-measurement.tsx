@@ -76,9 +76,9 @@ export default function Lesson03Content() {
         <li>Result: certain outcome, no randomness — the state was already a basis state in this measurement basis.</li>
       </ol>
 
-      <h2>3.4 — The No-Cloning Theorem (Consequence)</h2>
+      <h2>3.4 — The No-Cloning Theorem</h2>
       <p>
-        Because measurement is destructive and collapses quantum state, it is <strong>impossible to copy an unknown quantum state</strong>. If you could clone it, you could measure multiple copies and reconstruct the amplitudes — violating the probabilistic nature of quantum mechanics. This is the No-Cloning Theorem.
+        It is <strong>impossible to copy an arbitrary unknown quantum state</strong> with one universal physical operation. If a unitary could map <InlineMath math="|\psi\rangle|0\rangle" /> to <InlineMath math="|\psi\rangle|\psi\rangle" /> for every <InlineMath math="|\psi\rangle" />, it would fail to preserve inner products. This is the No-Cloning Theorem; it is a consequence of linearity and unitarity, not merely of measurement disturbance.
       </p>
 
       <h2>3.5 — Try It: Measure After H</h2>
@@ -86,7 +86,7 @@ export default function Lesson03Content() {
         Apply <strong>H</strong> to the qubit, then observe the probability bars. The circuit simulator shows the theoretical probabilities. In a real quantum computer, each run produces a single outcome; only averaging many shots recovers the distribution.
       </p>
       <p>
-        Then try <strong>H → Z → H</strong>. The Z gate flips the phase of <InlineMath math="|1\rangle" />. After the second H, the qubit returns to <InlineMath math="|0\rangle" /> deterministically — destructive interference eliminates the <InlineMath math="|1\rangle" /> outcome.
+        Then try <strong>H → Z → H</strong>. The Z gate flips the phase of <InlineMath math="|1\rangle" />. After the second H, the qubit reaches <InlineMath math="|1\rangle" /> deterministically — destructive interference eliminates the <InlineMath math="|0\rangle" /> outcome.
       </p>
     </>
   );

@@ -8,7 +8,7 @@ export default function Lesson10Content() {
       <NotationBox>
         <NotationBox.Item heading="Controlled Gates">
           <NotationBox.Text>
-            A controlled-U gate applies <InlineMath math="U" /> to the target qubit if and only if the control qubit is <InlineMath math="|1\rangle" />. In matrix form (control = qubit 1, target = qubit 0):
+            A controlled-U gate applies <InlineMath math="U" /> to the target qubit if and only if the control qubit is <InlineMath math="|1\rangle" />. With the control as the first tensor factor, its matrix is:
           </NotationBox.Text>
           <NotationBox.Formula math="C\text{-}U = \begin{pmatrix}I & 0 \\ 0 & U\end{pmatrix}" note="Upper-left block: control = |0⟩ (identity). Lower-right block: control = |1⟩ (apply U)." />
         </NotationBox.Item>
@@ -84,33 +84,32 @@ export default function Lesson10Content() {
         Result: the target is unchanged at <InlineMath math="|{-}\rangle" />, and the control qubit has acquired a relative phase of <InlineMath math="-1" /> on its <InlineMath math="|1\rangle" /> component. The eigenvalue <InlineMath math="-1" /> of the X gate has been &ldquo;kicked back&rdquo; to the control.
       </p>
 
-      <h2>10.4 — Application: The Identity HZH = X</h2>
+      <h2>10.4 — Reversing CNOT in the Hadamard Basis</h2>
       <p>
-        Phase kickback gives a clean derivation of the circuit identity <InlineMath math="H \cdot \text{CNOT} \cdot H \equiv \text{CNOT}_{\text{reversed}}" />. Consider the circuit where H is applied to both qubits before and after CNOT:
+        Applying Hadamard gates to <strong>both</strong> qubits before and after a CNOT reverses its control and target. This identity follows from the fact that Hadamards exchange X- and Z-type behavior:
       </p>
+      <BlockMath math="(H\otimes H)\,\text{CNOT}_{0\to1}\,(H\otimes H) = \text{CNOT}_{1\to0}" />
       <ol>
-        <li>Apply H to control (qubit 0): transforms computational basis states to Hadamard basis.</li>
-        <li>Apply CNOT: in the Hadamard basis, the roles of control and target are exchanged — the gate now flips the <em>first</em> qubit controlled on the <em>second</em>.</li>
-        <li>Apply H to control again: transforms back to computational basis.</li>
+        <li>Apply H to qubits 0 and 1: move both wires into the Hadamard basis.</li>
+        <li>Apply <InlineMath math="\text{CNOT}_{0\to1}" />: in that basis, its control and target roles are exchanged.</li>
+        <li>Apply H to both qubits again: return to the computational basis.</li>
       </ol>
       <p>
-        Algebraically: <InlineMath math="(H \otimes I)\,\text{CNOT}_{0\to1}\,(H \otimes I) = \text{CNOT}_{1\to0}" />. Control and target are swapped.
-      </p>
-      <p>
-        This identity is exploited in the Deutsch and Deutsch-Jozsa algorithms: placing the target qubit in <InlineMath math="|{-}\rangle" /> before querying an oracle transfers the oracle&apos;s phase response back to the control register, allowing global information about the function to be extracted in a single query.
+        In Deutsch and Deutsch–Jozsa, the more direct use of this idea is phase kickback: preparing the target in <InlineMath math="|{-}\rangle" /> transfers the oracle&apos;s phase response to the control register.
       </p>
 
       <TryIt heading="10.5 — Try It: Observe Phase Kickback">
         <p>
-          Construct the sequence <strong>H → CNOT → H</strong> on qubit 0 (control), with qubit 1 as target:
+          Prepare qubit 1 in <InlineMath math="|{-}\rangle" />, then use it as the CNOT target while qubit 0 is the control:
         </p>
         <ol>
-          <li>Apply H to qubit 0: <InlineMath math="|00\rangle \to |{+}\rangle|0\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |10\rangle)" /></li>
-          <li>Apply CNOT (control=0, target=1): <InlineMath math="\to \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle) = |\Phi^+\rangle" /></li>
-          <li>Apply H to qubit 0 only: observe how the probability distribution changes.</li>
+          <li>Apply <strong>X then H</strong> to qubit 1, preparing <InlineMath math="|{-}\rangle" />.</li>
+          <li>Apply H to qubit 0, creating <InlineMath math="|{+}\rangle|{-}\rangle" />.</li>
+          <li>Apply CNOT with q0 as control and q1 as target. The target remains <InlineMath math="|{-}\rangle" />, while q0 becomes <InlineMath math="|{-}\rangle" /> through phase kickback.</li>
+          <li>Apply H to qubit 0. It becomes <InlineMath math="|1\rangle" />, so the phase is visible in the measurement basis.</li>
         </ol>
         <p>
-          Alternatively, prepare qubit 1 in <InlineMath math="|{-}\rangle" /> by applying <strong>X then H</strong> to qubit 1, then apply <strong>H → CNOT → H</strong> to qubit 0. The net effect is a Z gate on qubit 0 — the phase kicked back from the oracle.
+          For an arbitrary control state, this <strong>H → CNOT → H</strong> sequence on q0, with q1 fixed in <InlineMath math="|{-}\rangle" />, implements a Z gate on q0.
         </p>
       </TryIt>
     </>

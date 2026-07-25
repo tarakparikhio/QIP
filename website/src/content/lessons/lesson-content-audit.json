@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-01T18:02:34.973Z",
-  "lessonCount": 10,
+  "generatedAt": "2026-07-25T11:09:08.460Z",
+  "lessonCount": 15,
   "tagsByLesson": {
     "birth-of-quantum-information": [
       "h2",
@@ -87,10 +87,36 @@
       "strong"
     ],
     "phase-kickback": [
-      "em",
       "h2",
       "li",
       "ol",
+      "p",
+      "strong"
+    ],
+    "decoherence": [
+      "h2",
+      "p",
+      "pre",
+      "strong"
+    ],
+    "quantum-noise-and-errors": [
+      "h2",
+      "p",
+      "pre",
+      "strong"
+    ],
+    "deutsch-jozsa": [
+      "h2",
+      "p",
+      "strong"
+    ],
+    "simons-algorithm": [
+      "h2",
+      "p",
+      "strong"
+    ],
+    "shors-algorithm": [
+      "h2",
       "p",
       "strong"
     ]
@@ -143,6 +169,36 @@
       "TryIt"
     ],
     "phase-kickback": [
+      "BlockMath",
+      "InlineMath",
+      "NotationBox",
+      "TryIt"
+    ],
+    "decoherence": [
+      "BlockMath",
+      "InlineMath",
+      "NotationBox",
+      "TryIt"
+    ],
+    "quantum-noise-and-errors": [
+      "BlockMath",
+      "InlineMath",
+      "NotationBox",
+      "TryIt"
+    ],
+    "deutsch-jozsa": [
+      "BlockMath",
+      "InlineMath",
+      "NotationBox",
+      "TryIt"
+    ],
+    "simons-algorithm": [
+      "BlockMath",
+      "InlineMath",
+      "NotationBox",
+      "TryIt"
+    ],
+    "shors-algorithm": [
       "BlockMath",
       "InlineMath",
       "NotationBox",

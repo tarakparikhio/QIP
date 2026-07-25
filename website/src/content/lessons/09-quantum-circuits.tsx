@@ -45,7 +45,7 @@ export default function Lesson09Content() {
         where <InlineMath math="G_1" /> is the leftmost gate in the circuit and <InlineMath math="G_n" /> is the rightmost. This right-to-left convention for matrix multiplication is standard in linear algebra and matches the order in which operators act on kets.
       </p>
       <p>
-        <strong>Gates acting on separate qubits at the same time step</strong> are combined via tensor product. A circuit layer with gate <InlineMath math="A" /> on qubit 0 and gate <InlineMath math="B" /> on qubit 1 corresponds to the 4×4 matrix <InlineMath math="B \otimes A" />.
+        <strong>Gates acting on separate qubits at the same time step</strong> are combined via tensor product. In this playground&apos;s ordering (qubit 0 is the left tensor factor), a circuit layer with gate <InlineMath math="A" /> on qubit 0 and gate <InlineMath math="B" /> on qubit 1 corresponds to the 4×4 matrix <InlineMath math="A \otimes B" />.
       </p>
 
       <h2>9.2 — The CNOT Gate</h2>

@@ -50,13 +50,15 @@ export default function CircuitBuilder({
           {demoOps && demoOps.length > 0 && (
             <button
               onClick={() => { loadOps(demoOps); setDemoLoaded(true); }}
+              aria-label="Load the lesson example circuit"
               className="text-xs font-mono px-3 py-1.5 rounded-lg border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 transition-all"
             >
               ⚡ Load Example
             </button>
           )}
-          <button
-            onClick={() => { clearCircuit(); setDemoLoaded(false); }}
+            <button
+              onClick={() => { clearCircuit(); setDemoLoaded(false); }}
+              aria-label="Clear the circuit"
             className="text-xs text-muted hover:text-foreground transition-colors font-mono px-2 py-1 rounded hover:bg-border/20"
           >
             clear
@@ -90,6 +92,9 @@ export default function CircuitBuilder({
           <div className="space-y-2">
             <p className="text-xs font-mono text-muted uppercase tracking-widest">Measurement Probabilities</p>
             <ProbabilityBars />
+            <p className="text-xs text-muted/65 leading-relaxed">
+              This ideal simulator displays exact computational-basis probabilities. Real hardware returns sampled outcomes and can be affected by noise.
+            </p>
           </div>
         </div>
 

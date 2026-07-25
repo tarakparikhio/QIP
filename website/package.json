@@ -9,6 +9,7 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "content:audit": "node scripts/generate-lesson-content-audit.mjs",
+    "check:lessons": "node scripts/validate-published-lessons.mjs",
     "check:quick": "npm run typecheck && next build --no-lint",
     "check:full": "npm run typecheck && npm run lint && npm run build"
   },
