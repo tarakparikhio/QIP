@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import ResetButton from './ResetButton';
 import BuyMeCoffee from './BuyMeCoffee';
+import HeaderProgress from './HeaderProgress';
 import { siteUrl } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -43,7 +44,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <span className="hidden sm:inline text-xs text-muted font-normal ml-2">A Beginner&apos;s Tool</span>
                 </div>
               </a>
-              <div className="flex items-center gap-4 text-sm text-muted">
+              <div className="flex items-center gap-3 text-sm text-muted">
+                <HeaderProgress />
                 <a href="/lessons" className="hover:text-foreground transition-colors">Lessons</a>
                 <a href="/playground" className="hover:text-foreground transition-colors">Playground</a>
                 <a href="/about" className="hidden sm:inline hover:text-foreground transition-colors">About</a>
