@@ -23,6 +23,9 @@ export default function Lesson13Content() {
       </NotationBox>
 
       <h2>13.1 — A Question with a Promise</h2>
+      <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
+        <strong>Study takeaway:</strong> Deutsch–Jozsa shows how interference can solve a black-box promise problem with a single query.
+      </p>
       <p>
         A function is <strong>constant</strong> when it returns the same value for every input. It is <strong>balanced</strong> when it returns 0 for exactly half of its inputs and 1 for the other half. Classically, determining which kind of function you have can require many evaluations. Deutsch–Jozsa does it with one quantum oracle query.
       </p>

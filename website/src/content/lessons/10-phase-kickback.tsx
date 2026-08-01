@@ -33,6 +33,9 @@ export default function Lesson10Content() {
       </NotationBox>
 
       <h2>10.1 — Controlled-U Gate Mechanics</h2>
+      <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
+        <strong>Study takeaway:</strong> phase kickback is a central idea behind several quantum algorithms because it moves phase information from a target to a control register.
+      </p>
       <p>
         A controlled-U gate is a two-qubit gate acting on a control qubit <InlineMath math="|c\rangle" /> and a target qubit <InlineMath math="|t\rangle" />. Its action on the computational basis is:
       </p>

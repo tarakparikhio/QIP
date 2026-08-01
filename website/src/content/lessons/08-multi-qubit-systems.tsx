@@ -35,6 +35,9 @@ export default function Lesson08Content() {
       </NotationBox>
 
       <h2>8.1 — Tensor Products and State Space</h2>
+      <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
+        <strong>Study takeaway:</strong> multi-qubit systems grow exponentially in state-space dimension, and tensor products are the language for describing them.
+      </p>
       <p>
         When two physical systems are combined, their joint state space is the tensor product of the individual spaces. For a single qubit, the state space is <InlineMath math="\mathbb{C}^2" />. For two qubits:
       </p>

@@ -48,6 +48,9 @@ export default function Lesson04Content() {
       </section>
 
       <h2>4.1 — What Is Entanglement?</h2>
+      <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
+        <strong>Study takeaway:</strong> entanglement creates correlations that cannot be explained by separate local descriptions of the qubits.
+      </p>
       <p>
         Two qubits are <strong>entangled</strong> when their joint quantum state cannot be written as a product of two independent single-qubit states. Entanglement can produce correlations stronger than any classical local model allows. For the Bell state below, measurements in the same computational basis are perfectly correlated; these correlations cannot be used to send information faster than light.
       </p>

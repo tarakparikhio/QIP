@@ -32,7 +32,14 @@ export default function CircuitBuilder({
 
   useEffect(() => {
     setNumQubits(numQubits);
-    setDemoLoaded(false);
+
+    if (demoOps && demoOps.length > 0) {
+      loadOps(demoOps);
+      setDemoLoaded(true);
+    } else {
+      clearCircuit();
+      setDemoLoaded(false);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numQubits]);
 
@@ -71,7 +78,7 @@ export default function CircuitBuilder({
         <div className="px-5 py-2.5 bg-primary/5 border-b border-primary/10 flex items-start gap-2 text-xs text-primary/80">
           <span className="mt-px shrink-0">💡</span>
           <span>
-            Example circuit loaded. Click gates in the palette to add more, right-click a gate to remove it, or press <strong>Load Example</strong> again to reset.
+            A guided example is already loaded. This simulator is an idealized educational model, so it shows exact state evolution and ideal measurement probabilities rather than realistic hardware sampling or noise.
           </span>
         </div>
       )}
@@ -90,7 +97,7 @@ export default function CircuitBuilder({
 
           {/* Probability bars */}
           <div className="space-y-2">
-            <p className="text-xs font-mono text-muted uppercase tracking-widest">Measurement Probabilities</p>
+            <p className="text-xs font-mono text-muted uppercase tracking-widest">Ideal Measurement Probabilities</p>
             <ProbabilityBars />
             <p className="text-xs text-muted/65 leading-relaxed">
               This ideal simulator displays exact computational-basis probabilities. Real hardware returns sampled outcomes and can be affected by noise.

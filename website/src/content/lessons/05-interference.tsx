@@ -38,6 +38,9 @@ export default function Lesson05Content() {
       </section>
 
       <h2>5.1 — Interference: The Core Quantum Mechanism</h2>
+      <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
+        <strong>Study takeaway:</strong> interference is the mechanism that lets quantum algorithms amplify correct outcomes and suppress incorrect ones.
+      </p>
       <p>
         Quantum interference is the mechanism by which quantum algorithms achieve their advantage. It allows the probability of correct answers to be amplified while the probability of wrong answers is suppressed — without ever explicitly evaluating all possibilities simultaneously.
       </p>

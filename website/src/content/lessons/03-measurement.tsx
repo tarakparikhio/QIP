@@ -42,6 +42,9 @@ export default function Lesson03Content() {
       </section>
 
       <h2>3.1 — Measurement as Projection</h2>
+      <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
+        <strong>Study takeaway:</strong> measurement turns amplitudes into classical outcomes and irreversibly collapses the quantum state.
+      </p>
       <p>
         Measuring a qubit in the computational basis is mathematically a <strong>projection</strong> of the state vector onto one of the basis states. The probability of each outcome is determined by the Born Rule:
       </p>

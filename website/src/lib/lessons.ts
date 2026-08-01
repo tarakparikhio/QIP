@@ -279,9 +279,13 @@ export const LESSONS: LessonMeta[] = [
     prerequisites: [8, 9, 4],
     objective: 'Encode logical qubits to protect against decoherence and gate errors.',
     xp: 400,
-    allowedGates: [],
+    allowedGates: ['H', 'X', 'Z'],
     challengeType: 'read',
-    upcoming: true,
+    demoOps: [
+      { gateId: 'H', targetQubit: 0 },
+      { gateId: 'X', targetQubit: 0 },
+      { gateId: 'H', targetQubit: 0 },
+    ],
   },
   {
     id: 17,
@@ -292,9 +296,13 @@ export const LESSONS: LessonMeta[] = [
     prerequisites: [4, 9, 3],
     objective: 'Transmit an arbitrary qubit state using entanglement and classical bits.',
     xp: 300,
-    allowedGates: [],
+    allowedGates: ['H', 'X', 'Z', 'CNOT'],
     challengeType: 'circuit',
-    upcoming: true,
+    demoOps: [
+      { gateId: 'H', targetQubit: 0 },
+      { gateId: 'CNOT', targetQubit: 1, controlQubit: 0 },
+      { gateId: 'H', targetQubit: 0 },
+    ],
   },
   {
     id: 18,
@@ -305,9 +313,13 @@ export const LESSONS: LessonMeta[] = [
     prerequisites: [7, 8, 3],
     objective: 'Represent mixed states and open quantum systems with density operators.',
     xp: 350,
-    allowedGates: [],
+    allowedGates: ['H', 'X', 'Z'],
     challengeType: 'read',
-    upcoming: true,
+    demoOps: [
+      { gateId: 'H', targetQubit: 0 },
+      { gateId: 'Z', targetQubit: 0 },
+      { gateId: 'H', targetQubit: 0 },
+    ],
   },
   {
     id: 19,
@@ -318,9 +330,13 @@ export const LESSONS: LessonMeta[] = [
     prerequisites: [12, 15],
     objective: 'Understand BQP, QMA, and where quantum advantage actually lives.',
     xp: 400,
-    allowedGates: [],
+    allowedGates: ['H', 'X', 'Z'],
     challengeType: 'read',
-    upcoming: true,
+    demoOps: [
+      { gateId: 'H', targetQubit: 0 },
+      { gateId: 'X', targetQubit: 0 },
+      { gateId: 'H', targetQubit: 0 },
+    ],
   },
   {
     id: 20,
@@ -331,9 +347,13 @@ export const LESSONS: LessonMeta[] = [
     prerequisites: [9, 11, 18],
     objective: 'Design hybrid classical-quantum loops for near-term quantum hardware.',
     xp: 400,
-    allowedGates: [],
+    allowedGates: ['H', 'X', 'Z', 'S'],
     challengeType: 'circuit',
-    upcoming: true,
+    demoOps: [
+      { gateId: 'H', targetQubit: 0 },
+      { gateId: 'S', targetQubit: 0 },
+      { gateId: 'H', targetQubit: 0 },
+    ],
   },
 ];
 

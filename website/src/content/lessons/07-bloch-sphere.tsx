@@ -38,6 +38,9 @@ export default function Lesson07Content() {
       </NotationBox>
 
       <h2>7.1 — Every Qubit State as a Point on the Sphere</h2>
+      <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
+        <strong>Study takeaway:</strong> the Bloch sphere gives a geometric picture of single-qubit states and the effect of gates as rotations.
+      </p>
       <p>
         The state space of a single qubit is a two-dimensional complex vector space. After normalizing (<InlineMath math="|\alpha|^2 + |\beta|^2 = 1" />) and factoring out the unobservable global phase, the remaining degrees of freedom reduce to exactly two real numbers: <InlineMath math="\theta" /> and <InlineMath math="\phi" />.
       </p>

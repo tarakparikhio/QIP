@@ -36,6 +36,7 @@ export default function AboutPage() {
 
       <div className="mt-12 flex flex-wrap gap-3">
         <Link href="/lessons" className="px-5 py-2.5 rounded-xl bg-primary text-white font-semibold text-sm hover:bg-primary/90 transition-colors">Browse lessons</Link>
+        <Link href="/roadmap" className="px-5 py-2.5 rounded-xl border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 text-sm transition-colors">View 30-day roadmap</Link>
         <Link href="/playground" className="px-5 py-2.5 rounded-xl border border-border hover:border-primary/40 text-muted hover:text-foreground text-sm transition-colors">Open playground</Link>
       </div>
     </div>

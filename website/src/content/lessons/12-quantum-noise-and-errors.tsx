@@ -27,6 +27,9 @@ export default function Lesson12Content() {
       </NotationBox>
 
       <h2>12.1 — Quantum Noise & Errors</h2>
+      <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
+        <strong>Study takeaway:</strong> noise can introduce bit flips, phase flips, or more general distortions, and error correction aims to make those effects controllable.
+      </p>
       <p>
         Noise in quantum systems appears as unwanted operations on a qubit. The simplest error models are the bit flip and phase flip channels.
       </p>

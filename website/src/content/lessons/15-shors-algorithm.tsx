@@ -23,6 +23,9 @@ export default function Lesson15Content() {
       </NotationBox>
 
       <h2>15.1 — Factoring Becomes Period Finding</h2>
+      <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
+        <strong>Study takeaway:</strong> Shor’s algorithm reframes factoring as period finding, and the quantum Fourier transform exposes the hidden period through interference.
+      </p>
       <p>
         Shor&apos;s algorithm does not try divisors one at a time. It turns factoring into the task of finding the period of modular exponentiation: <InlineMath math="f(x)=a^x\bmod N" />. This function repeats, and quantum interference makes that period accessible efficiently.
       </p>
@@ -47,7 +50,7 @@ export default function Lesson15Content() {
 
       <h2>15.4 — A Tiny Period-Finding Skeleton</h2>
       <p>
-        Full modular exponentiation and the QFT need more qubits than this introductory playground provides. The example <strong>H on q0 → CNOT to q1 → H on q0</strong> is a two-wire interference skeleton: create periodic correlation, then use a Hadamard as the smallest Fourier-like basis change to expose it.
+        Full modular exponentiation and the QFT need more qubits than this introductory playground provides. The example <strong>H on q0 → CNOT to q1 → H on q0</strong> is a two-wire interference skeleton: it creates a simple correlation pattern and then uses a Hadamard as the smallest Fourier-like basis change to expose it. It is a toy sketch of the idea, not a full implementation of Shor&apos;s algorithm.
       </p>
 
       <TryIt heading="15.5 — Try It: Interference Is the Resource">

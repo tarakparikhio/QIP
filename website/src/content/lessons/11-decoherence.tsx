@@ -27,6 +27,9 @@ export default function Lesson11Content() {
       </NotationBox>
 
       <h2>11.1 — Decoherence</h2>
+      <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
+        <strong>Study takeaway:</strong> decoherence is a loss of phase coherence caused by environmental interaction, and it is one of the central obstacles to scalable quantum computing.
+      </p>
       <p>
         Decoherence is the process where a qubit loses phase coherence through uncontrolled interaction with its environment. It is the main reason why quantum states degrade over time.
       </p>

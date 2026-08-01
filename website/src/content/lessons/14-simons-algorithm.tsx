@@ -23,6 +23,9 @@ export default function Lesson14Content() {
       </NotationBox>
 
       <h2>14.1 — The Hidden Period Is an XOR</h2>
+      <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
+        <strong>Study takeaway:</strong> Simon’s algorithm turns a hidden collision structure into linear equations and is an important precursor to Shor’s algorithm.
+      </p>
       <p>
         Simon&apos;s problem supplies an oracle with a special collision pattern: every output has exactly two inputs, and those two inputs differ by the same unknown string <InlineMath math="s" />. The goal is to recover <InlineMath math="s" />.
       </p>

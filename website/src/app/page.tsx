@@ -42,6 +42,12 @@ export default function HomePage() {
           >
             View All Lessons
           </Link>
+          <Link
+            href="/roadmap"
+            className="px-6 py-3 rounded-xl border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 transition-all text-sm"
+          >
+            Follow the 30-Day Plan
+          </Link>
         </div>
 
         {/* Feature grid */}

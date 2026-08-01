@@ -17,6 +17,11 @@ import Lesson12 from '@/content/lessons/12-quantum-noise-and-errors';
 import Lesson13 from '@/content/lessons/13-deutsch-jozsa';
 import Lesson14 from '@/content/lessons/14-simons-algorithm';
 import Lesson15 from '@/content/lessons/15-shors-algorithm';
+import Lesson16 from '@/content/lessons/16-quantum-error-correction';
+import Lesson17 from '@/content/lessons/17-quantum-teleportation';
+import Lesson18 from '@/content/lessons/18-density-matrices';
+import Lesson19 from '@/content/lessons/19-quantum-complexity-theory';
+import Lesson20 from '@/content/lessons/20-variational-quantum-algorithms';
 
 export function generateStaticParams() {
   return LESSONS.filter((l) => !l.upcoming).map((l) => ({ slug: l.slug }));
@@ -62,6 +67,11 @@ const LESSON_CONTENT: Record<string, React.ComponentType> = {
   'deutsch-jozsa': Lesson13,
   'simons-algorithm': Lesson14,
   'shors-algorithm': Lesson15,
+  'quantum-error-correction': Lesson16,
+  'quantum-teleportation': Lesson17,
+  'density-matrices': Lesson18,
+  'quantum-complexity': Lesson19,
+  'variational-quantum-algorithms': Lesson20,
 };
 
 export default function LessonPage({ params }: { params: { slug: string } }) {

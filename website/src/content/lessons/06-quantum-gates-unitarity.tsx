@@ -38,6 +38,9 @@ export default function Lesson06Content() {
       </NotationBox>
 
       <h2>6.1 — Why Quantum Gates Must Be Unitary</h2>
+      <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
+        <strong>Study takeaway:</strong> quantum gates preserve probability, so they must be unitary and therefore reversible.
+      </p>
       <p>
         Quantum evolution must preserve the total probability of all measurement outcomes. For a state <InlineMath math="|\psi\rangle" />, the normalization condition requires <InlineMath math="\langle\psi|\psi\rangle = 1" /> to hold after every operation.
       </p>

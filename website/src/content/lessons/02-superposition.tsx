@@ -39,6 +39,9 @@ export default function Lesson02Content() {
       </section>
 
       <h2>2.1 — Definition of Superposition</h2>
+      <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
+        <strong>Study takeaway:</strong> superposition is a coherent quantum state, not a classical mixture of possibilities.
+      </p>
       <p>
         In quantum mechanics, a system is said to be in <strong>superposition</strong> when its state is a non-trivial linear combination of basis states. For a qubit:
       </p>

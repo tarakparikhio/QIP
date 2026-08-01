@@ -1,5 +1,4 @@
 'use client';
-'use client';
 import { InlineMath, BlockMath } from '@/components/math';
 import { NotationBox, TryIt } from '@/components/lesson';
 
@@ -34,6 +33,9 @@ export default function Lesson01Content() {
       </NotationBox>
 
       <h2>1.1 — From Classical Bits to Qubits</h2>
+      <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
+        <strong>Study takeaway:</strong> a qubit is not just a two-state object; it carries complex amplitudes and phase information before measurement.
+      </p>
       <p>
         A classical bit encodes exactly one of two values: 0 or 1. Physically, this might be a voltage level, a magnetic orientation, or the charge on a capacitor. The defining property is that at any moment, the bit is in exactly one definite state.
       </p>

@@ -34,6 +34,9 @@ export default function Lesson09Content() {
       </NotationBox>
 
       <h2>9.1 — Reading Quantum Circuits</h2>
+      <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
+        <strong>Study takeaway:</strong> quantum circuits are ordered operations, and their mathematics is built from matrix products and tensor products.
+      </p>
       <p>
         A quantum circuit is a directed acyclic graph where each horizontal wire represents one qubit, and boxes on the wire represent gates applied at specific time steps. Time flows left to right.
       </p>
