@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { LessonMeta, LESSONS } from '@/lib/lessons';
+import LessonQuiz from '@/components/lesson/LessonQuiz';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { cn } from '@/lib/utils';
 
@@ -21,16 +22,17 @@ const DIFFICULTY_COLOR: Record<string, string> = {
 };
 
 export default function LessonPageClient({ lesson, children }: Props) {
-  const { completedModules, completeModule } = useProgressStore();
+  const { completedModules, completeModule, quizResults } = useProgressStore();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const isCompleted = mounted && completedModules.includes(lesson.slug);
 
   const nextLesson = LESSONS.find((l) => l.id === lesson.id + 1 && !l.upcoming);
   const prevLesson = LESSONS.find((l) => l.id === lesson.id - 1 && !l.upcoming);
+  const quizPassed = lesson.quiz ? quizResults[lesson.slug] === true : true;
 
   function handleComplete() {
-    if (!isCompleted) {
+    if (!isCompleted && quizPassed) {
       completeModule(lesson.slug, nextLesson?.slug ?? lesson.slug, lesson.xp);
     }
   }
@@ -51,7 +53,7 @@ export default function LessonPageClient({ lesson, children }: Props) {
             {lesson.difficulty}
           </span>
           <span className="text-xs text-muted font-mono">{lesson.stage}</span>
-          <span className="text-xs text-primary font-mono">+{lesson.xp} XP</span>
+          <span className="text-xs text-primary font-mono">+{lesson.xp} credits</span>
           {isCompleted && (
             <span className="text-xs px-2 py-0.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 font-mono">
               ✓ Completed
@@ -84,8 +86,10 @@ export default function LessonPageClient({ lesson, children }: Props) {
         {children}
       </motion.article>
 
+      {lesson.quiz && <LessonQuiz lesson={lesson} />}
+
       {/* Playground section */}
-        <section className="mb-12">
+      <section className="mb-12">
           <div className="mb-4">
             <h2 className="text-2xl font-bold mb-2">Interactive Playground</h2>
             <p className="text-muted text-sm">
@@ -109,13 +113,22 @@ export default function LessonPageClient({ lesson, children }: Props) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mt-12 flex justify-center"
+          className="mt-12 flex flex-col items-center gap-3"
         >
+          {!quizPassed && lesson.quiz && (
+            <p className="text-sm text-amber-300">Pass the quiz first to unlock completion and credit for this lesson.</p>
+          )}
           <button
             onClick={handleComplete}
-            className="px-8 py-3 rounded-xl bg-primary text-white font-semibold text-base hover:bg-primary/90 transition-all glow-primary"
+            disabled={!quizPassed}
+            className={cn(
+              'px-8 py-3 rounded-xl font-semibold text-base transition-all',
+              quizPassed
+                ? 'bg-primary text-white hover:bg-primary/90 glow-primary'
+                : 'bg-card/60 text-muted cursor-not-allowed border border-border/40'
+            )}
           >
-            Mark as Complete → Unlock Next Lesson
+            {quizPassed ? 'Mark as Complete → Unlock Next Lesson' : 'Complete the quiz to continue'}
           </button>
         </motion.div>
       )}

@@ -5,9 +5,11 @@ interface ProgressState {
   completedModules: string[];
   currentUnlockedModule: string;
   totalXP: number;
+  quizResults: Record<string, boolean>;
 
   // Actions
   completeModule: (moduleId: string, nextModuleId: string, xpEarned: number) => void;
+  markQuizResult: (moduleId: string, passed: boolean) => void;
   resetProgress: () => void;
 }
 
@@ -15,6 +17,7 @@ const INITIAL_STATE = {
   completedModules: [] as string[],
   currentUnlockedModule: 'birth-of-quantum-information',
   totalXP: 0,
+  quizResults: {} as Record<string, boolean>,
 };
 
 export const useProgressStore = create<ProgressState>()(
@@ -26,6 +29,7 @@ export const useProgressStore = create<ProgressState>()(
         set((state) => {
           if (state.completedModules.includes(moduleId)) return state;
           return {
+            ...state,
             completedModules: [...state.completedModules, moduleId],
             currentUnlockedModule: nextModuleId,
             totalXP: state.totalXP + xpEarned,
@@ -33,7 +37,17 @@ export const useProgressStore = create<ProgressState>()(
         });
       },
 
-      resetProgress: () => set(INITIAL_STATE),
+      markQuizResult: (moduleId, passed) => {
+        set((state) => ({
+          ...state,
+          quizResults: {
+            ...state.quizResults,
+            [moduleId]: passed,
+          },
+        }));
+      },
+
+      resetProgress: () => set({ ...INITIAL_STATE, quizResults: {} }),
     }),
     {
       name: 'qcpath-progress',

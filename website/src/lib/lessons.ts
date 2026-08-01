@@ -4,6 +4,13 @@ export type DemoOp = {
   controlQubit?: number;
 };
 
+export type LessonQuiz = {
+  prompt: string;
+  options: string[];
+  answer: 'a' | 'b' | 'c' | 'd';
+  explanation: string;
+};
+
 export type LessonMeta = {
   id: number;
   title: string;
@@ -17,7 +24,153 @@ export type LessonMeta = {
   challengeType: 'circuit' | 'read';
   upcoming?: boolean;
   demoOps?: DemoOp[];
+  quiz?: LessonQuiz;
 };
+
+const QUIZZES: Record<number, LessonQuiz> = {
+  1: {
+    prompt: 'What does a Hadamard gate do to |0⟩?',
+    options: ['It leaves it unchanged', 'It turns it into |1⟩', 'It creates an equal superposition of |0⟩ and |1⟩', 'It measures it instantly'],
+    answer: 'c',
+    explanation: 'A Hadamard gate maps |0⟩ to an equal superposition of the two computational basis states.',
+  },
+  2: {
+    prompt: 'Which statement best describes superposition?',
+    options: ['A state that is definitely one outcome', 'A linear combination of basis states with amplitudes', 'A state that has no measurement uncertainty', 'A classical random bit'],
+    answer: 'b',
+    explanation: 'Superposition means the state is a coherent linear combination of basis states, not just a classical mixture.',
+  },
+  3: {
+    prompt: 'What does measurement do in the simple picture of this course?',
+    options: ['It creates new amplitudes', 'It converts quantum amplitudes into a classical outcome', 'It makes gates unitary', 'It removes all phase information forever'],
+    answer: 'b',
+    explanation: 'Measurement turns the quantum state into a concrete classical result according to the amplitudes.',
+  },
+  4: {
+    prompt: 'What is entanglement?',
+    options: ['A type of classical randomness', 'A joint state that cannot be written as a product of local states', 'A measurement error', 'A gate that always flips a qubit'],
+    answer: 'b',
+    explanation: 'Entangled states are non-factorizable: the joint state cannot be separated into independent local states.',
+  },
+  5: {
+    prompt: 'Interference is mainly about which quantity?',
+    options: ['The number of qubits', 'The relative phase of amplitudes', 'The speed of the gate', 'The amount of classical memory'],
+    answer: 'b',
+    explanation: 'Interference depends on the relative phase between amplitudes, which can make them reinforce or cancel.',
+  },
+  6: {
+    prompt: 'Why must an ideal quantum gate be unitary?',
+    options: ['Because it must be random', 'Because it must preserve normalization and reversibility', 'Because it can only act on one qubit', 'Because it cannot be represented as a matrix'],
+    answer: 'b',
+    explanation: 'Unitary gates preserve the total probability and are reversible before measurement.',
+  },
+  7: {
+    prompt: 'What does the Bloch sphere represent?',
+    options: ['The physical shape of a qubit', 'The geometry of a single-qubit pure state', 'The circuit depth', 'The classical bit value'],
+    answer: 'b',
+    explanation: 'The Bloch sphere is a geometric view of the state of a single qubit.',
+  },
+  8: {
+    prompt: 'What grows exponentially when you add more qubits?',
+    options: ['The number of gates in a circuit', 'The dimension of the state space', 'The strength of measurement', 'The size of a classical register'],
+    answer: 'b',
+    explanation: 'A system of n qubits lives in a Hilbert space of dimension 2^n.',
+  },
+  9: {
+    prompt: 'What is a quantum circuit mainly used for?',
+    options: ['To store classical data', 'To describe a sequence of gate operations', 'To create random noise', 'To replace measurement'],
+    answer: 'b',
+    explanation: 'A circuit is a visual and mathematical way to describe a sequence of quantum operations.',
+  },
+  10: {
+    prompt: 'Phase kickback is most closely related to what effect?',
+    options: ['A classical OR operation', 'A phase change that appears on the control qubit', 'A measurement collapse', 'A reset operation'],
+    answer: 'b',
+    explanation: 'Phase kickback transfers phase information into the control qubit through a controlled operation.',
+  },
+  11: {
+    prompt: 'What does decoherence describe?',
+    options: ['The loss of phase information due to environmental interaction', 'The creation of a new qubit', 'The exact reversal of a circuit', 'The equalization of all measurement outcomes'],
+    answer: 'a',
+    explanation: 'Decoherence is the loss of coherence caused by interaction with the environment.',
+  },
+  12: {
+    prompt: 'What is a common consequence of quantum noise?',
+    options: ['Perfect gate reversibility', 'Logical errors in the computation', 'No change in measurement statistics', 'A guaranteed entangled state'],
+    answer: 'b',
+    explanation: 'Noise can cause errors that change the intended computation.',
+  },
+  13: {
+    prompt: 'What is the main goal of Deutsch-Jozsa?',
+    options: ['To solve factoring', 'To distinguish constant from balanced functions with one query', 'To simulate Hamiltonians', 'To create superposition only'],
+    answer: 'b',
+    explanation: 'Deutsch-Jozsa uses quantum parallelism to decide a property of a function more efficiently than classical methods in the idealized case.',
+  },
+  14: {
+    prompt: "What does Simon's algorithm exploit?",
+    options: ['A classical sorting trick', 'An unknown periodicity hidden in a function', 'A fixed gate sequence', 'Only single-qubit gates'],
+    answer: 'b',
+    explanation: "Simon's algorithm uses quantum interference to reveal a hidden period in a black-box function.",
+  },
+  15: {
+    prompt: "Shor's algorithm is famous for its use in which task?",
+    options: ['Sorting numbers', 'Factoring integers', 'Searching a database', 'Sampling random states'],
+    answer: 'b',
+    explanation: "Shor's algorithm is best known for factoring integers efficiently using period finding.",
+  },
+  16: {
+    prompt: 'Why do we use error correction in quantum computing?',
+    options: ['To avoid all measurement', 'To protect logical qubits from noise and decoherence', 'To remove all entanglement', 'To simplify gate sets'],
+    answer: 'b',
+    explanation: 'Quantum error correction preserves fragile logical information despite errors.',
+  },
+  17: {
+    prompt: 'What is quantum teleportation mainly using?',
+    options: ['A classical memory channel only', 'Entanglement plus classical communication', 'Only unitary gates', 'Only measurement without entanglement'],
+    answer: 'b',
+    explanation: 'Teleportation uses entanglement and classical communication to transfer a state.',
+  },
+  18: {
+    prompt: 'What do density matrices describe?',
+    options: ['Only pure states', 'Mixed states and open systems', 'Only classical bits', 'Only one-qubit circuits'],
+    answer: 'b',
+    explanation: 'Density matrices describe statistical mixtures and open-system states.',
+  },
+  19: {
+    prompt: 'What does BQP refer to?',
+    options: ['A classical search algorithm', 'The class of problems efficiently solvable by a quantum computer', 'A noise model', 'A measurement basis'],
+    answer: 'b',
+    explanation: 'BQP is the complexity class for problems efficiently solvable by a quantum computer.',
+  },
+  20: {
+    prompt: 'What is a variational algorithm mainly doing?',
+    options: ['Ignoring classical compute', 'Optimizing parameters in a hybrid quantum-classical loop', 'Removing all measurements', 'Only using one gate'],
+    answer: 'b',
+    explanation: 'Variational methods use a quantum circuit and a classical optimizer together to find good parameters.',
+  },
+  21: {
+    prompt: 'What is the quantum Fourier transform best known for?',
+    options: ['Reversing a qubit', 'Re-expressing amplitudes in a frequency basis', 'Removing all phase', 'Replacing measurement'],
+    answer: 'b',
+    explanation: 'The QFT reshapes amplitudes into a frequency-like basis that is useful for period finding and phase estimation.',
+  },
+  22: {
+    prompt: 'Phase estimation is mainly used to find what?',
+    options: ['A random bit', 'The eigenvalue of a unitary operator', 'A classical register size', 'The number of qubits in memory'],
+    answer: 'b',
+    explanation: 'Phase estimation extracts an eigenvalue, often encoded as an angle, from a unitary operator.',
+  },
+  23: {
+    prompt: 'Hamiltonian simulation is about modeling what?',
+    options: ['Only classical sorting', 'The time evolution of a physical system', 'A static webpage', 'Only single-gate circuits'],
+    answer: 'b',
+    explanation: 'Hamiltonian simulation studies how a quantum system evolves under a Hamiltonian over time.',
+  },
+};
+
+export function getLessonQuiz(lessonId: number): LessonQuiz | undefined {
+  return QUIZZES[lessonId];
+}
 
 export const LESSONS: LessonMeta[] = [
   {
@@ -34,6 +187,7 @@ export const LESSONS: LessonMeta[] = [
     demoOps: [
       { gateId: 'H', targetQubit: 0 },
     ],
+    quiz: getLessonQuiz(1),
   },
   {
     id: 2,
@@ -50,6 +204,7 @@ export const LESSONS: LessonMeta[] = [
       { gateId: 'H', targetQubit: 0 },
       { gateId: 'H', targetQubit: 0 },
     ],
+    quiz: getLessonQuiz(2),
   },
   {
     id: 3,
@@ -67,6 +222,7 @@ export const LESSONS: LessonMeta[] = [
       { gateId: 'Z', targetQubit: 0 },
       { gateId: 'H', targetQubit: 0 },
     ],
+    quiz: getLessonQuiz(3),
   },
   {
     id: 4,
@@ -83,6 +239,7 @@ export const LESSONS: LessonMeta[] = [
       { gateId: 'H', targetQubit: 0 },
       { gateId: 'CNOT', targetQubit: 1, controlQubit: 0 },
     ],
+    quiz: getLessonQuiz(4),
   },
   {
     id: 5,
@@ -100,6 +257,7 @@ export const LESSONS: LessonMeta[] = [
       { gateId: 'Z', targetQubit: 0 },
       { gateId: 'H', targetQubit: 0 },
     ],
+    quiz: getLessonQuiz(5),
   },
   // ── Upcoming ───────────────────────────────────────────────────────────
   {
@@ -117,6 +275,7 @@ export const LESSONS: LessonMeta[] = [
       { gateId: 'X', targetQubit: 0 },
       { gateId: 'X', targetQubit: 0 },
     ],
+    quiz: getLessonQuiz(6),
   },
   {
     id: 7,
@@ -149,6 +308,7 @@ export const LESSONS: LessonMeta[] = [
     demoOps: [
       { gateId: 'X', targetQubit: 1 },
     ],
+    quiz: getLessonQuiz(8),
   },
   {
     id: 9,
@@ -165,6 +325,7 @@ export const LESSONS: LessonMeta[] = [
       { gateId: 'H', targetQubit: 0 },
       { gateId: 'CNOT', targetQubit: 1, controlQubit: 0 },
     ],
+    quiz: getLessonQuiz(9),
   },
   {
     id: 10,
@@ -184,6 +345,7 @@ export const LESSONS: LessonMeta[] = [
       { gateId: 'CNOT', targetQubit: 1, controlQubit: 0 },
       { gateId: 'H', targetQubit: 0 },
     ],
+    quiz: getLessonQuiz(10),
   },
   {
     id: 11,
@@ -201,6 +363,7 @@ export const LESSONS: LessonMeta[] = [
       { gateId: 'Z', targetQubit: 0 },
       { gateId: 'H', targetQubit: 0 },
     ],
+    quiz: getLessonQuiz(11),
   },
   {
     id: 12,
@@ -216,6 +379,7 @@ export const LESSONS: LessonMeta[] = [
     demoOps: [
       { gateId: 'X', targetQubit: 0 },
     ],
+    quiz: getLessonQuiz(12),
   },
   {
     id: 13,
@@ -235,6 +399,7 @@ export const LESSONS: LessonMeta[] = [
       { gateId: 'CNOT', targetQubit: 1, controlQubit: 0 },
       { gateId: 'H', targetQubit: 0 },
     ],
+    quiz: getLessonQuiz(13),
   },
   {
     id: 14,
@@ -252,6 +417,7 @@ export const LESSONS: LessonMeta[] = [
       { gateId: 'CNOT', targetQubit: 1, controlQubit: 0 },
       { gateId: 'H', targetQubit: 0 },
     ],
+    quiz: getLessonQuiz(14),
   },
   {
     id: 15,
@@ -269,6 +435,7 @@ export const LESSONS: LessonMeta[] = [
       { gateId: 'CNOT', targetQubit: 1, controlQubit: 0 },
       { gateId: 'H', targetQubit: 0 },
     ],
+    quiz: getLessonQuiz(15),
   },
   {
     id: 16,
@@ -286,6 +453,7 @@ export const LESSONS: LessonMeta[] = [
       { gateId: 'X', targetQubit: 0 },
       { gateId: 'H', targetQubit: 0 },
     ],
+    quiz: getLessonQuiz(16),
   },
   {
     id: 17,
@@ -303,6 +471,7 @@ export const LESSONS: LessonMeta[] = [
       { gateId: 'CNOT', targetQubit: 1, controlQubit: 0 },
       { gateId: 'H', targetQubit: 0 },
     ],
+    quiz: getLessonQuiz(17),
   },
   {
     id: 18,
@@ -320,6 +489,7 @@ export const LESSONS: LessonMeta[] = [
       { gateId: 'Z', targetQubit: 0 },
       { gateId: 'H', targetQubit: 0 },
     ],
+    quiz: getLessonQuiz(18),
   },
   {
     id: 19,
@@ -337,6 +507,7 @@ export const LESSONS: LessonMeta[] = [
       { gateId: 'X', targetQubit: 0 },
       { gateId: 'H', targetQubit: 0 },
     ],
+    quiz: getLessonQuiz(19),
   },
   {
     id: 20,
@@ -354,6 +525,61 @@ export const LESSONS: LessonMeta[] = [
       { gateId: 'S', targetQubit: 0 },
       { gateId: 'H', targetQubit: 0 },
     ],
+    quiz: getLessonQuiz(20),
+  },
+  {
+    id: 21,
+    title: 'Quantum Fourier Transform',
+    slug: 'quantum-fourier-transform',
+    difficulty: 'advanced',
+    stage: 'advanced',
+    prerequisites: [9, 15],
+    objective: 'Understand why the quantum Fourier transform is central to many quantum algorithms.',
+    xp: 450,
+    allowedGates: ['H', 'S', 'CNOT'],
+    challengeType: 'read',
+    upcoming: true,
+    demoOps: [
+      { gateId: 'H', targetQubit: 0 },
+      { gateId: 'S', targetQubit: 0 },
+    ],
+    quiz: getLessonQuiz(21),
+  },
+  {
+    id: 22,
+    title: 'Phase Estimation',
+    slug: 'phase-estimation',
+    difficulty: 'advanced',
+    stage: 'advanced',
+    prerequisites: [15, 21],
+    objective: 'See how phase estimation turns eigenvalue information into useful algorithmic output.',
+    xp: 450,
+    allowedGates: ['H', 'S', 'CNOT'],
+    challengeType: 'read',
+    upcoming: true,
+    demoOps: [
+      { gateId: 'H', targetQubit: 0 },
+      { gateId: 'S', targetQubit: 0 },
+    ],
+    quiz: getLessonQuiz(22),
+  },
+  {
+    id: 23,
+    title: 'Hamiltonian Simulation',
+    slug: 'hamiltonian-simulation',
+    difficulty: 'advanced',
+    stage: 'advanced',
+    prerequisites: [16, 20],
+    objective: 'Understand how quantum computers simulate the dynamics of physical systems.',
+    xp: 500,
+    allowedGates: ['H', 'S', 'CNOT'],
+    challengeType: 'read',
+    upcoming: true,
+    demoOps: [
+      { gateId: 'H', targetQubit: 0 },
+      { gateId: 'S', targetQubit: 0 },
+    ],
+    quiz: getLessonQuiz(23),
   },
 ];
 
