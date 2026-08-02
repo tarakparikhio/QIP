@@ -5,7 +5,11 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { LessonMeta, LESSONS } from '@/lib/lessons';
 import LessonQuiz from '@/components/lesson/LessonQuiz';
+import EquationBreakdown from '@/components/lesson/EquationBreakdown';
+import LessonQiskitSnippet from '@/components/lesson/LessonQiskitSnippet';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { EQUATION_BREAKDOWNS } from '@/lib/equationBreakdowns';
+import { LESSON_QISKIT_SNIPPETS } from '@/lib/lessonQiskitSnippets';
 import { cn } from '@/lib/utils';
 
 const CircuitBuilder = dynamic(() => import('@/components/circuit-builder/CircuitBuilder'), { ssr: false });
@@ -85,6 +89,14 @@ export default function LessonPageClient({ lesson, children }: Props) {
       >
         {children}
       </motion.article>
+
+      {lesson.id >= 6 && EQUATION_BREAKDOWNS[lesson.id] && (
+        <EquationBreakdown data={EQUATION_BREAKDOWNS[lesson.id]} />
+      )}
+
+      {LESSON_QISKIT_SNIPPETS[lesson.id] && (
+        <LessonQiskitSnippet snippet={LESSON_QISKIT_SNIPPETS[lesson.id]} />
+      )}
 
       {lesson.quiz && <LessonQuiz lesson={lesson} />}
 

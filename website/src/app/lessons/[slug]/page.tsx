@@ -20,8 +20,23 @@ import Lesson15 from '@/content/lessons/15-shors-algorithm';
 import Lesson16 from '@/content/lessons/16-quantum-error-correction';
 import Lesson17 from '@/content/lessons/17-quantum-teleportation';
 import Lesson18 from '@/content/lessons/18-density-matrices';
-import Lesson19 from '@/content/lessons/19-quantum-complexity-theory';
+import Lesson19 from '@/content/lessons/19-quantum-complexity';
 import Lesson20 from '@/content/lessons/20-variational-quantum-algorithms';
+import Lesson21 from '@/content/lessons/21-quantum-fourier-transform';
+import Lesson22 from '@/content/lessons/22-phase-estimation';
+import Lesson23 from '@/content/lessons/23-hamiltonian-simulation';
+import Lesson24 from '@/content/lessons/24-universal-gate-sets';
+import Lesson25 from '@/content/lessons/25-measurement-theory-deep';
+import Lesson26 from '@/content/lessons/26-quantum-fourier-transform-qft';
+import Lesson27 from '@/content/lessons/27-qft-circuit-implementation';
+import Lesson28 from '@/content/lessons/28-phase-estimation-deep';
+import Lesson29 from '@/content/lessons/29-hamiltonian-simulation-deep';
+import Lesson30 from '@/content/lessons/30-variational-quantum-eigensolver-vqe';
+import Lesson31 from '@/content/lessons/31-quantum-approximate-optimization-algorithm-qaoa';
+import Lesson32 from '@/content/lessons/32-quantum-annealing';
+import Lesson33 from '@/content/lessons/33-adiabatic-quantum-computation';
+import Lesson34 from '@/content/lessons/34-phase-kickback-advanced';
+import Lesson35 from '@/content/lessons/35-phase-amplitude-and-interference-advanced-view';
 
 export function generateStaticParams() {
   return LESSONS.filter((l) => !l.upcoming).map((l) => ({ slug: l.slug }));
@@ -72,6 +87,21 @@ const LESSON_CONTENT: Record<string, React.ComponentType> = {
   'density-matrices': Lesson18,
   'quantum-complexity': Lesson19,
   'variational-quantum-algorithms': Lesson20,
+  'quantum-fourier-transform': Lesson21,
+  'phase-estimation': Lesson22,
+  'hamiltonian-simulation': Lesson23,
+  'universal-gate-sets': Lesson24,
+  'measurement-theory-deep': Lesson25,
+  'quantum-fourier-transform-qft': Lesson26,
+  'qft-circuit-implementation': Lesson27,
+  'phase-estimation-deep': Lesson28,
+  'hamiltonian-simulation-deep': Lesson29,
+  'variational-quantum-eigensolver-vqe': Lesson30,
+  'quantum-approximate-optimization-algorithm-qaoa': Lesson31,
+  'quantum-annealing': Lesson32,
+  'adiabatic-quantum-computation': Lesson33,
+  'phase-kickback-advanced': Lesson34,
+  'phase-amplitude-and-interference-advanced-view': Lesson35,
 };
 
 export default function LessonPage({ params }: { params: { slug: string } }) {

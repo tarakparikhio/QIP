@@ -1,36 +1,30 @@
 # QCML
 
-QCML is a portfolio-grade quantum computing learning platform built to make difficult material feel structured, visual, and credible to software engineers. It combines curriculum design, lesson extraction, pedagogical modeling, mathematically grounded interactive widgets, and a production-ready Next.js website.
+QCML is a quantum-computing learning platform built to make difficult material structured, visual, and approachable for software engineers. The main deliverable is the static-exportable Next.js website in `website/`.
 
-The result is not just a content dump. It is a productized learning system with 35 lessons, specialized lesson widgets, validated lesson math, and a clear source trail from original PDFs to website output.
+The result is a productized learning system with 35 lessons, interactive circuit and state-vector tools, quizzes, equation explanations, Qiskit examples, and a clear explanation of simulator limitations.
 
 ## Why This Project Matters
 
 Most quantum learning material fails in one of two ways: it is either too hand-wavy to trust or too formal to navigate. QCML is an attempt to close that gap.
 
-This repo shows work across multiple layers:
-- source extraction from raw lesson PDFs
-- structured lesson generation and enrichment
-- curriculum design for intuition and rigor together
-- React/TypeScript widget engineering for quantum concepts
-- audit-driven correction of mathematically misleading demos
-- portfolio-quality website presentation and deployability
+This repo shows work across curriculum design, technical writing, React/TypeScript engineering, quantum-state simulation, mathematical visualization, validation, and static deployment.
 
 For a recruiter or reviewer, this repo demonstrates product thinking, technical writing, frontend engineering, data pipeline work, and the ability to use AI as a disciplined implementation tool rather than as a blind code generator.
 
 ## What Exists Today
 
 - 35 lessons in the curriculum
-- 35 out of 35 lessons validated in the website data bundle
-- specialized interactive widgets for the major quantum concepts
-- corrected math in the highest-risk lessons and widgets
-- static-export friendly Next.js website
-- canonical AI handoff files for fast future iteration
+- 35 out of 35 lessons validated by the published-lesson checker
+- interactive circuit builder, Bloch sphere, state vectors, probabilities, and multi-qubit views
+- equation breakdowns and copyable Qiskit 2.x examples
+- local quiz validation and persistent learning progress
+- static-export friendly Next.js website for Firebase Hosting
 
 ## Portfolio Highlights
 
 ### 1. Audit-driven technical correction
-The most important recent phase was not cosmetic polish. It was a system audit for mathematical and pedagogical errors in the visualization layer.
+The project includes an audit trail for mathematical and pedagogical risks in the visualization layer.
 
 That audit led to:
 - Pauli-Y matrix correction to the proper complex form
@@ -41,123 +35,83 @@ That audit led to:
 
 ### 2. Product architecture, not just page-building
 The website is organized as a maintainable system:
-- lesson content is generated into a website-ready bundle
-- lesson routes are driven by structured data
-- widget selection is centrally mapped
-- metadata for AI and maintenance is separated from live code
+- lesson routes are driven by structured metadata and typed content components
+- shared lesson UI renders quizzes, equations, and code examples consistently
+- the simulator engine and gate definitions are separated from presentation
+- automated validation checks lesson files, routes, metadata, quizzes, snippets, and KaTeX expressions
 
 ### 3. Source transparency
-The original lesson PDFs and portfolio assets now live under the website so the source material and showcase assets travel with the product.
+The project distinguishes educational explanations, simulator behavior, and external provider documentation. Qiskit and IBM Quantum are examples used for familiarity, not an exclusive or affiliated platform relationship.
 
 ## Repository Structure
 
 - `website/`: live Next.js application
-- `website/app/`: routes, lesson pages, layout
-- `website/components/lesson-widgets/`: interactive quantum widgets
-- `website/data/lessons.json`: website-ready lesson bundle
-- `website/public/source-pdfs/`: original PDF source archive
-- `website/public/portfolio-assets/`: screenshots and demo assets for portfolio presentation
-- `artifacts/`: extracted and transformed lesson content workspace
-- `scripts/`: content extraction, enrichment, audit generation, and data build utilities
-- `_metadata/`: canonical AI and project handoff files
-
-## Canonical Context Files
-
-These four files are the single source of repo context for humans and AI collaborators:
-
-- [_metadata/AI_CONTEXT.md](/Users/tarak/Documents/Github/QCML/_metadata/AI_CONTEXT.md)
-- [_metadata/PLAN.md](/Users/tarak/Documents/Github/QCML/_metadata/PLAN.md)
-- [_metadata/RAW_CONTEXT.md](/Users/tarak/Documents/Github/QCML/_metadata/RAW_CONTEXT.md)
-- [_metadata/AUDIT.csv](/Users/tarak/Documents/Github/QCML/_metadata/AUDIT.csv)
+- `website/src/app/`: routes, pages, layout, and interactive client screens
+- `website/src/components/`: reusable lesson, circuit, math, and visualization components
+- `website/src/content/lessons/`: the 35 published lesson components
+- `website/src/lib/`: lesson metadata, quiz data, quantum engine, equation data, and Qiskit snippets
+- `website/scripts/`: lesson coverage and KaTeX validation
+- `QC/`: source lesson material retained for reference
 
 ## Website Architecture
 
-The live app is in [website/README.md](/Users/tarak/Documents/Github/QCML/website/README.md), but the high-level flow is:
+See [website/README.md](website/README.md) for setup and deployment details. At a high level:
 
-1. Source PDFs are stored in `website/public/source-pdfs/`.
-2. Extraction and enrichment scripts build structured lesson content in `artifacts/`.
-3. `scripts/build_website_data.py` generates `website/data/lessons.json`.
-4. The Next.js app renders lesson pages from that bundle.
-5. `website/components/lesson-widgets/index.ts` maps lesson IDs to specialized widgets.
+1. Typed lesson metadata in `website/src/lib/lessons.ts` defines the curriculum.
+2. Lesson components in `website/src/content/lessons/` provide the teaching content.
+3. Dynamic lesson routes map slugs to those components.
+4. Shared lesson UI adds quizzes, equations, Qiskit snippets, and navigation.
+5. The local TypeScript quantum engine powers the interactive simulator.
 
-## AI Workflow
+## Learning and source boundaries
 
-AI was used here as an engineering collaborator, not as an authority.
-
-The pattern was:
-- extract and inspect ground truth
-- audit the visualization layer for mismatches
-- implement focused fixes
-- validate with TypeScript and lesson checks
-- consolidate process context into canonical metadata
-
-That matters because the credibility of a quantum education product depends on not letting plausible-looking UI drift away from actual mechanics.
+AI-assisted implementation was used as an engineering aid, not as an authority. Quantum explanations should be checked against standard references and provider documentation. The simulator is an ideal state-vector model; real hardware adds sampling, noise, calibration, connectivity, transpilation, and queue constraints. Advanced algorithm examples may intentionally simplify an oracle, resource count, or hardware workflow.
 
 ## Project Stages
 
-### Stage 1. Source capture
-- collect and preserve the original lesson PDFs
-- extract lesson text into structured intermediate artifacts
+### Stage 1. Curriculum and content
+- define a progressive 35-lesson path
+- write structured explanations, equations, quizzes, and exercises
 
-### Stage 2. Curriculum system
-- define lesson schema and content structure
-- build a lesson pipeline for website consumption
+### Stage 2. Interactive website
+- build the App Router website and local quantum engine
+- add circuit editing, visualizations, progress, and responsive navigation
 
-### Stage 3. Website productization
-- build the App Router website
-- add browsing, math rendering, learning modes, and widgets
-
-### Stage 4. Audit and correction
-- run a 35-lesson visualization audit
-- fix mathematical errors and pedagogical mismatches
-- validate full lesson coverage
-
-### Stage 5. Portfolio hardening
-- simplify repo context for AI and reviewers
-- move source and presentation assets into the website
-- present the work clearly for recruiters and collaborators
+### Stage 3. Accuracy and portfolio hardening
+- audit high-risk quantum visualizations and algorithm explanations
+- add lesson, route, quiz, snippet, and KaTeX validation
+- document scope, limitations, provider attribution, and deployment
 
 ## Commands
 
-From `website/`:
+From the repository root:
 
 ```bash
-npm install
-npm run dev
-npm run build
-npm run typecheck
-npm run validate:lessons
+npm --prefix website install
+npm --prefix website run dev
+npm --prefix website run typecheck
+npm --prefix website run lint
+npm --prefix website run check:lessons
+npm --prefix website run build
 ```
 
-From the repo root:
-
-```bash
-node scripts/generate_quantum_audit_csv.mjs
-python3 scripts/build_website_data.py
-```
+Open `http://localhost:3000` after starting the dev server.
 
 ## Validation
 
-Current verified status:
-- `npm run typecheck` passes
-- `npm run validate:lessons` passes
-- audit generation writes to `_metadata/AUDIT.csv`
-
-## Source Provenance
-
-The canonical source PDFs are now stored in:
-- [website/public/source-pdfs/README.md](/Users/tarak/Documents/Github/QCML/website/public/source-pdfs/README.md)
-
-Portfolio screenshots and demo assets are stored in:
-- [website/public/portfolio-assets/README.md](/Users/tarak/Documents/Github/QCML/website/public/portfolio-assets/README.md)
+The release checks currently pass:
+- TypeScript typecheck
+- Next.js lint
+- 35-lesson coverage and KaTeX validation
+- production static build
 
 ## For Recruiters
 
-If you want the fastest path through the repo:
+The fastest path through the project is:
 
 1. Read this file.
-2. Open [website/README.md](/Users/tarak/Documents/Github/QCML/website/README.md).
-3. Review [_metadata/AI_CONTEXT.md](/Users/tarak/Documents/Github/QCML/_metadata/AI_CONTEXT.md) for the condensed technical state.
-4. Inspect `website/components/lesson-widgets/` for the core teaching logic.
+2. Open the live website and try the lessons, playground, and gate reference.
+3. Read [website/README.md](website/README.md) for the implementation details.
+4. Inspect `website/src/lib/quantum-engine/` and `website/src/components/` for the core technical work.
 
-This project is strongest as evidence of depth: product design, interactive frontend work, technical accuracy, content systems, and disciplined AI-assisted development.
+This project is strongest as evidence of product design, interactive frontend work, technical writing, quantum-software learning, and disciplined AI-assisted development.

@@ -4,20 +4,6 @@ import { useMemo, useState } from 'react';
 import { LessonMeta, getLessonQuiz } from '@/lib/lessons';
 import { useProgressStore } from '@/lib/store/progressStore';
 
-async function validateQuizAnswer(lessonId: number, answer: 'a' | 'b' | 'c' | 'd') {
-  const response = await fetch('/api/quizzes', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ lessonId, answer }),
-  });
-
-  if (!response.ok) {
-    throw new Error('Unable to validate quiz answer');
-  }
-
-  return response.json() as Promise<{ ok: boolean; isCorrect: boolean }>;
-}
-
 function getAnswerIndex(answer: 'a' | 'b' | 'c' | 'd') {
   return answer.charCodeAt(0) - 'a'.charCodeAt(0);
 }
@@ -41,32 +27,26 @@ export default function LessonQuiz({ lesson }: { lesson: LessonMeta }) {
   const { quizResults, markQuizResult } = useProgressStore();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [feedback, setFeedback] = useState<'correct' | 'incorrect' | null>(null);
+  const shuffledOptions = useMemo(() => {
+    if (!quiz) return [];
+
+    const indexedOptions = quiz.options.map((option, originalIndex) => ({ option, originalIndex }));
+    return shuffleOptions(indexedOptions, lesson.id);
+  }, [quiz, lesson.id]);
 
   if (!quiz) return null;
 
   const passed = quizResults[lesson.slug] === true;
-  const shuffledOptions = useMemo(() => {
-    const indexedOptions = quiz.options.map((option, originalIndex) => ({ option, originalIndex }));
-    return shuffleOptions(indexedOptions, lesson.id);
-  }, [quiz.options, lesson.id]);
   const correctDisplayIndex = shuffledOptions.findIndex((entry) => entry.originalIndex === getAnswerIndex(quiz.answer));
 
-  async function handleSelect(displayIndex: number) {
+  function handleSelect(displayIndex: number) {
     if (passed || !quiz) return;
 
     const selectedOption = shuffledOptions[displayIndex];
-    const selectedAnswer = ['a', 'b', 'c', 'd'][selectedOption.originalIndex] as 'a' | 'b' | 'c' | 'd';
-
-    try {
-      const result = await validateQuizAnswer(lesson.id, selectedAnswer);
-      setSelectedIndex(displayIndex);
-      setFeedback(result.isCorrect ? 'correct' : 'incorrect');
-      markQuizResult(lesson.slug, result.isCorrect);
-    } catch {
-      setSelectedIndex(displayIndex);
-      setFeedback('incorrect');
-      markQuizResult(lesson.slug, false);
-    }
+    const isCorrect = selectedOption.originalIndex === getAnswerIndex(quiz.answer);
+    setSelectedIndex(displayIndex);
+    setFeedback(isCorrect ? 'correct' : 'incorrect');
+    markQuizResult(lesson.slug, isCorrect);
   }
 
   return (

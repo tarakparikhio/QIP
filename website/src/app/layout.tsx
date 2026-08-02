@@ -3,6 +3,7 @@ import './globals.css';
 import ResetButton from './ResetButton';
 import BuyMeCoffee from './BuyMeCoffee';
 import HeaderProgress from './HeaderProgress';
+import MobileNav from './MobileNav';
 import { siteUrl } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -34,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-background text-foreground antialiased">
         <div className="min-h-screen flex flex-col">
           <nav className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-md">
-            <div className="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+            <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4">
               <a href="/" className="flex items-center gap-2 group">
                 <div className="w-7 h-7 rounded-md bg-primary/20 border border-primary/40 flex items-center justify-center text-xs font-mono text-primary group-hover:glow-primary transition-all">
                   ▶
@@ -44,12 +45,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <span className="hidden sm:inline text-xs text-muted font-normal ml-2">A Beginner&apos;s Tool</span>
                 </div>
               </a>
-              <div className="flex items-center gap-3 text-sm text-muted">
+              <div className="hidden items-center gap-4 text-sm text-muted md:flex">
                 <HeaderProgress />
                 <a href="/lessons" className="hover:text-foreground transition-colors">Lessons</a>
                 <a href="/playground" className="hover:text-foreground transition-colors">Playground</a>
+                <a href="/gates" className="hover:text-foreground transition-colors">Gates</a>
+                <a href="/run-on-ibm" className="hidden lg:inline hover:text-foreground transition-colors">Run on IBM</a>
                 <a href="/about" className="hidden sm:inline hover:text-foreground transition-colors">About</a>
                 <ResetButton />
+              </div>
+              <div className="flex items-center gap-2 md:hidden">
+                <HeaderProgress />
+                <MobileNav />
               </div>
             </div>
           </nav>

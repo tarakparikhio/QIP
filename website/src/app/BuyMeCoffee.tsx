@@ -9,11 +9,11 @@ export default function BuyMeCoffee() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="inline-flex items-center gap-1.5 text-xs text-amber-400/80 hover:text-amber-400 transition-colors font-medium"
-        aria-label="Buy me a coffee"
+        className="inline-flex items-center gap-1.5 rounded-lg border border-amber-400/20 bg-amber-400/5 px-3 py-1.5 text-xs font-medium text-amber-300/90 transition-colors hover:border-amber-400/50 hover:bg-amber-400/10 hover:text-amber-200"
+        aria-label="Support this learning project"
       >
         <span>☕</span>
-        <span>Buy me a coffee</span>
+        <span>Support the project</span>
       </button>
 
       {open && (
@@ -33,9 +33,9 @@ export default function BuyMeCoffee() {
               ×
             </button>
 
-            <p className="text-sm font-medium text-amber-400">☕ Buy me a coffee</p>
+            <p className="text-sm font-medium text-amber-400">☕ Support the project</p>
             <p className="text-xs text-muted text-center">
-              Scan to support or open the link below
+              Help cover hosting, tooling, and time spent building open quantum lessons.
             </p>
 
             <Image

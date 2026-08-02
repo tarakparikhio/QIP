@@ -22,13 +22,16 @@ const STAGE_LABEL: Record<string, string> = {
 const STAGE_ORDER = ['foundation', 'core', 'algorithms', 'advanced'];
 
 export default function LessonsClient() {
-  const { completedModules, currentUnlockedModule } = useProgressStore();
+  const { completedModules, currentUnlockedModule, totalXP, quizResults } = useProgressStore();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
   // Use safe defaults until client hydration is complete
   const completed = mounted ? completedModules : [];
   const current = mounted ? currentUnlockedModule : 'birth-of-quantum-information';
+  const displayedXP = mounted ? totalXP : 0;
+  const completedQuizCount = mounted ? Object.values(quizResults).filter(Boolean).length : 0;
+  const totalPossibleXP = LESSONS.filter((lesson) => !lesson.upcoming).reduce((sum, lesson) => sum + lesson.xp, 0);
 
   const available = LESSONS.filter((l) => !l.upcoming);
   const upcoming = LESSONS.filter((l) => l.upcoming);
@@ -59,6 +62,21 @@ export default function LessonsClient() {
           One concept at a time. Each lesson unlocks the next. Build real circuits to prove you understand.
         </p>
       </motion.div>
+
+      <section className="mb-12 grid grid-cols-3 divide-x divide-border/40 rounded-2xl border border-primary/20 bg-primary/5 px-3 py-4 sm:px-6" aria-label="Learning progress summary">
+        <div className="px-2 text-center sm:px-4">
+          <p className="text-xl font-semibold text-foreground">{completed.length}<span className="text-sm text-muted">/{available.length}</span></p>
+          <p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-muted">Lessons</p>
+        </div>
+        <div className="px-2 text-center sm:px-4">
+          <p className="text-xl font-semibold text-primary">{displayedXP}<span className="text-sm text-muted">/{totalPossibleXP}</span></p>
+          <p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-muted">Credits</p>
+        </div>
+        <div className="px-2 text-center sm:px-4">
+          <p className="text-xl font-semibold text-emerald-400">{completedQuizCount}<span className="text-sm text-muted">/{available.length}</span></p>
+          <p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-muted">Quizzes</p>
+        </div>
+      </section>
 
       {/* ── Available lessons ── */}
       <div className="relative mb-16">
