@@ -7,9 +7,11 @@ import { LessonMeta, LESSONS } from '@/lib/lessons';
 import LessonQuiz from '@/components/lesson/LessonQuiz';
 import EquationBreakdown from '@/components/lesson/EquationBreakdown';
 import LessonQiskitSnippet from '@/components/lesson/LessonQiskitSnippet';
+import AnalogyPanel from '@/components/lesson/AnalogyPanel';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { EQUATION_BREAKDOWNS } from '@/lib/equationBreakdowns';
 import { LESSON_QISKIT_SNIPPETS } from '@/lib/lessonQiskitSnippets';
+import { LESSON_ANALOGIES } from '@/lib/lessonAnalogies';
 import { cn } from '@/lib/utils';
 
 const CircuitBuilder = dynamic(() => import('@/components/circuit-builder/CircuitBuilder'), { ssr: false });
@@ -89,6 +91,10 @@ export default function LessonPageClient({ lesson, children }: Props) {
       >
         {children}
       </motion.article>
+
+      {LESSON_ANALOGIES[lesson.id] && (
+        <AnalogyPanel data={LESSON_ANALOGIES[lesson.id]} />
+      )}
 
       {lesson.id >= 6 && EQUATION_BREAKDOWNS[lesson.id] && (
         <EquationBreakdown data={EQUATION_BREAKDOWNS[lesson.id]} />

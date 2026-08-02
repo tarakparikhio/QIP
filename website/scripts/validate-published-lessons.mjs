@@ -8,6 +8,7 @@ const pagePath = path.join(root, 'src/app/lessons/[slug]/page.tsx');
 const lessonsPath = path.join(root, 'src/lib/lessons.ts');
 const snippetsPath = path.join(root, 'src/lib/lessonQiskitSnippets.ts');
 const breakdownsPath = path.join(root, 'src/lib/equationBreakdowns.ts');
+const analogiesPath = path.join(root, 'src/lib/lessonAnalogies.ts');
 const failures = [];
 
 const lessonFiles = fs.readdirSync(lessonDir)
@@ -22,6 +23,7 @@ const routeSource = fs.readFileSync(pagePath, 'utf8');
 const metadataSource = fs.readFileSync(lessonsPath, 'utf8');
 const snippetsSource = fs.readFileSync(snippetsPath, 'utf8');
 const breakdownsSource = fs.readFileSync(breakdownsPath, 'utf8');
+const analogiesSource = fs.readFileSync(analogiesPath, 'utf8');
 
 function declaredIds(source) {
   return new Set([...source.matchAll(/^\s+(\d+):\s*\{/gm)].map((match) => Number(match[1])));
@@ -36,6 +38,15 @@ function assertCompleteMap(source, label, firstLesson = 1) {
 
 assertCompleteMap(snippetsSource, 'Qiskit snippets');
 assertCompleteMap(breakdownsSource, 'Equation breakdowns', 6);
+
+for (const match of analogiesSource.matchAll(/formalMath:\s*'([^']+)'/g)) {
+  const formula = match[1].replaceAll('\\\\', '\\');
+  try {
+    katex.renderToString(formula, { throwOnError: true });
+  } catch (error) {
+    failures.push(`Analogy formula has invalid KaTeX: \`${formula}\` (${error.message}).`);
+  }
+}
 
 const quizSource = metadataSource.slice(
   metadataSource.indexOf('const QUIZZES:'),

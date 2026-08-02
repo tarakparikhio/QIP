@@ -90,6 +90,60 @@ const PRESET_CIRCUITS: { label: string; qubits: number; ops: { gateId: string; t
       { gateId: 'RZ', targetQubit: 0 },
     ],
   },
+  {
+    label: 'Deutsch Oracle',
+    qubits: 2,
+    desc: 'A small phase-marking oracle pattern for a balanced function',
+    ops: [
+      { gateId: 'H', targetQubit: 0 },
+      { gateId: 'X', targetQubit: 1 },
+      { gateId: 'H', targetQubit: 1 },
+      { gateId: 'CNOT', targetQubit: 1, controlQubit: 0 },
+      { gateId: 'H', targetQubit: 1 },
+      { gateId: 'H', targetQubit: 0 },
+    ],
+  },
+  {
+    label: 'Grover 2-Qubit',
+    qubits: 2,
+    desc: 'One educational Grover iteration: oracle phase mark plus diffuser',
+    ops: [
+      { gateId: 'H', targetQubit: 0 },
+      { gateId: 'H', targetQubit: 1 },
+      { gateId: 'CZ', targetQubit: 1, controlQubit: 0 },
+      { gateId: 'H', targetQubit: 0 },
+      { gateId: 'H', targetQubit: 1 },
+      { gateId: 'X', targetQubit: 0 },
+      { gateId: 'X', targetQubit: 1 },
+      { gateId: 'CZ', targetQubit: 1, controlQubit: 0 },
+      { gateId: 'X', targetQubit: 0 },
+      { gateId: 'X', targetQubit: 1 },
+      { gateId: 'H', targetQubit: 0 },
+      { gateId: 'H', targetQubit: 1 },
+    ],
+  },
+  {
+    label: 'Teleportation Setup',
+    qubits: 3,
+    desc: 'Entangled-pair and Bell-measurement skeleton; classical feed-forward is not simulated',
+    ops: [
+      { gateId: 'H', targetQubit: 1 },
+      { gateId: 'CNOT', targetQubit: 2, controlQubit: 1 },
+      { gateId: 'CNOT', targetQubit: 1, controlQubit: 0 },
+      { gateId: 'H', targetQubit: 0 },
+    ],
+  },
+  {
+    label: 'Fourier-Like Pattern',
+    qubits: 2,
+    desc: 'Small QFT-inspired basis-change pattern using available simulator gates',
+    ops: [
+      { gateId: 'H', targetQubit: 0 },
+      { gateId: 'CZ', targetQubit: 1, controlQubit: 0 },
+      { gateId: 'H', targetQubit: 1 },
+      { gateId: 'SWAP', targetQubit: 1, controlQubit: 0 },
+    ],
+  },
 ];
 
 export default function PlaygroundClient() {
