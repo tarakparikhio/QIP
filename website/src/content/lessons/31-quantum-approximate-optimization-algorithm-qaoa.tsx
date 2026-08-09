@@ -12,6 +12,7 @@ export default function Lesson31Content() {
       <BlockMath math="\min_{\gamma,\beta}\langle\psi(\gamma,\beta)|C|\psi(\gamma,\beta)\rangle" />
       <h2>31.2 — It is approximate</h2>
       <p>Increasing the circuit depth p can make the ansatz more expressive, but it also increases optimization difficulty and hardware exposure. QAOA does not guarantee the optimal answer at small depth.</p>
+      <p>For example, at p=1 (one cost-mixer round) QAOA on Max-Cut is only proven to beat a uniformly random cut by a small, graph-dependent margin; reaching near-optimal cuts generally needs larger p and more classical tuning.</p>
       <TryIt heading="31.3 — Try It: Separate the roles"><p>Which operation knows about the problem graph, and which operation helps move between candidate bit strings? Explain why a cost phase alone cannot explore alternatives.</p></TryIt>
     </>
   );

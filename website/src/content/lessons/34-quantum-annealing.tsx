@@ -12,6 +12,7 @@ export default function Lesson32Content() {
       <BlockMath math="H(0)=H_0,\qquad H(1)=H_P" />
       <h2>34.2 — Important distinctions</h2>
       <p>Quantum annealing, adiabatic quantum computation, and gate-model algorithms are related but not interchangeable terms. Their performance depends on gaps, control precision, thermal effects, and how the problem is encoded.</p>
+      <p>For example, if a problem&apos;s spectral gap shrinks as the number of variables N grows, the required annealing time can grow much faster than N itself — gap scaling, not just problem size, is what determines practical runtime.</p>
       <TryIt heading="34.3 — Try It: Identify the assumptions"><p>Why does a small spectral gap make an annealing schedule harder? What kinds of noise can cause the system to leave the intended low-energy path?</p></TryIt>
     </>
   );

@@ -12,6 +12,7 @@ export default function Lesson33Content() {
       <BlockMath math="T\gg \frac{\max_s\|\partial_sH(s)\|}{\Delta_{\min}^2}" />
       <h2>35.2 — Relationship to gate models</h2>
       <p>Under broad conditions, adiabatic quantum computation and gate-based quantum computation are computationally equivalent. Their implementations and resource bottlenecks can still be very different.</p>
+      <p>For example, a problem needing only a handful of gate-model qubits can still demand a long adiabatic runtime if its spectral gap closes sharply with system size, showing that qubit count and adiabatic runtime are governed by different resources.</p>
       <TryIt heading="35.3 — Try It: Reason about the gap"><p>Why does the minimum spectral gap appear in the runtime condition? Describe what happens if the schedule changes too quickly near an avoided crossing.</p></TryIt>
     </>
   );

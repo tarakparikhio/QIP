@@ -16,6 +16,7 @@ export default function Lesson21Content() {
       <h2>22.2 — Why algorithms use it</h2>
       <p>Period finding produces repeated phase patterns. Applying the inverse QFT converts those patterns into concentrated measurement probabilities, which is why the transform is central to phase estimation and Shor&apos;s algorithm.</p>
       <p>The QFT is efficient as a circuit: an exact implementation uses a quadratic number of elementary rotations, and approximate versions can omit very small-angle rotations.</p>
+      <p>For the smallest case, a 1-qubit register (N=2), the QFT is exactly the Hadamard gate: it maps <InlineMath math="|0\rangle" /> to <InlineMath math="(|0\rangle+|1\rangle)/\sqrt2" /> and <InlineMath math="|1\rangle" /> to <InlineMath math="(|0\rangle-|1\rangle)/\sqrt2" />, so H is the smallest possible QFT.</p>
       <TryIt heading="22.3 — Try It: Think in bases"><p>Why can a state look unstructured in the computational basis but structured after a Fourier transform? Describe what information a basis change can reveal without changing the underlying physical state.</p></TryIt>
     </>
   );

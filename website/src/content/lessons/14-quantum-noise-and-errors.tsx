@@ -61,7 +61,7 @@ H`}
         The first sequence is a single bit-flip error, taking <InlineMath math="|0\rangle" /> to <InlineMath math="|1\rangle" />. The second is a single phase-flip error between two Hadamards, which maps the changed phase back into the measurement basis. The channel equations above describe the stochastic mixture obtained when these errors occur with probability <InlineMath math="p" />.
       </p>
 
-      <TryIt heading="14.5 — Try It">
+      <TryIt heading="14.5 — Try It: Identify the Noise Channel">
         <p>
           In the playground, try both <strong>X</strong> and <strong>H → Z → H</strong>. The first shows a bit flip directly; the second makes a phase flip observable. A single run is not the same as a noisy channel—repeat the thought experiment with an error occurring only on some runs to obtain the mixed-state model.
         </p>

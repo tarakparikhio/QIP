@@ -12,6 +12,7 @@ export default function Lesson28Content() {
       <BlockMath math="U^{2^j}|\psi\rangle=e^{2\pi i2^j\phi}|\psi\rangle" />
       <h2>26.2 — What can go wrong</h2>
       <p>Finite precision produces a distribution rather than a guaranteed exact answer. If the input is not an eigenstate, phase estimation samples an eigenphase according to the input state&apos;s overlap with each eigenvector.</p>
+      <p>For example, going from t=4 to t=8 counting qubits shrinks the worst-case grid spacing from 1/16 to 1/256, but it also roughly doubles the number of controlled-U powers the circuit must apply.</p>
       <TryIt heading="26.3 — Try It: Explain precision"><p>Why does adding a counting qubit improve phase resolution? What cost does that improvement impose on controlled powers and circuit depth?</p></TryIt>
     </>
   );

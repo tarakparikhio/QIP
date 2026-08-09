@@ -77,7 +77,7 @@ export default function LessonPageClient({ lesson, children }: Props) {
       </motion.div>
 
       {LESSON_ORIENTATIONS[lesson.id] && (
-        <LessonOrientation lessonId={lesson.id} data={LESSON_ORIENTATIONS[lesson.id]} />
+        <LessonOrientation lessonId={getDisplayLessonNumber(lesson.id)} data={LESSON_ORIENTATIONS[lesson.id]} />
       )}
 
       {/* MDX prose - Lesson content */}
@@ -122,7 +122,7 @@ export default function LessonPageClient({ lesson, children }: Props) {
             Start with an empty circuit. Follow the experiment guide, add gates yourself, and use Load Example only when you want to compare your work with the guided state.
           </p>
         </div>
-        {experiment && <ExperimentGuide lessonId={lesson.id} experiment={experiment} />}
+        {experiment && <ExperimentGuide lessonId={getDisplayLessonNumber(lesson.id)} experiment={experiment} />}
         <CircuitBuilder
           allowedGates={lesson.allowedGates}
           numQubits={experiment?.numQubits ?? (lesson.allowedGates.includes('CNOT') ? 2 : 1)}

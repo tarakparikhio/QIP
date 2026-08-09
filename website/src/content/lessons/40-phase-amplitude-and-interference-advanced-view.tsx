@@ -13,6 +13,7 @@ export default function Lesson35Content() {
       <h2>40.2 — The algorithmic loop</h2>
       <p>Prepare a state, apply structured transformations, create phase differences, and interfere paths so desired answers gain probability. This pattern appears in amplitude amplification, period finding, phase estimation, and variational circuits.</p>
       <p>The final probability distribution is classical, but the route to it depends on coherent complex amplitudes. That is the conceptual bridge between the introductory lessons and advanced algorithms.</p>
+      <p>For example, in Grover&apos;s algorithm the oracle phase-flips marked amplitudes and the diffusion step reflects amplitudes about their average — each iteration is a concrete instance of this prepare, phase, interfere loop rather than a separate trick.</p>
       <TryIt heading="40.3 — Try It: Give the explanation"><p>Explain why a quantum speedup cannot be summarized as “trying every answer at once.” Which operation makes useful answers interfere differently from unhelpful ones?</p></TryIt>
     </>
   );

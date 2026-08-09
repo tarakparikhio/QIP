@@ -12,6 +12,7 @@ export default function Lesson24Content() {
       <BlockMath math="U \approx G_mG_{m-1}\cdots G_1" />
       <h2>17.2 — Exact versus approximate</h2>
       <p>Clifford gates alone are not universal for general quantum computation. Adding a non-Clifford gate such as T supplies the missing expressive power. CNOT couples qubits; without an entangling gate, independently prepared qubits remain separable.</p>
+      <p>For example, the gate set H and CNOT alone generates only Clifford circuits, which the Gottesman&ndash;Knill theorem shows a classical computer can simulate efficiently; adding T breaks that classical shortcut and makes the set universal.</p>
       <TryIt heading="17.3 — Try It: Inspect the set"><p>With H, T, and CNOT, which gate changes basis, which supplies a non-Clifford phase, and which creates entanglement? Explain why removing CNOT changes the states you can prepare.</p></TryIt>
     </>
   );

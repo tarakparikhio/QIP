@@ -1,5 +1,5 @@
 'use client';
-import { BlockMath } from '@/components/math';
+import { BlockMath, InlineMath } from '@/components/math';
 import { NotationBox, TryIt } from '@/components/lesson';
 
 export default function Lesson34Content() {
@@ -12,6 +12,7 @@ export default function Lesson34Content() {
       <BlockMath math="\frac{|0\rangle+|1\rangle}{\sqrt2}|u\rangle\mapsto\frac{|0\rangle+e^{i\phi}|1\rangle}{\sqrt2}|u\rangle" />
       <h2>39.2 — Why algorithms care</h2>
       <p>Phase estimation, Deutsch-Jozsa, and several oracle algorithms convert hidden function or eigenvalue information into relative phase, then use interference to make that phase measurable.</p>
+      <p>For example, in Deutsch&ndash;Jozsa the oracle acts on an ancilla prepared in <InlineMath math="|-\rangle" />, an eigenstate with eigenvalue &minus;1; kickback writes the function&apos;s output directly onto the query register&apos;s phase instead of changing the ancilla.</p>
       <TryIt heading="39.3 — Try It: Track the control"><p>Which register changes visibly in the equation, and why can the target still be useful even though its basis label did not flip?</p></TryIt>
     </>
   );

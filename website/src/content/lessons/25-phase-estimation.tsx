@@ -16,6 +16,7 @@ export default function Lesson22Content() {
       <h2>25.2 — The circuit pattern</h2>
       <p>Hadamards prepare a superposition in the counting register. Controlled-U, controlled-U², and larger powers imprint increasingly precise phase information. The inverse QFT then performs the decoding step before measurement.</p>
       <p>Accuracy depends on the number of counting qubits and on whether the input is an exact eigenstate. With t counting qubits, the ideal binary grid has spacing about <InlineMath math="2^{-t}" />; more qubits improve resolution but require more controlled powers and deeper circuits. For a superposition of eigenstates, the result samples one of the corresponding phases.</p>
+      <p>For example, with t=3 counting qubits and a true phase &phi;=0.3, the nearest grid points are 010 (&phi;=0.25) and 011 (&phi;=0.375), so the circuit is most likely to output one of those two neighboring estimates rather than an exact value.</p>
       <TryIt heading="25.3 — Try It: Explain the registers"><p>What is the role of the eigenstate register, and what is the role of the counting register? Why is a controlled operation needed instead of applying U directly?</p></TryIt>
     </>
   );

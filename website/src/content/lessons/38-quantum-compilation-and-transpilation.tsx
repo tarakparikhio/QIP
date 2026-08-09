@@ -46,7 +46,7 @@ export default function Lesson40Content() {
         Hardware-aware compilation uses calibration data, but calibration changes over time. Compilation is therefore part of the execution workflow, not a one-time formatting step.
       </p>
 
-      <TryIt heading="38.4 - Try It: Compare equivalent circuits">
+      <TryIt heading="38.4 — Try It: Compare equivalent circuits">
         <p>
           Build a short circuit with H, CNOT, and a second H. Then remove a pair of adjacent self-inverse gates or change the placement of the two-qubit operation. Compare the state vector and circuit depth while checking that the intended operation remains clear.
         </p>

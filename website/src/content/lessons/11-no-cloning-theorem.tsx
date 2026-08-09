@@ -55,7 +55,7 @@ export default function Lesson36Content() {
         The theorem does not say that quantum information can never be transferred. It says that transfer and duplication are different operations, and an unknown state cannot be copied while leaving the original untouched.
       </p>
 
-      <TryIt heading="11.4 - Try It: CNOT is not a universal copier">
+      <TryIt heading="11.4 — Try It: CNOT is not a universal copier">
         <p>
           Prepare the control qubit in <InlineMath math="|+\rangle" /> with H, then apply CNOT with the second qubit as the target. The result is an entangled Bell state, not two independent copies of <InlineMath math="|+\rangle" />.
         </p>

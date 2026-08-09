@@ -57,7 +57,7 @@ H`}
         From <InlineMath math="|0\rangle" />, the first <strong>H</strong> produces <InlineMath math="|+\rangle" />. The <strong>Z</strong> gate flips the relative phase on <InlineMath math="|1\rangle" />, and the final <strong>H</strong> turns that phase into a different measurement outcome. Unlike decoherence, this Z operation is reversible and preserves a pure state.
       </p>
 
-      <TryIt heading="13.5 — Try It">
+      <TryIt heading="13.5 — Try It: Compare Coherent and Decohered States">
         <p>
           In the playground, apply <strong>H → Z → H</strong>. Compare the final result with <strong>H → H</strong> and note how a coherent phase error affects measurement. In a true dephasing channel, the off-diagonal density-matrix entries decay statistically rather than undergo one fixed Z operation.
         </p>

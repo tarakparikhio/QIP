@@ -12,6 +12,7 @@ export default function Lesson26Content() {
       <BlockMath math="F_N^\dagger F_N=I" />
       <h2>23.2 — Why this is not a classical FFT</h2>
       <p>A QFT circuit prepares and transforms a quantum state; it does not expose every transformed amplitude for free. Measurement gives samples, so the algorithm must be designed to extract a useful global property rather than the entire classical Fourier table.</p>
+      <p>For example, if amplitude is concentrated on inputs spaced by a period r, the QFT concentrates the transformed amplitude near a few frequencies close to multiples of N/r — that concentration, not a full frequency list, is what period-finding algorithms measure.</p>
       <TryIt heading="23.3 — Try It: Follow the interference"><p>What must be true about the phases for one frequency to become more likely after the transform? Think in terms of reinforcement and cancellation.</p></TryIt>
     </>
   );

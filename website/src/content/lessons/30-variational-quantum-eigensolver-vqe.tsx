@@ -1,5 +1,5 @@
 'use client';
-import { BlockMath } from '@/components/math';
+import { BlockMath, InlineMath } from '@/components/math';
 import { NotationBox, TryIt } from '@/components/lesson';
 
 export default function Lesson30Content() {
@@ -12,6 +12,7 @@ export default function Lesson30Content() {
       <BlockMath math="E(\theta)\ge E_0" />
       <h2>30.2 — Practical limitations</h2>
       <p>Measurement shots create statistical uncertainty, hardware noise biases expectation values, and a poor ansatz can create barren or misleading optimization landscapes. A barren plateau is a region where gradients become uniformly tiny, so a classical optimizer receives almost no useful direction. Good VQE design is as much about measurement and chemistry structure as optimization.</p>
+      <p>For example, estimating a small molecule&apos;s ground-state energy to chemical accuracy (about 1.6 milli-Hartree) often needs thousands of measurement shots per energy evaluation just to shrink the statistical noise on <InlineMath math="E(\theta)" /> below that threshold.</p>
       <TryIt heading="30.3 — Try It: Follow the loop"><p>What information comes from the quantum circuit, and what information comes from the classical optimizer? Why is a lower measured energy not automatically proof of a perfect ground state?</p></TryIt>
     </>
   );

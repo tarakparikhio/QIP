@@ -16,6 +16,7 @@ export default function Lesson23Content() {
       <h2>32.2 — From Hamiltonian to gates</h2>
       <p>Most useful Hamiltonians are decomposed into sums of simpler terms. Product-formula methods approximate the exponential of a sum with short alternating evolutions, while more advanced methods use block encodings, qubitization, or linear-combination techniques.</p>
       <p>The central engineering tradeoff is simulation error versus circuit cost. Smaller time steps generally improve approximation but increase depth.</p>
+      <p>For example, simulating two interacting qubits for a fixed total time with a first-order product formula typically needs tens of short steps to bring the approximation error under 1%, and each extra step adds another block of two-qubit gates.</p>
       <TryIt heading="32.3 — Try It: Predict the evolution"><p>If H is diagonal in the computational basis, what changes during evolution: the basis-state probabilities, the phases, or both? Explain your prediction before using a simulator.</p></TryIt>
     </>
   );

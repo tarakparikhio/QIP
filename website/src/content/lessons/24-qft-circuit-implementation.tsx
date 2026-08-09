@@ -12,6 +12,7 @@ export default function Lesson27Content() {
       <BlockMath math="\mathrm{QFT}_n=\mathrm{SWAPS}\cdot\prod_{j=0}^{n-1}\left(H_j\prod_{k=j+1}^{n-1}\mathrm{CR}_{k-j+1}(k,j)\right)" />
       <h2>24.2 — Approximation</h2>
       <p>Small-angle rotations contribute less to many applications and can be dropped in an approximate QFT. This lowers depth but introduces a controlled approximation error.</p>
+      <p>For example, in an 8-qubit QFT the smallest controlled rotations turn by only a few degrees; dropping the rotations below a chosen angle threshold can noticeably shrink the gate count while changing most measured probabilities by a small, boundable amount.</p>
       <TryIt heading="24.3 — Try It: Trace two qubits"><p>For two qubits, identify the Hadamards, the controlled phase rotation, and the final swap. What information does the controlled rotation add that a separate single-qubit phase could not?</p></TryIt>
     </>
   );
