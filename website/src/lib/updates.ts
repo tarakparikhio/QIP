@@ -9,6 +9,12 @@ export type ProjectUpdate = {
 export const PROJECT_UPDATES: ProjectUpdate[] = [
   {
     date: '2026-08-09',
+    commit: '7f03cbf',
+    title: 'Audited and corrected lesson content numbering',
+    summary: 'Fixed student-facing section numbers across the reordered 40-lesson curriculum, clarified several advanced explanations, and added validation to prevent stale labels from returning.',
+  },
+  {
+    date: '2026-08-09',
     commit: 'f817099',
     title: 'Completed the 40-lesson platform refresh',
     summary: 'Aligned the curriculum, added the self-paced roadmap and project updates, improved simulator learning tools, and focused the landing page on starting a lesson or running a circuit.',
