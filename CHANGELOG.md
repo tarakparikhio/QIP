@@ -9,6 +9,8 @@ All notable project changes are recorded here. Dates and commit identifiers are 
 - Add finite-shot browser measurement sampling with X, Y, and Z basis support for single-qubit circuits.
 - Move progress reset and selected-lesson management into the lessons settings menu.
 - Organize the catalog into Beginner, Intermediate, and Advanced sections.
+- Replace the fixed calendar roadmap with a self-paced capability roadmap, persistent checklist, lesson links, and entry-level readiness guidance.
+- Refocus the landing page on the core lesson and simulator workflow.
 - Refresh public documentation and regenerate the 40-lesson content audit.
 
 ## 2.0.0 - 2026-08-02

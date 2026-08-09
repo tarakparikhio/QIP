@@ -8,6 +8,12 @@ export type ProjectUpdate = {
 // Static by design: Firebase Hosting serves the site without a runtime Git dependency.
 export const PROJECT_UPDATES: ProjectUpdate[] = [
   {
+    date: '2026-08-09',
+    commit: 'f817099',
+    title: 'Completed the 40-lesson platform refresh',
+    summary: 'Aligned the curriculum, added the self-paced roadmap and project updates, improved simulator learning tools, and focused the landing page on starting a lesson or running a circuit.',
+  },
+  {
     date: '2026-08-02',
     commit: '06d0339',
     title: 'Validated mental models and circuit presets',
