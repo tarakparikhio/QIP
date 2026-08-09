@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import ResetButton from './ResetButton';
 import BuyMeCoffee from './BuyMeCoffee';
 import HeaderProgress from './HeaderProgress';
 import MobileNav from './MobileNav';
+import SettingsMenu from './SettingsMenu';
 import { siteUrl } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -50,12 +50,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <a href="/lessons" className="hover:text-foreground transition-colors">Lessons</a>
                 <a href="/playground" className="hover:text-foreground transition-colors">Playground</a>
                 <a href="/gates" className="hover:text-foreground transition-colors">Gates</a>
-                <a href="/run-on-ibm" className="hidden lg:inline hover:text-foreground transition-colors">Run on IBM</a>
                 <a href="/about" className="hidden sm:inline hover:text-foreground transition-colors">About</a>
-                <ResetButton />
+                <SettingsMenu />
               </div>
               <div className="flex items-center gap-2 md:hidden">
                 <HeaderProgress />
+                <SettingsMenu />
                 <MobileNav />
               </div>
             </div>

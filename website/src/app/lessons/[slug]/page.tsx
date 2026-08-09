@@ -5,38 +5,43 @@ import LessonPageClient from './LessonPageClient';
 import Lesson01 from '@/content/lessons/01-birth-of-quantum-information';
 import Lesson02 from '@/content/lessons/02-superposition';
 import Lesson03 from '@/content/lessons/03-measurement';
-import Lesson04 from '@/content/lessons/04-entanglement';
+import Lesson04 from '@/content/lessons/08-entanglement';
 import Lesson05 from '@/content/lessons/05-interference';
-import Lesson06 from '@/content/lessons/06-quantum-gates-unitarity';
-import Lesson07 from '@/content/lessons/07-bloch-sphere';
-import Lesson08 from '@/content/lessons/08-multi-qubit-systems';
+import Lesson06 from '@/content/lessons/04-quantum-gates-unitarity';
+import Lesson07 from '@/content/lessons/06-bloch-sphere';
+import Lesson08 from '@/content/lessons/07-multi-qubit-systems';
 import Lesson09 from '@/content/lessons/09-quantum-circuits';
-import Lesson10 from '@/content/lessons/10-phase-kickback';
-import Lesson11 from '@/content/lessons/11-decoherence';
-import Lesson12 from '@/content/lessons/12-quantum-noise-and-errors';
-import Lesson13 from '@/content/lessons/13-deutsch-jozsa';
-import Lesson14 from '@/content/lessons/14-simons-algorithm';
-import Lesson15 from '@/content/lessons/15-shors-algorithm';
-import Lesson16 from '@/content/lessons/16-quantum-error-correction';
-import Lesson17 from '@/content/lessons/17-quantum-teleportation';
-import Lesson18 from '@/content/lessons/18-density-matrices';
-import Lesson19 from '@/content/lessons/19-quantum-complexity';
-import Lesson20 from '@/content/lessons/20-variational-quantum-algorithms';
-import Lesson21 from '@/content/lessons/21-quantum-fourier-transform';
-import Lesson22 from '@/content/lessons/22-phase-estimation';
-import Lesson23 from '@/content/lessons/23-hamiltonian-simulation';
-import Lesson24 from '@/content/lessons/24-universal-gate-sets';
-import Lesson25 from '@/content/lessons/25-measurement-theory-deep';
-import Lesson26 from '@/content/lessons/26-quantum-fourier-transform-qft';
-import Lesson27 from '@/content/lessons/27-qft-circuit-implementation';
-import Lesson28 from '@/content/lessons/28-phase-estimation-deep';
-import Lesson29 from '@/content/lessons/29-hamiltonian-simulation-deep';
+import Lesson10 from '@/content/lessons/12-phase-kickback';
+import Lesson11 from '@/content/lessons/13-decoherence';
+import Lesson12 from '@/content/lessons/14-quantum-noise-and-errors';
+import Lesson13 from '@/content/lessons/19-deutsch-jozsa';
+import Lesson14 from '@/content/lessons/20-simons-algorithm';
+import Lesson15 from '@/content/lessons/27-shors-algorithm';
+import Lesson16 from '@/content/lessons/18-quantum-error-correction';
+import Lesson17 from '@/content/lessons/10-quantum-teleportation';
+import Lesson18 from '@/content/lessons/15-density-matrices';
+import Lesson19 from '@/content/lessons/28-quantum-complexity';
+import Lesson20 from '@/content/lessons/29-variational-quantum-algorithms';
+import Lesson21 from '@/content/lessons/22-quantum-fourier-transform';
+import Lesson22 from '@/content/lessons/25-phase-estimation';
+import Lesson23 from '@/content/lessons/32-hamiltonian-simulation';
+import Lesson24 from '@/content/lessons/17-universal-gate-sets';
+import Lesson25 from '@/content/lessons/16-measurement-theory-deep';
+import Lesson26 from '@/content/lessons/23-quantum-fourier-transform-qft';
+import Lesson27 from '@/content/lessons/24-qft-circuit-implementation';
+import Lesson28 from '@/content/lessons/26-phase-estimation-deep';
+import Lesson29 from '@/content/lessons/33-hamiltonian-simulation-deep';
 import Lesson30 from '@/content/lessons/30-variational-quantum-eigensolver-vqe';
 import Lesson31 from '@/content/lessons/31-quantum-approximate-optimization-algorithm-qaoa';
-import Lesson32 from '@/content/lessons/32-quantum-annealing';
-import Lesson33 from '@/content/lessons/33-adiabatic-quantum-computation';
-import Lesson34 from '@/content/lessons/34-phase-kickback-advanced';
-import Lesson35 from '@/content/lessons/35-phase-amplitude-and-interference-advanced-view';
+import Lesson32 from '@/content/lessons/34-quantum-annealing';
+import Lesson33 from '@/content/lessons/35-adiabatic-quantum-computation';
+import Lesson34 from '@/content/lessons/39-phase-kickback-advanced';
+import Lesson35 from '@/content/lessons/40-phase-amplitude-and-interference-advanced-view';
+import Lesson36 from '@/content/lessons/11-no-cloning-theorem';
+import Lesson37 from '@/content/lessons/21-grovers-search-algorithm';
+import Lesson38 from '@/content/lessons/36-quantum-cryptography-bb84';
+import Lesson39 from '@/content/lessons/37-quantum-hardware-platforms';
+import Lesson40 from '@/content/lessons/38-quantum-compilation-and-transpilation';
 
 export function generateStaticParams() {
   return LESSONS.filter((l) => !l.upcoming).map((l) => ({ slug: l.slug }));
@@ -102,6 +107,11 @@ const LESSON_CONTENT: Record<string, React.ComponentType> = {
   'adiabatic-quantum-computation': Lesson33,
   'phase-kickback-advanced': Lesson34,
   'phase-amplitude-and-interference-advanced-view': Lesson35,
+  'no-cloning-theorem': Lesson36,
+  'grovers-search-algorithm': Lesson37,
+  'quantum-cryptography-bb84': Lesson38,
+  'quantum-hardware-platforms': Lesson39,
+  'quantum-compilation-and-transpilation': Lesson40,
 };
 
 export default function LessonPage({ params }: { params: { slug: string } }) {

@@ -9,6 +9,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: siteUrl, lastModified: new Date() },
     { url: `${siteUrl}/lessons`, lastModified: new Date() },
     { url: `${siteUrl}/playground`, lastModified: new Date() },
+    { url: `${siteUrl}/gates`, lastModified: new Date() },
+    { url: `${siteUrl}/roadmap`, lastModified: new Date() },
+    { url: `${siteUrl}/run-on-ibm`, lastModified: new Date() },
+    { url: `${siteUrl}/updates`, lastModified: new Date() },
     { url: `${siteUrl}/about`, lastModified: new Date() },
     ...LESSONS.filter((lesson) => !lesson.upcoming).map((lesson) => ({
       url: `${siteUrl}/lessons/${lesson.slug}`,

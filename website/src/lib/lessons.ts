@@ -238,6 +238,36 @@ const QUIZZES: Record<number, LessonQuiz> = {
     answer: 'b',
     explanation: 'Algorithms arrange amplitude and relative phase so interference changes the final measurement distribution in a useful way.',
   },
+  36: {
+    prompt: 'What does the no-cloning theorem say?',
+    options: ['Quantum states can never be measured', 'An unknown quantum state cannot be copied perfectly', 'Only classical bits can be copied', 'Entangled states cannot exist'],
+    answer: 'b',
+    explanation: 'Quantum mechanics does not allow a universal operation that makes a perfect copy of an arbitrary unknown state.',
+  },
+  37: {
+    prompt: 'What does Grover\'s algorithm amplify?',
+    options: ['Every answer equally', 'The probability of marked solutions', 'Only the global phase', 'The number of physical qubits'],
+    answer: 'b',
+    explanation: 'The oracle marks candidate solutions with phase, and the diffusion step increases the amplitude of marked states under the search assumptions.',
+  },
+  38: {
+    prompt: 'What makes BB84 secure in its idealized model?',
+    options: ['Unknown quantum states can be copied', 'An eavesdropper cannot measure incompatible states without introducing detectable disturbance', 'The channel never has noise', 'Classical encryption is unnecessary'],
+    answer: 'b',
+    explanation: 'BB84 uses incompatible preparation and measurement bases; interception changes statistics that legitimate users can test.',
+  },
+  39: {
+    prompt: 'What is a key difference between quantum hardware platforms?',
+    options: ['They all use identical control and readout methods', 'They use different physical qubits, control methods, connectivity, and error profiles', 'They do not need calibration', 'They cannot run circuits'],
+    answer: 'b',
+    explanation: 'Superconducting circuits, trapped ions, neutral atoms, photons, and other platforms have different engineering tradeoffs.',
+  },
+  40: {
+    prompt: 'What does a quantum compiler or transpiler do?',
+    options: ['Change a quantum result after measurement', 'Map an abstract circuit to native gates and hardware constraints', 'Remove the need for error correction', 'Copy unknown quantum states'],
+    answer: 'b',
+    explanation: 'Compilation preserves the intended operation while adapting it to native gates, connectivity, scheduling, and hardware limits.',
+  },
 };
 
 export function getLessonQuiz(lessonId: number): LessonQuiz | undefined {
@@ -273,7 +303,7 @@ export const LESSONS: LessonMeta[] = [
     allowedGates: ['H', 'X'],
     challengeType: 'circuit',
     demoOps: [
-      { gateId: 'H', targetQubit: 0 },
+      { gateId: 'X', targetQubit: 0 },
       { gateId: 'H', targetQubit: 0 },
     ],
     quiz: getLessonQuiz(2),
@@ -481,7 +511,7 @@ export const LESSONS: LessonMeta[] = [
     difficulty: 'intermediate',
     stage: 'algorithms',
     prerequisites: [9, 11, 13],
-    objective: 'Find hidden periods exponentially faster than any classical algorithm.',
+    objective: 'Recover a hidden XOR period with an exponential query advantage in the standard oracle model.',
     xp: 300,
     allowedGates: ['H', 'X', 'Z', 'CNOT'],
     challengeType: 'circuit',
@@ -499,7 +529,7 @@ export const LESSONS: LessonMeta[] = [
     difficulty: 'advanced',
     stage: 'algorithms',
     prerequisites: [11, 14],
-    objective: 'Factor integers in polynomial time using quantum period finding.',
+    objective: 'Understand how ideal fault-tolerant quantum period finding can factor integers in polynomial time.',
     xp: 400,
     allowedGates: ['H', 'X', 'Z', 'CNOT'],
     challengeType: 'circuit',
@@ -817,7 +847,101 @@ export const LESSONS: LessonMeta[] = [
     challengeType: 'read',
     quiz: getLessonQuiz(35),
   },
+  {
+    id: 36,
+    title: 'The No-Cloning Theorem',
+    slug: 'no-cloning-theorem',
+    difficulty: 'intermediate',
+    stage: 'core',
+    prerequisites: [2, 3, 6],
+    objective: 'Understand why an unknown quantum state cannot be copied perfectly and how this differs from classical duplication.',
+    xp: 250,
+    allowedGates: ['H', 'X', 'CNOT'],
+    challengeType: 'read',
+    quiz: getLessonQuiz(36),
+  },
+  {
+    id: 37,
+    title: "Grover's Search Algorithm",
+    slug: 'grovers-search-algorithm',
+    difficulty: 'intermediate',
+    stage: 'algorithms',
+    prerequisites: [5, 9, 10],
+    objective: 'See how an oracle and diffusion step amplify marked solutions in an unstructured search problem.',
+    xp: 350,
+    allowedGates: ['H', 'X', 'Z', 'CNOT'],
+    challengeType: 'read',
+    quiz: getLessonQuiz(37),
+  },
+  {
+    id: 38,
+    title: 'Quantum Cryptography and BB84',
+    slug: 'quantum-cryptography-bb84',
+    difficulty: 'intermediate',
+    stage: 'algorithms',
+    prerequisites: [3, 4, 9, 36],
+    objective: 'Explain how BB84 uses incompatible measurement bases to detect eavesdropping in an idealized key-distribution protocol.',
+    xp: 350,
+    allowedGates: ['H', 'X', 'Z'],
+    challengeType: 'read',
+    quiz: getLessonQuiz(38),
+  },
+  {
+    id: 39,
+    title: 'Quantum Hardware Platforms',
+    slug: 'quantum-hardware-platforms',
+    difficulty: 'intermediate',
+    stage: 'advanced',
+    prerequisites: [11, 12, 16],
+    objective: 'Compare major physical qubit platforms and the control, connectivity, and error tradeoffs that shape their architectures.',
+    xp: 300,
+    allowedGates: [],
+    challengeType: 'read',
+    quiz: getLessonQuiz(39),
+  },
+  {
+    id: 40,
+    title: 'Compilation and Transpilation',
+    slug: 'quantum-compilation-and-transpilation',
+    difficulty: 'advanced',
+    stage: 'advanced',
+    prerequisites: [9, 24, 27, 39],
+    objective: 'Follow how an abstract circuit becomes a hardware-aware program with native gates, routing, scheduling, and measurable costs.',
+    xp: 350,
+    allowedGates: ['H', 'X', 'Y', 'Z', 'S', 'T', 'CNOT'],
+    challengeType: 'read',
+    quiz: getLessonQuiz(40),
+  },
 ];
+
+// IDs stay stable for routes, prerequisites, quizzes, and progress. This array is
+// the student-facing sequence; content filenames use its 1-based display order.
+const CURRICULUM_ORDER = [
+  1, 2, 3, 6, 5, 7, 8, 4, 9, 17, 36, 10, 11, 12, 18, 25, 24, 16,
+  13, 14, 37, 21, 26, 27, 22, 28, 15, 19, 20, 30, 31, 23, 29, 32, 33,
+  38, 39, 40, 34, 35,
+] as const;
+
+export const ORDERED_LESSONS: LessonMeta[] = CURRICULUM_ORDER.map((id) => {
+  const lesson = LESSONS.find((item) => item.id === id);
+  if (!lesson) throw new Error(`Missing lesson ${id} from curriculum order.`);
+  return lesson;
+});
+
+export function getDisplayLessonNumber(lessonId: number): number {
+  const index = ORDERED_LESSONS.findIndex((lesson) => lesson.id === lessonId);
+  return index >= 0 ? index + 1 : lessonId;
+}
+
+export function getNextLesson(lessonId: number): LessonMeta | undefined {
+  const index = ORDERED_LESSONS.findIndex((lesson) => lesson.id === lessonId);
+  return index >= 0 ? ORDERED_LESSONS[index + 1] : undefined;
+}
+
+export function getPreviousLesson(lessonId: number): LessonMeta | undefined {
+  const index = ORDERED_LESSONS.findIndex((lesson) => lesson.id === lessonId);
+  return index > 0 ? ORDERED_LESSONS[index - 1] : undefined;
+}
 
 export function getLessonBySlug(slug: string): LessonMeta | undefined {
   return LESSONS.find((l) => l.slug === slug);

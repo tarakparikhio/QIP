@@ -29,9 +29,9 @@ export default function Lesson05Content() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-2 text-foreground">Why Classical Probability Cannot Interfere</h3>
+            <h3 className="font-semibold mb-2 text-foreground">Why Classical Probabilities Behave Differently</h3>
             <p className="text-foreground/75 text-xs leading-relaxed">
-              Classical probabilities always add: <InlineMath math="P = P_1 + P_2" />. There is no cross term. This is why classical computing cannot exploit interference to cancel wrong answers.
+              For mutually exclusive classical alternatives, probabilities add: <InlineMath math="P = P_1 + P_2" />. There is no amplitude cross term, so an ordinary probabilistic program cannot use quantum-style phase cancellation as part of its computation.
             </p>
           </div>
         </div>
@@ -42,7 +42,7 @@ export default function Lesson05Content() {
         <strong>Study takeaway:</strong> interference is the mechanism that lets quantum algorithms amplify correct outcomes and suppress incorrect ones.
       </p>
       <p>
-        Quantum interference is the mechanism by which quantum algorithms achieve their advantage. It allows the probability of correct answers to be amplified while the probability of wrong answers is suppressed — without ever explicitly evaluating all possibilities simultaneously.
+        Quantum interference is one mechanism by which some quantum algorithms can gain an advantage. It allows the probability of useful answers to be amplified while other outcomes are suppressed, without requiring the algorithm to read every superposed possibility individually.
       </p>
       <p>
         Interference requires two ingredients:
@@ -73,7 +73,7 @@ export default function Lesson05Content() {
       </p>
       <BlockMath math="|0\rangle|1\rangle \xrightarrow{H^{\otimes 2}} |{+}\rangle|{-}\rangle \xrightarrow{U_f} \frac{(-1)^{f(0)}|0\rangle+(-1)^{f(1)}|1\rangle}{\sqrt{2}}|{-}\rangle \xrightarrow{H\otimes I} \text{constant or balanced result}" />
       <p>
-        Interference causes the output qubit&apos;s first register to be <InlineMath math="|0\rangle" /> if <InlineMath math="f" /> is constant, and <InlineMath math="|1\rangle" /> if balanced — in one shot.
+        Interference causes the output qubit&apos;s first register to be <InlineMath math="|0\rangle" /> if <InlineMath math="f" /> is constant, and <InlineMath math="|1\rangle" /> if balanced — with one oracle query under the problem&apos;s promise.
       </p>
 
       <h2>5.4 — Phase Kickback (Advanced)</h2>

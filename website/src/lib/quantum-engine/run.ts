@@ -8,6 +8,25 @@ export type GateOperation = {
   controlQubit?: number; // For multi-qubit gates like CNOT
 };
 
+export function sampleMeasurementCounts(probabilities: number[], shots: number): number[] {
+  const counts = probabilities.map(() => 0);
+  const totalProbability = probabilities.reduce((sum, probability) => sum + probability, 0);
+  if (totalProbability <= 0 || shots <= 0) return counts;
+
+  for (let shot = 0; shot < shots; shot += 1) {
+    let threshold = Math.random() * totalProbability;
+    for (let index = 0; index < probabilities.length; index += 1) {
+      threshold -= probabilities[index];
+      if (threshold <= 0 || index === probabilities.length - 1) {
+        counts[index] += 1;
+        break;
+      }
+    }
+  }
+
+  return counts;
+}
+
 export class CircuitRunner {
   public state: QuantumState;
   public numQubits: number;

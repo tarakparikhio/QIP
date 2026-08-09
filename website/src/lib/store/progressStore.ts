@@ -9,6 +9,7 @@ interface ProgressState {
 
   // Actions
   completeModule: (moduleId: string, nextModuleId: string, xpEarned: number) => void;
+  completeSelectedModules: (modules: { moduleId: string; xpEarned: number }[], nextModuleId: string) => void;
   markQuizResult: (moduleId: string, passed: boolean) => void;
   resetProgress: () => void;
 }
@@ -33,6 +34,20 @@ export const useProgressStore = create<ProgressState>()(
             completedModules: [...state.completedModules, moduleId],
             currentUnlockedModule: nextModuleId,
             totalXP: state.totalXP + xpEarned,
+          };
+        });
+      },
+
+      completeSelectedModules: (modules, nextModuleId) => {
+        set((state) => {
+          const newModules = modules.filter(({ moduleId }) => !state.completedModules.includes(moduleId));
+          if (newModules.length === 0) return state;
+
+          return {
+            ...state,
+            completedModules: [...state.completedModules, ...newModules.map(({ moduleId }) => moduleId)],
+            currentUnlockedModule: nextModuleId,
+            totalXP: state.totalXP + newModules.reduce((sum, { xpEarned }) => sum + xpEarned, 0),
           };
         });
       },

@@ -2,13 +2,11 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import ResetButton from './ResetButton';
 
 const links = [
   ['Lessons', '/lessons'],
   ['Playground', '/playground'],
   ['Gates', '/gates'],
-  ['Run on IBM', '/run-on-ibm'],
   ['About', '/about'],
 ];
 
@@ -42,9 +40,6 @@ export default function MobileNav() {
               </Link>
             ))}
           </nav>
-          <div className="mt-2 border-t border-border/50 px-3 pt-2">
-            <ResetButton />
-          </div>
         </div>
       )}
     </div>

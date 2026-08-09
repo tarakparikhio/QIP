@@ -2,7 +2,7 @@
 
 QCML is a quantum-computing learning platform built to make difficult material structured, visual, and approachable for software engineers. The main deliverable is the static-exportable Next.js website in `website/`.
 
-The result is a productized learning system with 35 lessons, interactive circuit and state-vector tools, quizzes, equation explanations, Qiskit examples, and a clear explanation of simulator limitations.
+The result is a productized learning system with 40 lessons, interactive circuit and state-vector tools, quizzes, equation explanations, Qiskit examples, and a clear explanation of simulator limitations.
 
 ## Why This Project Matters
 
@@ -14,8 +14,8 @@ For a recruiter or reviewer, this repo demonstrates product thinking, technical 
 
 ## What Exists Today
 
-- 35 lessons in the curriculum
-- 35 out of 35 lessons validated by the published-lesson checker
+- 40 lessons in the curriculum
+- 40 out of 40 lessons validated by the published-lesson checker
 - interactive circuit builder, Bloch sphere, state vectors, probabilities, and multi-qubit views
 - equation breakdowns and copyable Qiskit 2.x examples
 - local quiz validation and persistent learning progress
@@ -48,10 +48,13 @@ The project distinguishes educational explanations, simulator behavior, and exte
 - `website/`: live Next.js application
 - `website/src/app/`: routes, pages, layout, and interactive client screens
 - `website/src/components/`: reusable lesson, circuit, math, and visualization components
-- `website/src/content/lessons/`: the 35 published lesson components
+- `website/src/content/lessons/`: the 40 published lesson components
 - `website/src/lib/`: lesson metadata, quiz data, quantum engine, equation data, and Qiskit snippets
 - `website/scripts/`: lesson coverage and KaTeX validation
-- `QC/`: source lesson material retained for reference
+- `website/src/lib/updates.ts`: the static public update log derived from commit history
+- `CHANGELOG.md`: repository release notes and current release preparation notes
+
+Lesson content filenames use the visible 1-based curriculum order. Stable lesson IDs, slugs, prerequisites, and quiz keys remain defined in `website/src/lib/lessons.ts`; this keeps file browsing intuitive without breaking application data.
 
 ## Website Architecture
 
@@ -63,6 +66,8 @@ See [website/README.md](website/README.md) for setup and deployment details. At 
 4. Shared lesson UI adds quizzes, equations, Qiskit snippets, and navigation.
 5. The local TypeScript quantum engine powers the interactive simulator.
 
+The `/updates` page records meaningful project milestones using commit dates and hashes. It is checked into the site because the deployed Firebase build cannot query Git history at runtime.
+
 ## Learning and source boundaries
 
 AI-assisted implementation was used as an engineering aid, not as an authority. Quantum explanations should be checked against standard references and provider documentation. The simulator is an ideal state-vector model; real hardware adds sampling, noise, calibration, connectivity, transpilation, and queue constraints. Advanced algorithm examples may intentionally simplify an oracle, resource count, or hardware workflow.
@@ -70,7 +75,7 @@ AI-assisted implementation was used as an engineering aid, not as an authority. 
 ## Project Stages
 
 ### Stage 1. Curriculum and content
-- define a progressive 35-lesson path
+- define a progressive 40-lesson path
 - write structured explanations, equations, quizzes, and exercises
 
 ### Stage 2. Interactive website
@@ -102,7 +107,7 @@ Open `http://localhost:3000` after starting the dev server.
 The release checks currently pass:
 - TypeScript typecheck
 - Next.js lint
-- 35-lesson coverage and KaTeX validation
+- 40-lesson coverage and KaTeX validation
 - production static build
 
 ## For Recruiters

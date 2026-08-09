@@ -33,14 +33,18 @@ const GATE_INFO: Record<string, { label: string; desc: string }> = {
   SWAP: { label: 'SWAP', desc: 'SWAP — exchanges two qubit states' },
 };
 
-type Props = { allowedGates: string[] };
+type Props = {
+  allowedGates: string[];
+  selectedGateId: string | null;
+  onSelectGate: (gateId: string) => void;
+};
 
-export default function GatePalette({ allowedGates }: Props) {
-  const { addOperation, numQubits } = useCircuitStore();
+export default function GatePalette({ allowedGates, selectedGateId, onSelectGate }: Props) {
+  const { numQubits } = useCircuitStore();
 
   return (
     <div className="space-y-3">
-      <p className="text-xs text-muted font-mono uppercase tracking-widest">Gate Palette — click to add, drag to position</p>
+      <p className="text-xs text-muted font-mono uppercase tracking-widest">Gate Palette — select a gate, then click a circuit slot</p>
       <div className="flex flex-wrap gap-3">
         {allowedGates.map((gateId) => {
           const info = GATE_INFO[gateId] ?? { label: gateId, desc: '' };
@@ -52,26 +56,16 @@ export default function GatePalette({ allowedGates }: Props) {
                 whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.93 }}
                 onClick={() => {
-                  if (disabled) return;
-                  addOperation(
-                    isControlled
-                      ? { gateId, targetQubit: 1, controlQubit: 0 }
-                      : { gateId, targetQubit: 0 }
-                  );
-                }}
-                draggable
-                onDragStart={(e: any) => {
-                  e.dataTransfer.effectAllowed = 'copy';
-                  e.dataTransfer.setData('gateId', gateId);
-                  e.dataTransfer.setData('numQubits', numQubits.toString());
+                  if (!disabled) onSelectGate(gateId);
                 }}
                 className={cn(
                   'w-12 h-10 rounded-lg border text-sm font-mono font-bold transition-all',
-                  disabled ? 'opacity-45 cursor-not-allowed' : 'cursor-move',
+                  disabled ? 'opacity-45 cursor-not-allowed' : 'cursor-pointer',
+                  selectedGateId === gateId && 'ring-2 ring-primary ring-offset-2 ring-offset-background',
                   GATE_COLORS[gateId] ?? 'bg-card border-border text-foreground hover:border-primary/40'
                 )}
-                title={disabled ? `${info.desc} (requires 2+ qubits)` : info.desc}
-                aria-label={disabled ? `${info.desc}; unavailable because it requires two qubits` : `Add ${info.desc}`}
+                title={disabled ? `${info.desc} (requires 2+ qubits)` : `Select ${info.desc}`}
+                aria-label={disabled ? `${info.desc}; unavailable because it requires two qubits` : `Select ${info.desc}`}
                 disabled={disabled}
               >
                 {info.label}
@@ -82,7 +76,8 @@ export default function GatePalette({ allowedGates }: Props) {
         })}
       </div>
       <p className="text-xs text-muted/40 font-mono">
-        Right-click a gate in the circuit to remove it.{numQubits > 1 ? ' Controlled gates default to control q0 → target q1.' : ''}
+        {selectedGateId ? `Selected ${selectedGateId}. Click a wire slot to place it.` : 'Right-click a gate in the circuit to remove it.'}
+        {numQubits > 1 ? ' Controlled gates use the clicked wire as control.' : ''}
       </p>
     </div>
   );

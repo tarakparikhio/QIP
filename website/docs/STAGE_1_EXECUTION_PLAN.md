@@ -1,5 +1,7 @@
 # Stage 1 Execution Plan
 
+> **Archived planning document.** This plan was written on 2026-05-01. The current public release is documented in the root `CHANGELOG.md`, while `OPERATING_FRAMEWORK.md` contains the forward-looking product plan. Unchecked items below are deferred work, not release requirements.
+
 ## Scope
 This plan starts execution immediately for Stage A (Foundation Stabilization).
 

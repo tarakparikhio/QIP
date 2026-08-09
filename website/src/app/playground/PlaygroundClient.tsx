@@ -149,6 +149,7 @@ const PRESET_CIRCUITS: { label: string; qubits: number; ops: { gateId: string; t
 export default function PlaygroundClient() {
   const { setNumQubits, clearCircuit, loadOps, numQubits } = useCircuitStore();
   const [localQubits, setLocalQubits] = useState(1);
+  const [selectedGateId, setSelectedGateId] = useState<string | null>(null);
   const [pendingPreset, setPendingPreset] = useState<{ qubits: number; ops: { gateId: string; targetQubit: number; controlQubit?: number }[] } | null>(null);
 
   // Sync local qubit count into store
@@ -166,6 +167,7 @@ export default function PlaygroundClient() {
   function loadPreset(preset: (typeof PRESET_CIRCUITS)[number]) {
     setLocalQubits(preset.qubits);
     setPendingPreset({ qubits: preset.qubits, ops: preset.ops });
+    setSelectedGateId(null);
   }
 
   const isMultiQubit = localQubits > 1;
@@ -242,13 +244,17 @@ export default function PlaygroundClient() {
       <div className="rounded-2xl border border-primary/20 bg-background/60 backdrop-blur-sm overflow-hidden">
         {/* Gate palette */}
         <div className="px-5 py-4 border-b border-border/30">
-          <GatePalette allowedGates={ALL_GATES} />
+          <GatePalette
+            allowedGates={ALL_GATES}
+            selectedGateId={selectedGateId}
+            onSelectGate={(gateId) => setSelectedGateId((current) => current === gateId ? null : gateId)}
+          />
         </div>
 
         {/* Circuit grid */}
         <div className="px-5 py-4 border-b border-border/30">
           <p className="text-xs font-mono text-muted uppercase tracking-widest mb-3">Circuit</p>
-          <CircuitGrid />
+          <CircuitGrid selectedGateId={selectedGateId} />
         </div>
 
         {/* ── Visualizations ── */}

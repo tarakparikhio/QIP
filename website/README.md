@@ -22,7 +22,7 @@ npm --prefix website run check:lessons
 npm --prefix website run build
 ```
 
-`check:lessons` verifies that all 35 lessons have content, routes, metadata, quizzes, equation breakdowns, Qiskit snippets, and valid KaTeX expressions.
+`check:lessons` verifies that all 40 lessons have content, routes, metadata, quizzes, equation breakdowns, Qiskit snippets, and valid KaTeX expressions. The numeric prefix of each content file follows the student-facing curriculum order; stable lesson IDs remain in `src/lib/lessons.ts`.
 
 ## Deployment
 
@@ -34,12 +34,16 @@ The simulator is an ideal state-vector model. Real quantum hardware introduces s
 
 - `src/app/`: pages, layout, lessons, playground, gates, and IBM Quantum guide
 - `src/components/`: circuit, lesson, math, and quantum visualization components
-- `src/content/lessons/`: the 35 lesson content components
+- `src/content/lessons/`: the 40 lesson content components, numbered in curriculum order
 - `src/lib/quantum-engine/`: gate matrices, state updates, and simulation math
 - `src/lib/lessons.ts`: curriculum metadata and quiz definitions
-- `src/lib/equationBreakdowns.ts`: equation explanations for lessons 6–35
+- `src/lib/equationBreakdowns.ts`: equation explanations for the published lessons
 - `src/lib/lessonQiskitSnippets.ts`: copyable Qiskit 2.x examples
 - `scripts/validate-published-lessons.mjs`: published-content validation
+
+## Project updates
+
+The public update history is available at [/updates](/updates) and is also summarized in the repository [CHANGELOG.md](../CHANGELOG.md). The website log is a static snapshot of meaningful commits so it remains compatible with Firebase Hosting.
 
 ## Provider note
 

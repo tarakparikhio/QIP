@@ -13,6 +13,7 @@ interface CircuitState {
   // Actions
   setNumQubits: (n: number) => void;
   addOperation: (op: GateOperation) => void;
+  insertOperation: (index: number, op: GateOperation) => void;
   removeOperation: (index: number) => void;
   moveOperation: (fromIndex: number, toIndex: number) => void;
   clearCircuit: () => void;
@@ -34,6 +35,15 @@ export const useCircuitStore = create<CircuitState>((set, get) => ({
 
   addOperation: (op) => {
     set((state) => ({ operations: [...state.operations, op] }));
+    get().recalculate();
+  },
+
+  insertOperation: (index, op) => {
+    set((state) => {
+      const newOps = [...state.operations];
+      newOps.splice(Math.max(0, Math.min(index, newOps.length)), 0, op);
+      return { operations: newOps };
+    });
     get().recalculate();
   },
 

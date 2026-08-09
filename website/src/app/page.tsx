@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { LESSONS } from '@/lib/lessons';
+import { LESSONS, ORDERED_LESSONS } from '@/lib/lessons';
 
 export default function HomePage() {
-  const firstLesson = LESSONS[0];
+  const firstLesson = ORDERED_LESSONS[0];
   const publishedLessons = LESSONS.filter((lesson) => !lesson.upcoming);
   const foundationLessons = publishedLessons.filter((lesson) => lesson.stage === 'foundation');
 
@@ -13,39 +13,37 @@ export default function HomePage() {
         <div className="mb-8 flex items-center justify-between gap-4 border-b border-border/60 pb-5">
           <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.18em] text-muted">
             <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_hsl(142_70%_50%/.7)]" />
-            Guided quantum curriculum
+            Learn by doing
           </div>
-          <span className="hidden text-xs font-mono text-muted sm:block">{publishedLessons.length} lessons online</span>
+          <span className="hidden text-xs font-mono text-muted sm:block">{publishedLessons.length} lessons · ideal simulator</span>
         </div>
 
         <div className="grid items-end gap-10 lg:grid-cols-[1.15fr_0.85fr]">
           <section>
-            <p className="mb-5 max-w-xl text-sm font-mono uppercase tracking-[0.22em] text-primary">Quantum Computing Made Learnable</p>
+            <p className="mb-5 max-w-xl text-sm font-mono uppercase tracking-[0.22em] text-primary">An interactive quantum computing course</p>
             <h1 className="max-w-4xl text-5xl font-semibold leading-[0.98] tracking-tight text-foreground sm:text-7xl">
-              Build the intuition.
-              <span className="block text-primary">Then trust the math.</span>
+              Learn the idea.
+              <span className="block text-primary">Run the circuit.</span>
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-relaxed text-muted">
-              A structured path from the first qubit to real quantum algorithms, with interactive circuits and short checks that make each idea stick.
+              Short lessons take you from qubits and measurement to algorithms and hardware. Make a prediction, run it in the simulator, and see where the math shows up.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href={`/lessons/${firstLesson.slug}`} className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary/90 glow-primary">
-                Begin with lesson 01
+                Start learning
               </Link>
-              <Link href="/lessons" className="inline-flex items-center justify-center rounded-lg border border-border px-6 py-3 text-sm text-muted transition hover:border-primary/50 hover:text-foreground">
-                Browse the curriculum
+              <Link href="/playground" className="inline-flex items-center justify-center rounded-lg border border-accent/50 bg-accent/10 px-6 py-3 text-sm font-semibold text-accent transition hover:border-accent hover:text-foreground">
+                Open the playground
               </Link>
-              <Link href="/gates" className="inline-flex items-center justify-center rounded-lg border border-border px-6 py-3 text-sm text-muted transition hover:border-primary/50 hover:text-foreground">
-                Gate reference
-              </Link>
-              <Link href="/run-on-ibm" className="inline-flex items-center justify-center rounded-lg border border-accent/40 bg-accent/10 px-6 py-3 text-sm text-accent transition hover:border-accent/70 hover:text-foreground">
-                Run code on IBM
-              </Link>
+            </div>
+            <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted">
+              <Link href="/lessons" className="hover:text-primary">Browse all lessons <span aria-hidden="true">→</span></Link>
+              <Link href="/roadmap" className="hover:text-primary">View the self-paced roadmap <span aria-hidden="true">→</span></Link>
             </div>
           </section>
 
           <aside className="border-l border-primary/30 pl-6 lg:mb-2">
-            <p className="text-xs font-mono uppercase tracking-[0.2em] text-muted">Your first checkpoint</p>
+            <p className="text-xs font-mono uppercase tracking-[0.2em] text-muted">Start here</p>
             <div className="mt-4 border-y border-border/60 py-5">
               <div className="flex items-start justify-between gap-4">
                 <div>
@@ -56,7 +54,7 @@ export default function HomePage() {
               </div>
               <p className="mt-4 text-sm leading-relaxed text-muted">{firstLesson.objective}</p>
               <Link href={`/lessons/${firstLesson.slug}`} className="mt-5 inline-block text-sm font-semibold text-primary hover:text-foreground">
-                Open checkpoint <span aria-hidden="true">→</span>
+                Open lesson 01 <span aria-hidden="true">→</span>
               </Link>
             </div>
           </aside>
@@ -78,8 +76,8 @@ export default function HomePage() {
         </div>
 
         <div className="mt-12 flex flex-col justify-between gap-5 border-t border-border/60 pt-5 sm:flex-row sm:items-center">
-          <p className="max-w-xl text-sm leading-relaxed text-muted">Start small, make a prediction, run the circuit, and explain what changed. That is the whole loop.</p>
-          <Link href="/roadmap" className="text-sm font-semibold text-primary hover:text-foreground">See the 30-day route <span aria-hidden="true">→</span></Link>
+          <p className="max-w-xl text-sm leading-relaxed text-muted">The simulator is an ideal state-vector model. Use it to build intuition, then keep hardware noise and measurement limits in view.</p>
+          <Link href="/gates" className="text-sm font-semibold text-primary hover:text-foreground">Check the gate reference <span aria-hidden="true">→</span></Link>
         </div>
       </div>
     </div>

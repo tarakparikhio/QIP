@@ -50,7 +50,7 @@ export default function Lesson01Content() {
 
       <h2>1.2 — Why Amplitudes Are Not Probabilities</h2>
       <p>
-        This distinction is fundamental. Consider two qubits, both with 50% probability for <InlineMath math="|0\rangle" /> and 50% for <InlineMath math="|1\rangle" />. Classically, these are identical. Quantum mechanically, they may be completely different:
+        This distinction is fundamental. Consider two possible single-qubit states, each with 50% probability for <InlineMath math="|0\rangle" /> and 50% for <InlineMath math="|1\rangle" />. Classically, these outcomes look identical. Quantum mechanically, the states may be completely different:
       </p>
       <BlockMath math="|\psi_1\rangle = \frac{1}{\sqrt{2}}|0\rangle + \frac{1}{\sqrt{2}}|1\rangle" />
       <BlockMath math="|\psi_2\rangle = \frac{1}{\sqrt{2}}|0\rangle - \frac{1}{\sqrt{2}}|1\rangle" />
@@ -70,7 +70,7 @@ export default function Lesson01Content() {
         <li>Result: <InlineMath math="|\psi''\rangle = |1\rangle" /> — the qubit reaches the excited state deterministically.</li>
       </ol>
       <p>
-        Without phase, interference is impossible. Without interference, quantum computing has no advantage over classical.
+        Without controllable relative phase, this kind of interference is impossible. Interference is one ingredient that can give quantum algorithms an advantage in specific problem settings; it is not an automatic advantage for every computation.
       </p>
 
       <TryIt heading="1.4 — Try It: Build Your First Circuit">

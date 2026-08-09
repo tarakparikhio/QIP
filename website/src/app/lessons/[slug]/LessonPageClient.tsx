@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { LessonMeta, LESSONS } from '@/lib/lessons';
+import { LessonMeta, getDisplayLessonNumber, getNextLesson, getPreviousLesson } from '@/lib/lessons';
 import LessonQuiz from '@/components/lesson/LessonQuiz';
 import EquationBreakdown from '@/components/lesson/EquationBreakdown';
 import LessonQiskitSnippet from '@/components/lesson/LessonQiskitSnippet';
@@ -12,7 +12,11 @@ import { useProgressStore } from '@/lib/store/progressStore';
 import { EQUATION_BREAKDOWNS } from '@/lib/equationBreakdowns';
 import { LESSON_QISKIT_SNIPPETS } from '@/lib/lessonQiskitSnippets';
 import { LESSON_ANALOGIES } from '@/lib/lessonAnalogies';
+import { LESSON_EXPERIMENTS } from '@/lib/lessonExperiments';
+import { LESSON_ORIENTATIONS } from '@/lib/lessonOrientations';
 import { cn } from '@/lib/utils';
+import ExperimentGuide from '@/components/lesson/ExperimentGuide';
+import LessonOrientation from '@/components/lesson/LessonOrientation';
 
 const CircuitBuilder = dynamic(() => import('@/components/circuit-builder/CircuitBuilder'), { ssr: false });
 
@@ -33,15 +37,17 @@ export default function LessonPageClient({ lesson, children }: Props) {
   useEffect(() => setMounted(true), []);
   const isCompleted = mounted && completedModules.includes(lesson.slug);
 
-  const nextLesson = LESSONS.find((l) => l.id === lesson.id + 1 && !l.upcoming);
-  const prevLesson = LESSONS.find((l) => l.id === lesson.id - 1 && !l.upcoming);
+  const nextLesson = getNextLesson(lesson.id);
+  const prevLesson = getPreviousLesson(lesson.id);
   const quizPassed = lesson.quiz ? quizResults[lesson.slug] === true : true;
+  const experiment = LESSON_EXPERIMENTS[lesson.id];
+  const experimentOps = experiment?.mode === 'circuit' ? (experiment.ops ?? lesson.demoOps) : undefined;
 
-  function handleComplete() {
-    if (!isCompleted && quizPassed) {
+  useEffect(() => {
+    if (mounted && lesson.quiz && quizPassed && !isCompleted) {
       completeModule(lesson.slug, nextLesson?.slug ?? lesson.slug, lesson.xp);
     }
-  }
+  }, [completeModule, isCompleted, lesson.quiz, lesson.slug, lesson.xp, mounted, nextLesson?.slug, quizPassed]);
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
@@ -49,7 +55,7 @@ export default function LessonPageClient({ lesson, children }: Props) {
       <div className="flex items-center gap-2 text-xs text-muted mb-8 font-mono">
         <Link href="/lessons" className="hover:text-foreground transition-colors">← All Lessons</Link>
         <span>/</span>
-        <span className="text-foreground/60">Lesson {lesson.id}</span>
+        <span className="text-foreground/60">Lesson {getDisplayLessonNumber(lesson.id)}</span>
       </div>
 
       {/* Header */}
@@ -69,6 +75,10 @@ export default function LessonPageClient({ lesson, children }: Props) {
         <h1 className="text-4xl font-bold mb-3">{lesson.title}</h1>
         <p className="text-muted text-base">{lesson.objective}</p>
       </motion.div>
+
+      {LESSON_ORIENTATIONS[lesson.id] && (
+        <LessonOrientation lessonId={lesson.id} data={LESSON_ORIENTATIONS[lesson.id]} />
+      )}
 
       {/* MDX prose - Lesson content */}
       <motion.article
@@ -104,49 +114,42 @@ export default function LessonPageClient({ lesson, children }: Props) {
         <LessonQiskitSnippet snippet={LESSON_QISKIT_SNIPPETS[lesson.id]} />
       )}
 
-      {lesson.quiz && <LessonQuiz lesson={lesson} />}
-
       {/* Playground section */}
       <section className="mb-12">
-          <div className="mb-4">
-            <h2 className="text-2xl font-bold mb-2">Interactive Playground</h2>
-            <p className="text-muted text-sm">
-              This playground is an idealized, educational simulator. It uses simplified circuits to highlight the core concept of each lesson, not a full hardware implementation or a complete production-grade algorithm.
-            </p>
-            <p className="text-muted text-sm mt-2">
-              Build and run circuits with the gates available for this lesson. A starter example is already loaded for most lessons, and your current state stays in place while resizing visual panels.
-            </p>
-          </div>
-          <CircuitBuilder
-            allowedGates={lesson.allowedGates}
-            numQubits={lesson.allowedGates.includes('CNOT') ? 2 : 1}
-            title={`Playground — ${lesson.title}`}
-            demoOps={lesson.demoOps}
-          />
-        </section>
+        <div className="mb-4">
+          <h2 className="mb-2 text-2xl font-bold">Interactive Playground</h2>
+          <p className="text-sm text-muted">
+            Start with an empty circuit. Follow the experiment guide, add gates yourself, and use Load Example only when you want to compare your work with the guided state.
+          </p>
+        </div>
+        {experiment && <ExperimentGuide lessonId={lesson.id} experiment={experiment} />}
+        <CircuitBuilder
+          allowedGates={lesson.allowedGates}
+          numQubits={experiment?.numQubits ?? (lesson.allowedGates.includes('CNOT') ? 2 : 1)}
+          title={`Playground — ${lesson.title}`}
+          demoOps={experimentOps}
+          experiment={experiment?.mode === 'circuit' ? experiment : undefined}
+        />
+      </section>
 
-      {/* Complete lesson button */}
-      {!isCompleted && (
+      {/* Quiz is the final lesson gate and completes the lesson automatically. */}
+      {lesson.quiz && <LessonQuiz lesson={lesson} />}
+
+      {!lesson.quiz && !isCompleted && (
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
           className="mt-12 flex flex-col items-center gap-3"
         >
-          {!quizPassed && lesson.quiz && (
-            <p className="text-sm text-amber-300">Pass the quiz first to unlock completion and credit for this lesson.</p>
-          )}
           <button
-            onClick={handleComplete}
-            disabled={!quizPassed}
+            onClick={() => completeModule(lesson.slug, nextLesson?.slug ?? lesson.slug, lesson.xp)}
             className={cn(
               'px-8 py-3 rounded-xl font-semibold text-base transition-all',
-              quizPassed
-                ? 'bg-primary text-white hover:bg-primary/90 glow-primary'
-                : 'bg-card/60 text-muted cursor-not-allowed border border-border/40'
+              'bg-primary text-white hover:bg-primary/90 glow-primary'
             )}
           >
-            {quizPassed ? 'Mark as Complete → Unlock Next Lesson' : 'Complete the quiz to continue'}
+            Mark as Complete → Unlock Next Lesson
           </button>
         </motion.div>
       )}

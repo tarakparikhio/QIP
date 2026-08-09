@@ -57,7 +57,7 @@ export default function LessonQuiz({ lesson }: { lesson: LessonMeta }) {
           <h3 className="text-xl font-semibold">{quiz.prompt}</h3>
         </div>
         <div className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs text-primary font-mono">
-          {passed ? 'Passed' : 'Required to complete'}
+          {passed ? 'Passed · Lesson unlocked' : 'Answer to unlock lesson'}
         </div>
       </div>
 
@@ -87,7 +87,7 @@ export default function LessonQuiz({ lesson }: { lesson: LessonMeta }) {
 
       {feedback && (
         <div className={`mt-4 rounded-xl border px-4 py-3 text-sm ${feedback === 'correct' ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300' : 'border-amber-500/30 bg-amber-500/10 text-amber-300'}`}>
-          {feedback === 'correct' ? `Correct. ${quiz.explanation}` : `Not quite. ${quiz.explanation}`}
+          {feedback === 'correct' ? `Correct. ${quiz.explanation} The next lesson is now unlocked.` : `Not quite. ${quiz.explanation}`}
         </div>
       )}
     </section>
