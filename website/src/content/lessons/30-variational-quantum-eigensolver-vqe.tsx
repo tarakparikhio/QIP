@@ -11,7 +11,7 @@ export default function Lesson30Content() {
       <p>The variational principle guarantees that the expected energy of any normalized trial state is at least the ground-state energy. VQE chooses an ansatz, measures the terms in H, and adjusts its parameters to lower the estimate.</p>
       <BlockMath math="E(\theta)\ge E_0" />
       <h2>30.2 — Practical limitations</h2>
-      <p>Measurement shots create statistical uncertainty, hardware noise biases expectation values, and a poor ansatz can create barren or misleading optimization landscapes. Good VQE design is as much about measurement and chemistry structure as optimization.</p>
+      <p>Measurement shots create statistical uncertainty, hardware noise biases expectation values, and a poor ansatz can create barren or misleading optimization landscapes. A barren plateau is a region where gradients become uniformly tiny, so a classical optimizer receives almost no useful direction. Good VQE design is as much about measurement and chemistry structure as optimization.</p>
       <TryIt heading="30.3 — Try It: Follow the loop"><p>What information comes from the quantum circuit, and what information comes from the classical optimizer? Why is a lower measured energy not automatically proof of a perfect ground state?</p></TryIt>
     </>
   );

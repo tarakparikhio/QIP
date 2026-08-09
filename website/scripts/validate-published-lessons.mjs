@@ -73,6 +73,7 @@ for (const block of metadataBlocks) {
 
 for (const file of lessonFiles) {
   const slug = file.slice(3, -4);
+  const displayNumber = Number(file.slice(0, 2));
   const componentName = routeImports.get(file.slice(0, -4));
   const content = fs.readFileSync(path.join(lessonDir, file), 'utf8');
 
@@ -81,6 +82,11 @@ for (const file of lessonFiles) {
   }
   if (componentName && !routeSource.includes(`'${slug}': ${componentName}`)) {
     failures.push(`${file}: missing LESSON_CONTENT route mapping.`);
+  }
+  for (const match of content.matchAll(/(?:<h[1-3]\b[^>]*>|<TryIt\b[^>]*heading=")\s*(\d+)\.(\d+)/g)) {
+    if (Number(match[1]) !== displayNumber) {
+      failures.push(`${file}: visible section number ${match[1]}.${match[2]} does not match display lesson ${displayNumber}.`);
+    }
   }
   if (!metadataSource.includes(`slug: '${slug}'`)) {
     failures.push(`${file}: missing lesson metadata.`);

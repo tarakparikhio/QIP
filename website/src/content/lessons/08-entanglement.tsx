@@ -47,7 +47,7 @@ export default function Lesson04Content() {
         </div>
       </section>
 
-      <h2>4.1 — What Is Entanglement?</h2>
+      <h2>8.1 — What Is Entanglement?</h2>
       <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
         <strong>Study takeaway:</strong> entanglement creates correlations that cannot be explained by separate local descriptions of the qubits.
       </p>
@@ -62,7 +62,7 @@ export default function Lesson04Content() {
         This state has no product form: there are no single-qubit states <InlineMath math="|\psi_A\rangle" /> and <InlineMath math="|\psi_B\rangle" /> such that <InlineMath math="|\psi_A\rangle \otimes |\psi_B\rangle = |\Phi^+\rangle" />.
       </p>
 
-      <h2>4.2 — Creating a Bell State: Step-by-Step</h2>
+      <h2>8.2 — Creating a Bell State: Step-by-Step</h2>
       <p>
         A Bell state is created by applying H to the first qubit, then CNOT with qubit 0 as control and qubit 1 as target:
       </p>
@@ -78,7 +78,7 @@ export default function Lesson04Content() {
         <li>Result: <InlineMath math="|\Phi^+\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)" /></li>
       </ol>
 
-      <h2>4.3 — Why Entanglement Is Not Classical Correlation</h2>
+      <h2>8.3 — Why Entanglement Is Not Classical Correlation</h2>
       <p>
         A classical analogy might be: &ldquo;one glove is left-handed, the other right-handed — when I see one, I know the other.&rdquo; But this classical correlation exists because the gloves were always in definite states. Entangled qubits are not: before measurement, neither qubit has a definite value.
       </p>
@@ -87,7 +87,7 @@ export default function Lesson04Content() {
       </p>
       <BlockMath math="|\Phi^\pm\rangle = \frac{|00\rangle \pm |11\rangle}{\sqrt{2}}, \quad |\Psi^\pm\rangle = \frac{|01\rangle \pm |10\rangle}{\sqrt{2}}" />
 
-      <h2>4.4 — Try It: Build a Bell State</h2>
+      <h2>8.4 — Try It: Build a Bell State</h2>
       <p>
         In the playground: apply <strong>H</strong> to qubit 0, then <strong>CNOT</strong>. The state probabilities will show 50% on <InlineMath math="|00\rangle" /> and 50% on <InlineMath math="|11\rangle" /> — with 0% on <InlineMath math="|01\rangle" /> and <InlineMath math="|10\rangle" />.
       </p>

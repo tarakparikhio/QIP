@@ -26,7 +26,7 @@ export default function Lesson36Content() {
         </NotationBox.Item>
       </NotationBox>
 
-      <h2>36.1 - Classical copying is not quantum copying</h2>
+      <h2>11.1 - Classical copying is not quantum copying</h2>
       <p>
         A classical program can read a bit and write the same value somewhere else. A quantum state is richer: copying it would need to preserve amplitudes and relative phase without learning them first.
       </p>
@@ -34,7 +34,7 @@ export default function Lesson36Content() {
         Some quantum states can be prepared again when their description is known. The theorem concerns one universal operation that would copy every possible unknown state.
       </p>
 
-      <h2>36.2 - The linearity proof</h2>
+      <h2>11.2 - The linearity proof</h2>
       <p>
         Suppose a machine copies the computational basis states:
       </p>
@@ -47,7 +47,7 @@ export default function Lesson36Content() {
         A perfect copy would instead be <InlineMath math="|+\rangle|+\rangle" />, which contains four basis terms. Those states are different, so the same universal machine cannot perform both jobs.
       </p>
 
-      <h2>36.3 - Why the theorem matters</h2>
+      <h2>11.3 - Why the theorem matters</h2>
       <p>
         No-cloning explains why quantum teleportation needs a destructive measurement and why quantum error correction stores information in correlations instead of making ordinary backups. It also helps explain why eavesdropping can disturb quantum key-distribution signals.
       </p>
@@ -55,7 +55,7 @@ export default function Lesson36Content() {
         The theorem does not say that quantum information can never be transferred. It says that transfer and duplication are different operations, and an unknown state cannot be copied while leaving the original untouched.
       </p>
 
-      <TryIt heading="36.4 - Try It: CNOT is not a universal copier">
+      <TryIt heading="11.4 - Try It: CNOT is not a universal copier">
         <p>
           Prepare the control qubit in <InlineMath math="|+\rangle" /> with H, then apply CNOT with the second qubit as the target. The result is an entangled Bell state, not two independent copies of <InlineMath math="|+\rangle" />.
         </p>

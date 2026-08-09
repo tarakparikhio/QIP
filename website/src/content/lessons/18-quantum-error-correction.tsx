@@ -19,7 +19,7 @@ export default function Lesson16Content() {
         </NotationBox.Item>
       </NotationBox>
 
-      <h2>16.1 — Error Correction Protects the Logic</h2>
+      <h2>18.1 — Error Correction Protects the Logic</h2>
       <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
         <strong>Study takeaway:</strong> quantum error correction uses redundancy and syndrome information to preserve logical information in the presence of noise.
       </p>
@@ -33,18 +33,18 @@ export default function Lesson16Content() {
         In a repetition-style code, the logical zero and logical one are stored as different bit patterns that are far apart in Hamming space. A single bit-flip then becomes easy to identify through parity checks.
       </p>
 
-      <h2>16.2 — Measuring What Went Wrong</h2>
+      <h2>18.2 — Measuring What Went Wrong</h2>
       <p>
         The key step is syndrome extraction: a set of ancilla qubits is used to detect which kind of error happened without directly measuring the logical state. That keeps the superposition intact while exposing enough information to decide on a correction.
       </p>
       <BlockMath math="|\psi_L\rangle \xrightarrow{\text{error}} E|\psi_L\rangle \xrightarrow{\text{syndrome}} s" />
 
-      <h2>16.3 — Why It Matters for Hardware</h2>
+      <h2>18.3 — Why It Matters for Hardware</h2>
       <p>
         Real devices have noise from imperfect gates, relaxation, and cross-talk. Error correction gives a route to make a noisy machine useful by trading many physical qubits for one more reliable logical qubit.
       </p>
 
-      <TryIt heading="16.4 — Try It: Spot the Error Pattern">
+      <TryIt heading="18.4 — Try It: Spot the Error Pattern">
         <p>
           Imagine the code state is encoded as three physical qubits. If one qubit flips, which parity check would tell you that something went wrong? Compare the effect of a single flip to the effect of a phase error and explain why the correction strategy must be tailored to the hardware noise model.
         </p>

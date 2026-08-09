@@ -21,7 +21,7 @@ export default function Lesson40Content() {
         </NotationBox.Item>
       </NotationBox>
 
-      <h2>40.1 - Abstract and native gates</h2>
+      <h2>38.1 - Abstract and native gates</h2>
       <p>
         An algorithm may ask for a controlled operation or a rotation that is not a native pulse on the target device. The compiler decomposes it into gates the device supports.
       </p>
@@ -30,7 +30,7 @@ export default function Lesson40Content() {
         The approximation error, circuit depth, and number of entangling gates all matter. Two mathematically equivalent circuits can have very different hardware costs.
       </p>
 
-      <h2>40.2 - Connectivity and routing</h2>
+      <h2>38.2 - Connectivity and routing</h2>
       <p>
         Logical qubits are names in the algorithm. Physical qubits are locations on a chip, ion chain, atom array, or photonic network. If two logical qubits need a two-qubit gate but their physical locations cannot interact, the compiler may insert SWAP operations or choose a different mapping.
       </p>
@@ -38,7 +38,7 @@ export default function Lesson40Content() {
         Routing is not free: extra two-qubit gates increase depth and create more opportunities for error. A good initial layout can be as important as a good local gate rewrite.
       </p>
 
-      <h2>40.3 - Optimization is hardware-aware</h2>
+      <h2>38.3 - Optimization is hardware-aware</h2>
       <p>
         A compiler can cancel inverse gates, merge rotations, parallelize independent operations, choose better qubit placements, and prefer calibrated native instructions. It must preserve qubit order, control direction, measurement meaning, and any classical dependencies.
       </p>
@@ -46,7 +46,7 @@ export default function Lesson40Content() {
         Hardware-aware compilation uses calibration data, but calibration changes over time. Compilation is therefore part of the execution workflow, not a one-time formatting step.
       </p>
 
-      <TryIt heading="40.4 - Try It: Compare equivalent circuits">
+      <TryIt heading="38.4 - Try It: Compare equivalent circuits">
         <p>
           Build a short circuit with H, CNOT, and a second H. Then remove a pair of adjacent self-inverse gates or change the placement of the two-qubit operation. Compare the state vector and circuit depth while checking that the intended operation remains clear.
         </p>

@@ -25,7 +25,7 @@ export default function Lesson38Content() {
         </NotationBox.Item>
       </NotationBox>
 
-      <h2>38.1 - Encode in a randomly chosen basis</h2>
+      <h2>36.1 - Encode in a randomly chosen basis</h2>
       <p>
         Alice chooses a random bit and a random basis for each transmitted signal. In the Z basis she sends <InlineMath math="|0\rangle" /> or <InlineMath math="|1\rangle" />. In the X basis she sends <InlineMath math="|+\rangle" /> or <InlineMath math="| - \rangle" />.
       </p>
@@ -33,7 +33,7 @@ export default function Lesson38Content() {
         Bob independently chooses a random measurement basis. When he chooses the same basis as Alice, the ideal result agrees. When he chooses the other basis, the result is random even without an eavesdropper.
       </p>
 
-      <h2>38.2 - Detect disturbance</h2>
+      <h2>36.2 - Detect disturbance</h2>
       <p>
         Alice and Bob publicly compare a sample of their basis choices and outcomes. An intercept-and-resend eavesdropper does not know the correct basis for every signal. Measuring in the wrong basis and resending changes the statistics of the checked sample.
       </p>
@@ -42,7 +42,7 @@ export default function Lesson38Content() {
         The value above is for the simple idealized attack and standard BB84 basis choices. Real security analysis also includes channel noise, finite samples, authentication, privacy amplification, and device assumptions.
       </p>
 
-      <h2>38.3 - What quantum mechanics contributes</h2>
+      <h2>36.3 - What quantum mechanics contributes</h2>
       <p>
         The protocol does not depend on a mysterious ability to hide a message from all observation. It depends on incompatible measurements and the fact that an unknown quantum state cannot be copied perfectly. The parties test for disturbance before treating the remaining bits as usable key material.
       </p>

@@ -25,7 +25,7 @@ export default function Lesson37Content() {
         </NotationBox.Item>
       </NotationBox>
 
-      <h2>37.1 - Start with equal candidates</h2>
+      <h2>21.1 - Start with equal candidates</h2>
       <p>
         Applying H to every qubit creates an equal superposition over the computational basis. For <InlineMath math="n" /> qubits, there are <InlineMath math="N=2^n" /> candidate bit strings.
       </p>
@@ -34,7 +34,7 @@ export default function Lesson37Content() {
         At this point every candidate has the same probability. The algorithm has not found anything yet; it has prepared a balanced starting point for interference.
       </p>
 
-      <h2>37.2 - Mark, then reflect</h2>
+      <h2>21.2 - Mark, then reflect</h2>
       <p>
         The oracle marks a solution by changing its phase. Because a global phase cannot be observed by itself, the oracle is followed by the diffusion operator, which compares amplitudes against their average.
       </p>
@@ -43,7 +43,7 @@ export default function Lesson37Content() {
         Repeating <InlineMath math="G" /> rotates the state toward the marked subspace. The measurement probability rises and then falls if the iterations continue too long, so amplification must be stopped at the right time.
       </p>
 
-      <h2>37.3 - What the advantage means</h2>
+      <h2>21.3 - What the advantage means</h2>
       <p>
         Classical black-box search needs order <InlineMath math="N" /> oracle queries in the worst case. Grover&apos;s algorithm needs order <InlineMath math="\sqrt{N}" /> queries under its oracle model. The quantum circuit still needs an oracle implementation, gates, and measurement repetitions.
       </p>
@@ -51,9 +51,12 @@ export default function Lesson37Content() {
         This is a quadratic query improvement, not an exponential improvement. The result is valuable, but it does not make arbitrary database lookup instant or remove the cost of loading and verifying data.
       </p>
 
-      <h2>37.4 - Why this playground stops at the idea</h2>
+      <h2>21.4 - Why this playground stops at the idea</h2>
       <p>
         The current playground can show H, X, Z, and CNOT patterns, but it does not provide a general phase oracle, multi-qubit diffusion operator, or repeated shot sampling. A small fixed circuit would illustrate interference, not a complete Grover search, so this lesson keeps the algorithmic boundary explicit.
+      </p>
+      <p>
+        The oracle is the non-trivial problem-specific part: it must recognize a marked input reversibly and encode that answer as a phase without measuring the search register. The diffusion step can then amplify that phase-marked subspace.
       </p>
     </>
   );

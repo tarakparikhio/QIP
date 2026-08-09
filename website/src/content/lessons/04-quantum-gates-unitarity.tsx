@@ -37,7 +37,7 @@ export default function Lesson06Content() {
         </NotationBox.Item>
       </NotationBox>
 
-      <h2>6.1 — Why Quantum Gates Must Be Unitary</h2>
+      <h2>4.1 — Why Quantum Gates Must Be Unitary</h2>
       <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
         <strong>Study takeaway:</strong> quantum gates preserve probability, so they must be unitary and therefore reversible.
       </p>
@@ -55,7 +55,7 @@ export default function Lesson06Content() {
         A second consequence of unitarity is <strong>reversibility</strong>. Since <InlineMath math="U^{-1} = U^\dagger" />, every gate has an inverse that is also a valid gate. Quantum computation (excluding measurement) is therefore fundamentally reversible. This distinguishes it from classical irreversible logic gates like AND and OR.
       </p>
 
-      <h2>6.2 — The Pauli Gates</h2>
+      <h2>4.2 — The Pauli Gates</h2>
       <p>
         The three Pauli gates — X, Y, Z — are the most fundamental single-qubit operations. Each is both Hermitian (<InlineMath math="U = U^\dagger" />) and unitary (<InlineMath math="U^2 = I" />), meaning they are self-inverse.
       </p>
@@ -75,7 +75,7 @@ export default function Lesson06Content() {
         Note that <InlineMath math="Y = iXZ" /> — the Y gate is not independent but follows from the Pauli algebra relation <InlineMath math="XYZ = iI" />.
       </p>
 
-      <h2>6.3 — Phase Gates: S and T</h2>
+      <h2>4.3 — Phase Gates: S and T</h2>
       <p>
         Phase gates leave <InlineMath math="|0\rangle" /> unchanged and multiply <InlineMath math="|1\rangle" /> by a phase factor. They do not change measurement probabilities in the computational basis but alter the relative phase between amplitudes.
       </p>
@@ -91,7 +91,7 @@ export default function Lesson06Content() {
         Together, <InlineMath math="\{H, T\}" /> form a <strong>universal gate set</strong> for single-qubit operations: any single-qubit unitary can be approximated to arbitrary precision using only H and T gates (Solovay–Kitaev theorem).
       </p>
 
-      <h2>6.4 — The Hadamard Gate as a Basis Change</h2>
+      <h2>4.4 — The Hadamard Gate as a Basis Change</h2>
       <p>
         The Hadamard gate is a rotation by <InlineMath math="\pi" /> about the <InlineMath math="(\hat{x}+\hat{z})/\sqrt{2}" /> axis on the Bloch sphere. Its matrix is:
       </p>
@@ -104,7 +104,7 @@ export default function Lesson06Content() {
         This basis-change property is the foundation of almost every quantum algorithm: operations that are difficult in the computational basis become simple in the Hadamard basis, and vice versa. The circuit <InlineMath math="H \to Z \to H" /> is equivalent to the X gate: <InlineMath math="HZH = X" />.
       </p>
 
-      <TryIt heading="6.5 — Try It: Gate Sequences and Self-Inverse">
+      <TryIt heading="4.5 — Try It: Gate Sequences and Self-Inverse">
         <p>
           Apply <strong>X</strong> to qubit 0, then apply <strong>X</strong> again. Observe that the state returns to <InlineMath math="|0\rangle" /> — confirming <InlineMath math="X^2 = I" />.
         </p>

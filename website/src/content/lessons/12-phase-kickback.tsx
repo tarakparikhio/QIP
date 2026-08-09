@@ -32,7 +32,7 @@ export default function Lesson10Content() {
         </NotationBox.Item>
       </NotationBox>
 
-      <h2>10.1 — Controlled-U Gate Mechanics</h2>
+      <h2>12.1 — Controlled-U Gate Mechanics</h2>
       <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
         <strong>Study takeaway:</strong> phase kickback is a central idea behind several quantum algorithms because it moves phase information from a target to a control register.
       </p>
@@ -47,7 +47,7 @@ export default function Lesson10Content() {
         The CNOT gate is the special case <InlineMath math="U = X" />. The controlled-Z (CZ) gate is the case <InlineMath math="U = Z" />.
       </p>
 
-      <h2>10.2 — The Eigenstate Condition</h2>
+      <h2>12.2 — The Eigenstate Condition</h2>
       <p>
         Suppose the target qubit is in an eigenstate of <InlineMath math="U" />: <InlineMath math="U|\lambda\rangle = e^{i\phi}|\lambda\rangle" />. Apply the controlled-U gate with the control qubit in a general superposition <InlineMath math="\alpha|0\rangle + \beta|1\rangle" />:
       </p>
@@ -59,7 +59,7 @@ export default function Lesson10Content() {
         The target qubit is unchanged — it remains <InlineMath math="|\lambda\rangle" />. The eigenvalue <InlineMath math="e^{i\phi}" /> has been transferred as a <strong>relative phase</strong> to the control qubit&apos;s <InlineMath math="|1\rangle" /> amplitude. This is the phase kickback mechanism.
       </p>
 
-      <h2>10.3 — Phase Kickback Derivation</h2>
+      <h2>12.3 — Phase Kickback Derivation</h2>
       <p>
         Step-by-step derivation for the CNOT gate with the target qubit in state <InlineMath math="|{-}\rangle = \frac{1}{\sqrt{2}}(|0\rangle - |1\rangle)" />, which is an eigenstate of X with eigenvalue <InlineMath math="-1" />:
       </p>
@@ -87,7 +87,7 @@ export default function Lesson10Content() {
         Result: the target is unchanged at <InlineMath math="|{-}\rangle" />, and the control qubit has acquired a relative phase of <InlineMath math="-1" /> on its <InlineMath math="|1\rangle" /> component. The eigenvalue <InlineMath math="-1" /> of the X gate has been &ldquo;kicked back&rdquo; to the control.
       </p>
 
-      <h2>10.4 — Reversing CNOT in the Hadamard Basis</h2>
+      <h2>12.4 — Reversing CNOT in the Hadamard Basis</h2>
       <p>
         Applying Hadamard gates to <strong>both</strong> qubits before and after a CNOT reverses its control and target. This identity follows from the fact that Hadamards exchange X- and Z-type behavior:
       </p>
@@ -101,7 +101,7 @@ export default function Lesson10Content() {
         In Deutsch and Deutsch–Jozsa, the more direct use of this idea is phase kickback: preparing the target in <InlineMath math="|{-}\rangle" /> transfers the oracle&apos;s phase response to the control register.
       </p>
 
-      <TryIt heading="10.5 — Try It: Observe Phase Kickback">
+      <TryIt heading="12.5 — Try It: Observe Phase Kickback">
         <p>
           Prepare qubit 1 in <InlineMath math="|{-}\rangle" />, then use it as the CNOT target while qubit 0 is the control:
         </p>

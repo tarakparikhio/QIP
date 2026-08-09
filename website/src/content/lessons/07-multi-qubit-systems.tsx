@@ -34,7 +34,7 @@ export default function Lesson08Content() {
         </NotationBox.Item>
       </NotationBox>
 
-      <h2>8.1 — Tensor Products and State Space</h2>
+      <h2>7.1 — Tensor Products and State Space</h2>
       <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
         <strong>Study takeaway:</strong> multi-qubit systems grow exponentially in state-space dimension, and tensor products are the language for describing them.
       </p>
@@ -50,7 +50,7 @@ export default function Lesson08Content() {
         This expansion has four terms — four complex amplitudes, subject to the single normalization constraint <InlineMath math="\sum_{x \in \{00,01,10,11\}} |c_x|^2 = 1" />. For <InlineMath math="n" /> qubits, the state vector has <InlineMath math="2^n" /> complex amplitudes.
       </p>
 
-      <h2>8.2 — The Two-Qubit Computational Basis</h2>
+      <h2>7.2 — The Two-Qubit Computational Basis</h2>
       <p>
         The four basis states <InlineMath math="|00\rangle, |01\rangle, |10\rangle, |11\rangle" /> are the eigenstates of simultaneous measurement of both qubits in the computational basis. In the playground convention, the <em>left</em> index is qubit 0 and the right index is qubit 1:
       </p>
@@ -63,7 +63,7 @@ export default function Lesson08Content() {
       </p>
       <BlockMath math="|\Psi\rangle = c_{00}|00\rangle + c_{01}|01\rangle + c_{10}|10\rangle + c_{11}|11\rangle, \quad \sum|c_{xy}|^2 = 1" />
 
-      <h2>8.3 — Separable and Entangled States</h2>
+      <h2>7.3 — Separable and Entangled States</h2>
       <p>
         A 2-qubit state <InlineMath math="|\Psi\rangle" /> is <strong>separable</strong> if it can be written as a tensor product <InlineMath math="|\psi_A\rangle \otimes |\psi_B\rangle" />. A separable state has no correlations between the two subsystems: measuring qubit A gives no information about qubit B.
       </p>
@@ -79,7 +79,7 @@ export default function Lesson08Content() {
         Example: the Bell state <InlineMath math="|\Phi^+\rangle = \frac{1}{\sqrt{2}}(|00\rangle + |11\rangle)" /> has amplitudes <InlineMath math="c_{00} = c_{11} = 1/\sqrt{2}" />, <InlineMath math="c_{01} = c_{10} = 0" />. Its determinant is <InlineMath math="\det M = (1/\sqrt{2})(1/\sqrt{2}) - 0 = 1/2 \neq 0" /> — entangled.
       </p>
 
-      <h2>8.4 — Operations on Multi-Qubit Systems</h2>
+      <h2>7.4 — Operations on Multi-Qubit Systems</h2>
       <p>
         Single-qubit gates acting on one qubit of a 2-qubit system are extended to 4×4 matrices via tensor product with the identity on the other qubit. If gate <InlineMath math="U" /> acts on qubit 1 and qubit 0 is untouched:
       </p>
@@ -92,7 +92,7 @@ export default function Lesson08Content() {
         This maps <InlineMath math="|00\rangle \to |01\rangle" />, <InlineMath math="|10\rangle \to |11\rangle" />, etc., flipping qubit 1 while leaving qubit 0 unchanged.
       </p>
 
-      <TryIt heading="8.5 — Try It: Build a Two-Qubit Product State">
+      <TryIt heading="7.5 — Try It: Build a Two-Qubit Product State">
         <p>
           In the playground, add a second qubit row. Apply <strong>X</strong> to qubit 1 only, leaving qubit 0 in <InlineMath math="|0\rangle" />.
         </p>

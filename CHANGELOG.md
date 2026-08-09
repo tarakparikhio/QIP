@@ -12,6 +12,8 @@ All notable project changes are recorded here. Dates and commit identifiers are 
 - Replace the fixed calendar roadmap with a self-paced capability roadmap, persistent checklist, lesson links, and entry-level readiness guidance.
 - Refocus the landing page on the core lesson and simulator workflow.
 - Refresh public documentation and regenerate the 40-lesson content audit.
+- Correct visible lesson section numbering after the curriculum reorder, including BB84, Grover, and the advanced lessons.
+- Add regression validation for display-order headings and clarify measurement, Grover, phase-estimation, VQE, and QAOA content.
 
 ## 2.0.0 - 2026-08-02
 

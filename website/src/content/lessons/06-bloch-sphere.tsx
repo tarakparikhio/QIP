@@ -37,7 +37,7 @@ export default function Lesson07Content() {
         </NotationBox.Item>
       </NotationBox>
 
-      <h2>7.1 — Every Qubit State as a Point on the Sphere</h2>
+      <h2>6.1 — Every Qubit State as a Point on the Sphere</h2>
       <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
         <strong>Study takeaway:</strong> the Bloch sphere gives a geometric picture of single-qubit states and the effect of gates as rotations.
       </p>
@@ -55,7 +55,7 @@ export default function Lesson07Content() {
         The polar angle <InlineMath math="\theta" /> controls the probability of each outcome: at the north pole <InlineMath math="(\theta=0)" />, <InlineMath math="P(|0\rangle)=1" />; at the south pole <InlineMath math="(\theta=\pi)" />, <InlineMath math="P(|1\rangle)=1" />; on the equator <InlineMath math="(\theta=\pi/2)" />, <InlineMath math="P(|0\rangle) = P(|1\rangle) = \frac{1}{2}" />. The azimuthal angle <InlineMath math="\phi" /> encodes the relative phase.
       </p>
 
-      <h2>7.2 — Gates as Rotations</h2>
+      <h2>6.2 — Gates as Rotations</h2>
       <p>
         Every unitary gate <InlineMath math="U" /> acts on the Bloch vector as a <strong>rotation</strong> in <InlineMath math="\mathbb{R}^3" />. This is because the map from <InlineMath math="2\times 2" /> unitaries to <InlineMath math="\mathbb{R}^3" /> rotations (via the Pauli matrices as a basis) is the double cover <InlineMath math="SU(2) \to SO(3)" />.
       </p>
@@ -77,7 +77,7 @@ export default function Lesson07Content() {
         where <InlineMath math="\vec{\sigma} = (X, Y, Z)" /> is the vector of Pauli matrices.
       </p>
 
-      <h2>7.3 — The Euler Decomposition</h2>
+      <h2>6.3 — The Euler Decomposition</h2>
       <p>
         Any single-qubit gate can be decomposed into at most three rotations (Euler angles). The standard decomposition uses z-y-z rotations:
       </p>
@@ -95,7 +95,7 @@ export default function Lesson07Content() {
         <li>Or equivalently: <InlineMath math="H = \frac{1}{\sqrt{2}}(X + Z)" /></li>
       </ol>
 
-      <h2>7.4 — Why Global Phase Is Unobservable</h2>
+      <h2>6.4 — Why Global Phase Is Unobservable</h2>
       <p>
         The parameterization <InlineMath math="|\psi\rangle = \cos(\theta/2)|0\rangle + e^{i\phi}\sin(\theta/2)|1\rangle" /> absorbs the global phase. Two states that differ only by a global phase factor <InlineMath math="e^{i\alpha}" /> are physically identical:
       </p>
@@ -107,7 +107,7 @@ export default function Lesson07Content() {
         On the Bloch sphere, this means the map from states to sphere points is many-to-one: both <InlineMath math="|\psi\rangle" /> and <InlineMath math="e^{i\alpha}|\psi\rangle" /> map to the same point <InlineMath math="\hat{r}" />. The sphere captures exactly the physically distinct states, without redundancy.
       </p>
 
-      <TryIt heading="7.5 — Try It: Navigate the Bloch Sphere">
+      <TryIt heading="6.5 — Try It: Navigate the Bloch Sphere">
         <p>
           Observe the Bloch sphere in the playground as you apply gates. Start from <InlineMath math="|0\rangle" /> (north pole) and trace the following path:
         </p>
