@@ -7,6 +7,7 @@ const links = [
   ['Lessons', '/lessons'],
   ['Playground', '/playground'],
   ['Gates', '/gates'],
+  ['Sources', '/sources'],
   ['About', '/about'],
 ];
 

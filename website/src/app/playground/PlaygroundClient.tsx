@@ -6,6 +6,7 @@ import GatePalette from '@/components/circuit-builder/GatePalette';
 import CircuitGrid from '@/components/circuit-builder/CircuitGrid';
 import ProbabilityBars from '@/components/quantum-visuals/ProbabilityBars';
 import StateVector from '@/components/quantum-visuals/StateVector';
+import QuantumCodePanel from '@/components/circuit-builder/QuantumCodePanel';
 import { useCircuitStore } from '@/lib/store/circuitStore';
 
 const BlochSphere = dynamic(() => import('@/components/quantum-visuals/BlochSphere'), { ssr: false });
@@ -147,7 +148,7 @@ const PRESET_CIRCUITS: { label: string; qubits: number; ops: { gateId: string; t
 ];
 
 export default function PlaygroundClient() {
-  const { setNumQubits, clearCircuit, loadOps, numQubits } = useCircuitStore();
+  const { setNumQubits, clearCircuit, loadOps, numQubits, operations } = useCircuitStore();
   const [localQubits, setLocalQubits] = useState(1);
   const [selectedGateId, setSelectedGateId] = useState<string | null>(null);
   const [pendingPreset, setPendingPreset] = useState<{ qubits: number; ops: { gateId: string; targetQubit: number; controlQubit?: number }[] } | null>(null);
@@ -255,6 +256,10 @@ export default function PlaygroundClient() {
         <div className="px-5 py-4 border-b border-border/30">
           <p className="text-xs font-mono text-muted uppercase tracking-widest mb-3">Circuit</p>
           <CircuitGrid selectedGateId={selectedGateId} />
+        </div>
+
+        <div className="px-5 py-4">
+          <QuantumCodePanel numQubits={numQubits} operations={operations} />
         </div>
 
         {/* ── Visualizations ── */}

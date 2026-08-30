@@ -10,6 +10,8 @@ const snippetsPath = path.join(root, 'src/lib/lessonQiskitSnippets.ts');
 const breakdownsPath = path.join(root, 'src/lib/equationBreakdowns.ts');
 const analogiesPath = path.join(root, 'src/lib/lessonAnalogies.ts');
 const orientationsPath = path.join(root, 'src/lib/lessonOrientations.ts');
+const sourcesPath = path.join(root, 'src/lib/lessonSources.ts');
+const visualsPath = path.join(root, 'src/lib/lessonVisuals.ts');
 const failures = [];
 
 const lessonFiles = fs.readdirSync(lessonDir)
@@ -26,6 +28,8 @@ const snippetsSource = fs.readFileSync(snippetsPath, 'utf8');
 const breakdownsSource = fs.readFileSync(breakdownsPath, 'utf8');
 const analogiesSource = fs.readFileSync(analogiesPath, 'utf8');
 const orientationsSource = fs.readFileSync(orientationsPath, 'utf8');
+const sourcesSource = fs.readFileSync(sourcesPath, 'utf8');
+const visualsSource = fs.readFileSync(visualsPath, 'utf8');
 const routeImports = new Map(
   [...routeSource.matchAll(/import\s+(Lesson\d+)\s+from\s+'@\/content\/lessons\/([^']+)'/g)]
     .map((match) => [match[2], match[1]])
@@ -42,16 +46,64 @@ function assertCompleteMap(source, label, firstLesson = 1) {
   }
 }
 
+function assertCompleteArrayMap(source, label, firstLesson = 1) {
+  const ids = new Set([...source.matchAll(/^\s+(\d+):\s*\[/gm)].map((match) => Number(match[1])));
+  for (let lessonId = firstLesson; lessonId <= 40; lessonId += 1) {
+    if (!ids.has(lessonId)) failures.push(`${label}: missing entry for lesson ${lessonId}.`);
+  }
+}
+
 assertCompleteMap(snippetsSource, 'Qiskit snippets');
 assertCompleteMap(breakdownsSource, 'Equation breakdowns', 6);
 assertCompleteMap(orientationsSource, 'Lesson orientations');
+assertCompleteMap(visualsSource, 'Lesson visuals');
+assertCompleteArrayMap(sourcesSource, 'Lesson sources');
+
+for (const match of sourcesSource.matchAll(/url:\s*'([^']+)'/g)) {
+  if (!match[1].startsWith('https://')) failures.push(`Lesson source is not an HTTPS URL: ${match[1]}`);
+}
+
+function unescapeJsSingleQuotedLiteral(text) {
+  let result = '';
+  for (let i = 0; i < text.length; i += 1) {
+    const char = text[i];
+    if (char !== '\\') {
+      result += char;
+      continue;
+    }
+    const next = text[i + 1];
+    if (next === 'n') result += '\n';
+    else if (next === 'r') result += '\r';
+    else if (next === 't') result += '\t';
+    else result += next ?? '';
+    i += 1;
+  }
+  return result;
+}
 
 for (const match of analogiesSource.matchAll(/formalMath:\s*'([^']+)'/g)) {
-  const formula = match[1].replaceAll('\\\\', '\\');
+  const formula = unescapeJsSingleQuotedLiteral(match[1]);
+  if (/[\r\n]/.test(formula)) {
+    failures.push(`Analogy formula has an under-escaped backslash producing a control character: \`${match[1]}\`.`);
+    continue;
+  }
   try {
     katex.renderToString(formula, { throwOnError: true });
   } catch (error) {
     failures.push(`Analogy formula has invalid KaTeX: \`${formula}\` (${error.message}).`);
+  }
+}
+
+for (const match of breakdownsSource.matchAll(/equation:\s*'([^']+)'/g)) {
+  const formula = unescapeJsSingleQuotedLiteral(match[1]);
+  if (/[\r\n]/.test(formula)) {
+    failures.push(`Equation breakdown has an under-escaped backslash producing a control character: \`${match[1]}\`.`);
+    continue;
+  }
+  try {
+    katex.renderToString(formula, { throwOnError: true });
+  } catch (error) {
+    failures.push(`Equation breakdown has invalid KaTeX: \`${formula}\` (${error.message}).`);
   }
 }
 

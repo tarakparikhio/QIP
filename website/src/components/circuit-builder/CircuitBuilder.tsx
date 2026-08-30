@@ -33,16 +33,36 @@ export default function CircuitBuilder({
 }: Props) {
   const { setNumQubits, clearCircuit, loadOps } = useCircuitStore();
   const [demoLoaded, setDemoLoaded] = useState(false);
+  const [guidedStep, setGuidedStep] = useState<number | null>(null);
   const [selectedGateId, setSelectedGateId] = useState<string | null>(null);
 
   useEffect(() => {
     setNumQubits(numQubits);
     clearCircuit();
     setDemoLoaded(false);
+    setGuidedStep(null);
     setSelectedGateId(null);
   }, [clearCircuit, numQubits, setNumQubits]);
 
   const isMultiQubit = numQubits > 1;
+  const guidedSteps = experiment?.mode === 'circuit' ? experiment.steps : [];
+
+  function loadGuidedStep(stepIndex: number) {
+    if (!demoOps || guidedSteps.length === 0) return;
+    const boundedStep = Math.max(0, Math.min(stepIndex, guidedSteps.length - 1));
+    const operationCount = guidedSteps.length === 1
+      ? demoOps.length
+      : Math.round((boundedStep / (guidedSteps.length - 1)) * demoOps.length);
+    loadOps(demoOps.slice(0, operationCount));
+    setDemoLoaded(true);
+    setGuidedStep(boundedStep);
+  }
+
+  function clearGuidedExample() {
+    clearCircuit();
+    setDemoLoaded(false);
+    setGuidedStep(null);
+  }
 
   return (
     <div className="rounded-2xl border border-primary/20 bg-background/60 backdrop-blur-sm overflow-hidden">
@@ -55,7 +75,7 @@ export default function CircuitBuilder({
         <div className="flex items-center gap-2">
           {demoOps && demoOps.length > 0 && (
             <button
-              onClick={() => { loadOps(demoOps); setDemoLoaded(true); }}
+              onClick={() => loadGuidedStep(guidedSteps.length - 1)}
               aria-label="Load the lesson example circuit and steps"
               className="text-xs font-mono px-3 py-1.5 rounded-lg border border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 transition-all"
             >
@@ -63,7 +83,7 @@ export default function CircuitBuilder({
             </button>
           )}
             <button
-              onClick={() => { clearCircuit(); setDemoLoaded(false); }}
+              onClick={clearGuidedExample}
               aria-label="Clear the circuit"
             className="text-xs text-muted hover:text-foreground transition-colors font-mono px-2 py-1 rounded hover:bg-border/20"
           >
@@ -84,6 +104,32 @@ export default function CircuitBuilder({
           </div>
           {experiment && (
             <div className="mt-3 border-t border-primary/15 pt-3">
+              {demoOps && guidedSteps.length > 0 && guidedStep !== null && (
+                <div className="mb-3 flex flex-wrap items-center justify-between gap-3 border-b border-primary/15 pb-3">
+                  <div>
+                    <p className="font-mono uppercase tracking-widest text-primary/80">Guided state</p>
+                    <p className="mt-1 text-primary/75">Step {guidedStep + 1} of {guidedSteps.length}: {guidedSteps[guidedStep].label}</p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => loadGuidedStep(guidedStep - 1)}
+                      disabled={guidedStep === 0}
+                      className="rounded border border-primary/30 px-2 py-1 font-mono text-[10px] text-primary transition hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                      previous
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => loadGuidedStep(guidedStep + 1)}
+                      disabled={guidedStep === guidedSteps.length - 1}
+                      className="rounded border border-primary/30 px-2 py-1 font-mono text-[10px] text-primary transition hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                      next
+                    </button>
+                  </div>
+                </div>
+              )}
               <p className="mb-2 font-mono uppercase tracking-widest text-primary/80">Walkthrough</p>
               <ol className="grid gap-2 md:grid-cols-2">
                 {experiment.steps.map((step, index) => (

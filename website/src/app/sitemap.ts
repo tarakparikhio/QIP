@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/run-on-ibm`, lastModified: new Date() },
     { url: `${siteUrl}/updates`, lastModified: new Date() },
     { url: `${siteUrl}/about`, lastModified: new Date() },
+    { url: `${siteUrl}/sources`, lastModified: new Date() },
     ...LESSONS.filter((lesson) => !lesson.upcoming).map((lesson) => ({
       url: `${siteUrl}/lessons/${lesson.slug}`,
       lastModified: new Date(),

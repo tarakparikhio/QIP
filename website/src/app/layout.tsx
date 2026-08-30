@@ -50,6 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <a href="/lessons" className="hover:text-foreground transition-colors">Lessons</a>
                 <a href="/playground" className="hover:text-foreground transition-colors">Playground</a>
                 <a href="/gates" className="hover:text-foreground transition-colors">Gates</a>
+                <a href="/sources" className="hidden lg:inline hover:text-foreground transition-colors">Sources</a>
                 <a href="/about" className="hidden sm:inline hover:text-foreground transition-colors">About</a>
                 <SettingsMenu />
               </div>
@@ -66,7 +67,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <footer className="border-t border-border/30 py-6 text-center text-xs text-muted/60">
             <div className="flex flex-col items-center gap-2">
               <span>Quantum Playground — A Beginner&apos;s Tool for Interactive Quantum Computing</span>
-              <a href="/about" className="hover:text-foreground transition-colors">About, scope &amp; feedback</a>
+              <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
+                <a href="/about" className="hover:text-foreground transition-colors">About, scope &amp; feedback</a>
+                <a href="/sources" className="hover:text-foreground transition-colors">Sources &amp; method</a>
+              </div>
               <BuyMeCoffee />
             </div>
           </footer>

@@ -30,7 +30,7 @@ export default function AboutPage() {
         </section>
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-2">Sources and independence</h2>
-          <p>This is an independent learning project, not an IBM, Qiskit, or hardware-provider product. The teaching material draws on standard quantum-information notation and publicly available documentation from the wider ecosystem. Use the linked provider documentation for current SDK behavior, account requirements, hardware availability, and pricing.</p>
+          <p>This is an independent learning project, not an IBM, Qiskit, or hardware-provider product. Lessons link to primary papers, university notes, and maintained official documentation so you can check definitions and assumptions at the source. The full editorial method and model boundary are on the <Link href="/sources" className="text-primary hover:underline">Sources and method page</Link>.</p>
         </section>
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-2">About the creator</h2>

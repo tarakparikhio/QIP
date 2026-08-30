@@ -17,6 +17,8 @@ import { LESSON_ORIENTATIONS } from '@/lib/lessonOrientations';
 import { cn } from '@/lib/utils';
 import ExperimentGuide from '@/components/lesson/ExperimentGuide';
 import LessonOrientation from '@/components/lesson/LessonOrientation';
+import LessonEvidence from '@/components/lesson/LessonEvidence';
+import LessonVisual from '@/components/lesson/LessonVisual';
 
 const CircuitBuilder = dynamic(() => import('@/components/circuit-builder/CircuitBuilder'), { ssr: false });
 
@@ -80,6 +82,8 @@ export default function LessonPageClient({ lesson, children }: Props) {
         <LessonOrientation lessonId={getDisplayLessonNumber(lesson.id)} data={LESSON_ORIENTATIONS[lesson.id]} />
       )}
 
+      <LessonVisual lessonId={lesson.id} />
+
       {/* MDX prose - Lesson content */}
       <motion.article
         initial={{ opacity: 0 }}
@@ -114,23 +118,33 @@ export default function LessonPageClient({ lesson, children }: Props) {
         <LessonQiskitSnippet snippet={LESSON_QISKIT_SNIPPETS[lesson.id]} />
       )}
 
-      {/* Playground section */}
-      <section className="mb-12">
-        <div className="mb-4">
-          <h2 className="mb-2 text-2xl font-bold">Interactive Playground</h2>
-          <p className="text-sm text-muted">
-            Start with an empty circuit. Follow the experiment guide, add gates yourself, and use Load Example only when you want to compare your work with the guided state.
-          </p>
-        </div>
-        {experiment && <ExperimentGuide lessonId={getDisplayLessonNumber(lesson.id)} experiment={experiment} />}
-        <CircuitBuilder
-          allowedGates={lesson.allowedGates}
-          numQubits={experiment?.numQubits ?? (lesson.allowedGates.includes('CNOT') ? 2 : 1)}
-          title={`Playground — ${lesson.title}`}
-          demoOps={experimentOps}
-          experiment={experiment?.mode === 'circuit' ? experiment : undefined}
-        />
-      </section>
+      <LessonEvidence lessonId={lesson.id} experiment={experiment} />
+
+      {/* Playground section: lessons with no allowed gates have no usable circuit builder. */}
+      {lesson.allowedGates.length > 0 ? (
+        <section className="mb-12">
+          <div className="mb-4">
+            <h2 className="mb-2 text-2xl font-bold">Interactive Playground</h2>
+            <p className="text-sm text-muted">
+              Start with an empty circuit. Follow the experiment guide, add gates yourself, and use Load Example only when you want to compare your work with the guided state.
+            </p>
+          </div>
+          {experiment && <ExperimentGuide lessonId={getDisplayLessonNumber(lesson.id)} experiment={experiment} />}
+          <CircuitBuilder
+            allowedGates={lesson.allowedGates}
+            numQubits={experiment?.numQubits ?? (lesson.allowedGates.includes('CNOT') ? 2 : 1)}
+            title={`Playground — ${lesson.title}`}
+            demoOps={experimentOps}
+            experiment={experiment?.mode === 'circuit' ? experiment : undefined}
+          />
+        </section>
+      ) : (
+        experiment && (
+          <section className="mb-12">
+            <ExperimentGuide lessonId={getDisplayLessonNumber(lesson.id)} experiment={experiment} />
+          </section>
+        )
+      )}
 
       {/* Quiz is the final lesson gate and completes the lesson automatically. */}
       {lesson.quiz && <LessonQuiz lesson={lesson} />}
