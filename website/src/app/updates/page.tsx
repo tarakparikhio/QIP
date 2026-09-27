@@ -19,13 +19,13 @@ export default function UpdatesPage() {
 
       <section className="mt-10" aria-label="Project updates">
         {PROJECT_UPDATES.map((update) => (
-          <article key={update.commit} className="border-b border-border/40 py-6 first:pt-0">
+          <article key={`${update.date}-${update.title}`} className="border-b border-border/40 py-6 first:pt-0">
             <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
               <h2 className="text-lg font-semibold text-foreground">{update.title}</h2>
               <time className="text-xs font-mono text-muted" dateTime={update.date}>{update.date}</time>
             </div>
             <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted">{update.summary}</p>
-            <p className="mt-3 text-xs font-mono text-primary/80">commit {update.commit}</p>
+            {update.commit && <p className="mt-3 text-xs font-mono text-primary/80">commit {update.commit}</p>}
           </article>
         ))}
       </section>

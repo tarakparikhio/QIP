@@ -26,7 +26,7 @@ export const useCircuitStore = create<CircuitState>((set, get) => ({
   operations: [],
   probabilities: [1, 0], // Initial state |0>
   amplitudes: [new Complex(1, 0), new Complex(0, 0)], // Initial state |0>
-  qubitBlochVectors: [{ x: 0, y: 0, z: 1, purity: 1 }], // Initial state |0⟩ → north pole
+  qubitBlochVectors: [{ x: 0, y: 0, z: 1, length: 1, purity: 1 }], // Initial state |0⟩ → north pole
 
   setNumQubits: (n) => {
     set({ numQubits: n, operations: [] });

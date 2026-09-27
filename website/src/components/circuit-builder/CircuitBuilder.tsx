@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 import GatePalette from './GatePalette';
 import CircuitGrid from './CircuitGrid';
@@ -8,7 +8,7 @@ import MeasurementSampler from '@/components/quantum-visuals/MeasurementSampler'
 import BlochSphere from '@/components/quantum-visuals/BlochSphere';
 import StateVector from '@/components/quantum-visuals/StateVector';
 import { useCircuitStore } from '@/lib/store/circuitStore';
-import { GateOperation } from '@/lib/quantum-engine/run';
+import { CircuitRunner, GateOperation } from '@/lib/quantum-engine/run';
 import type { LessonExperiment } from '@/lib/lessonExperiments';
 
 const MultiQubitBlochPanel = dynamic(
@@ -16,13 +16,33 @@ const MultiQubitBlochPanel = dynamic(
   { ssr: false },
 );
 
+export type TargetReward = {
+  /** Credits paid the first time the learner builds the target state themselves. */
+  credits: number;
+  alreadyAwarded: boolean;
+  onReached: () => void;
+};
+
 type Props = {
   allowedGates: string[];
   numQubits?: number;
   title?: string;
   demoOps?: GateOperation[];
   experiment?: LessonExperiment;
+  targetReward?: TargetReward;
 };
+
+/** |<a|b>|^2 for two state vectors: 1 means the same state up to a global phase. */
+function stateOverlap(a: { re: number; im: number }[], b: { re: number; im: number }[]): number {
+  if (a.length !== b.length) return 0;
+  let re = 0;
+  let im = 0;
+  for (let i = 0; i < a.length; i++) {
+    re += a[i].re * b[i].re + a[i].im * b[i].im;
+    im += a[i].re * b[i].im - a[i].im * b[i].re;
+  }
+  return re * re + im * im;
+}
 
 export default function CircuitBuilder({
   allowedGates,
@@ -30,8 +50,9 @@ export default function CircuitBuilder({
   title = 'Circuit Builder',
   demoOps,
   experiment,
+  targetReward,
 }: Props) {
-  const { setNumQubits, clearCircuit, loadOps } = useCircuitStore();
+  const { setNumQubits, clearCircuit, loadOps, operations, amplitudes, numQubits: storeQubits } = useCircuitStore();
   const [demoLoaded, setDemoLoaded] = useState(false);
   const [guidedStep, setGuidedStep] = useState<number | null>(null);
   const [selectedGateId, setSelectedGateId] = useState<string | null>(null);
@@ -43,6 +64,30 @@ export default function CircuitBuilder({
     setGuidedStep(null);
     setSelectedGateId(null);
   }, [clearCircuit, numQubits, setNumQubits]);
+
+  // Target state for the lesson experiment: the final state of the example circuit.
+  const targetAmplitudes = useMemo(() => {
+    if (!demoOps || demoOps.length === 0) return null;
+    const runner = new CircuitRunner(numQubits);
+    runner.run(demoOps);
+    return runner.state.amplitudes;
+  }, [demoOps, numQubits]);
+
+  const builtTargetYourself = Boolean(
+    targetAmplitudes
+      && !demoLoaded
+      && storeQubits === numQubits
+      && operations.length > 0
+      && stateOverlap(targetAmplitudes, amplitudes) > 1 - 1e-9,
+  );
+
+  const [justAwarded, setJustAwarded] = useState(false);
+  useEffect(() => {
+    if (builtTargetYourself && targetReward && !targetReward.alreadyAwarded) {
+      targetReward.onReached();
+      setJustAwarded(true);
+    }
+  }, [builtTargetYourself, targetReward]);
 
   const isMultiQubit = numQubits > 1;
   const guidedSteps = experiment?.mode === 'circuit' ? experiment.steps : [];
@@ -92,6 +137,19 @@ export default function CircuitBuilder({
         </div>
       </div>
 
+      {/* ── Target reached ── */}
+      {builtTargetYourself && (
+        <div className="border-b border-emerald-500/20 bg-emerald-500/10 px-5 py-3 text-sm text-emerald-300" role="status">
+          <strong>Target state reached.</strong> You built the experiment&apos;s final state yourself
+          {!targetReward ? '.' : justAwarded ? ` · +${targetReward.credits} credits earned!` : ' (bonus already collected).'}
+        </div>
+      )}
+      {targetReward && !targetReward.alreadyAwarded && !builtTargetYourself && (
+        <div className="border-b border-border/40 px-5 py-2 text-xs text-muted">
+          Bonus: build the experiment&apos;s target state yourself, without loading the example, for +{targetReward.credits} credits.
+        </div>
+      )}
+
       {/* ── Beginner hint ── */}
       {demoLoaded && (
         <div className="border-b border-primary/10 bg-primary/5 px-5 py-3 text-xs text-primary/80">
@@ -115,7 +173,7 @@ export default function CircuitBuilder({
                       type="button"
                       onClick={() => loadGuidedStep(guidedStep - 1)}
                       disabled={guidedStep === 0}
-                      className="rounded border border-primary/30 px-2 py-1 font-mono text-[10px] text-primary transition hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-40"
+                      className="rounded border border-primary/30 px-2 py-1 font-mono text-[11px] text-primary transition hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       previous
                     </button>
@@ -123,7 +181,7 @@ export default function CircuitBuilder({
                       type="button"
                       onClick={() => loadGuidedStep(guidedStep + 1)}
                       disabled={guidedStep === guidedSteps.length - 1}
-                      className="rounded border border-primary/30 px-2 py-1 font-mono text-[10px] text-primary transition hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-40"
+                      className="rounded border border-primary/30 px-2 py-1 font-mono text-[11px] text-primary transition hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       next
                     </button>

@@ -2,7 +2,7 @@
 import { InlineMath, BlockMath } from '@/components/math';
 import { NotationBox, TryIt } from '@/components/lesson';
 
-export default function Lesson36Content() {
+export default function Lesson11Content() {
   return (
     <>
       <NotationBox>
@@ -55,7 +55,18 @@ export default function Lesson36Content() {
         The theorem does not say that quantum information can never be transferred. It says that transfer and duplication are different operations, and an unknown state cannot be copied while leaving the original untouched.
       </p>
 
-      <TryIt heading="11.4 — Try It: CNOT is not a universal copier">
+      <h2>11.4 - Approximate copies and the limits of estimation</h2>
+      <p>
+        No-cloning forbids <em>perfect</em> copies, not approximate ones. Quality is measured by fidelity <InlineMath math="F = |\langle\psi|\phi\rangle|^2" />, where 1 means identical. The best universal quantum cloner (Bužek and Hillery, 1996) turns one unknown qubit into two copies with fidelity <InlineMath math="5/6 \approx 0.833" /> each, the same for every input.
+      </p>
+      <p>
+        The naive strategy, measuring the qubit and preparing two copies of your best guess, averages only <InlineMath math="2/3" />. One measurement returns one bit, and a single bit cannot pin down two continuous angles on the Bloch sphere.
+      </p>
+      <p>
+        <strong>Statistics lens:</strong> this is a sample-size limit. With <InlineMath math="n" /> identical copies you can estimate the state better and better (the best average fidelity is <InlineMath math="(n+1)/(n+2)" />), just as more coin flips estimate a bias more precisely. With one copy, the information simply is not there.
+      </p>
+
+      <TryIt heading="11.5 — Try It: CNOT is not a universal copier">
         <p>
           Prepare the control qubit in <InlineMath math="|+\rangle" /> with H, then apply CNOT with the second qubit as the target. The result is an entangled Bell state, not two independent copies of <InlineMath math="|+\rangle" />.
         </p>

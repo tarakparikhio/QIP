@@ -1,3 +1,5 @@
+import { QUIZ_EXTRAS } from './lessonQuizExtras';
+
 export type DemoOp = {
   gateId: string;
   targetQubit: number;
@@ -162,7 +164,7 @@ const QUIZZES: Record<number, LessonQuiz> = {
   },
   23: {
     prompt: 'Hamiltonian simulation is about modeling what?',
-    options: ['Only classical sorting', 'The time evolution of a physical system', 'A static webpage', 'Only single-gate circuits'],
+    options: ['Only classical sorting', 'The time evolution of a physical system', 'A single measurement outcome', 'Only single-gate circuits'],
     answer: 'b',
     explanation: 'Hamiltonian simulation studies how a quantum system evolves under a Hamiltonian over time.',
   },
@@ -272,6 +274,12 @@ const QUIZZES: Record<number, LessonQuiz> = {
 
 export function getLessonQuiz(lessonId: number): LessonQuiz | undefined {
   return QUIZZES[lessonId];
+}
+
+/** All questions for a lesson: the primary question followed by the extra checks. */
+export function getLessonQuestions(lessonId: number): LessonQuiz[] {
+  const primary = QUIZZES[lessonId];
+  return primary ? [primary, ...(QUIZ_EXTRAS[lessonId] ?? [])] : [];
 }
 
 export const LESSONS: LessonMeta[] = [
@@ -513,7 +521,7 @@ export const LESSONS: LessonMeta[] = [
     prerequisites: [9, 11, 13],
     objective: 'Recover a hidden XOR period with an exponential query advantage in the standard oracle model.',
     xp: 300,
-    allowedGates: ['H', 'X', 'Z', 'CNOT'],
+    allowedGates: ['H', 'X', 'CNOT'],
     challengeType: 'circuit',
     demoOps: [
       { gateId: 'H', targetQubit: 0 },
@@ -549,8 +557,8 @@ export const LESSONS: LessonMeta[] = [
     prerequisites: [8, 9, 4],
     objective: 'Encode logical qubits to protect against decoherence and gate errors.',
     xp: 400,
-    allowedGates: ['H', 'X', 'Z'],
-    challengeType: 'read',
+    allowedGates: ['H', 'X', 'CNOT'],
+    challengeType: 'circuit',
     demoOps: [
       { gateId: 'H', targetQubit: 0 },
       { gateId: 'X', targetQubit: 0 },
@@ -567,7 +575,7 @@ export const LESSONS: LessonMeta[] = [
     prerequisites: [4, 9, 3],
     objective: 'Transmit an arbitrary qubit state using entanglement and classical bits.',
     xp: 300,
-    allowedGates: ['H', 'X', 'Z', 'CNOT'],
+    allowedGates: ['H', 'X', 'Z', 'RX', 'T', 'CNOT', 'CZ'],
     challengeType: 'circuit',
     demoOps: [
       { gateId: 'H', targetQubit: 0 },
@@ -585,8 +593,8 @@ export const LESSONS: LessonMeta[] = [
     prerequisites: [7, 8, 3],
     objective: 'Represent mixed states and open quantum systems with density operators.',
     xp: 350,
-    allowedGates: ['H', 'X', 'Z'],
-    challengeType: 'read',
+    allowedGates: ['H', 'X', 'Z', 'CNOT'],
+    challengeType: 'circuit',
     demoOps: [
       { gateId: 'H', targetQubit: 0 },
       { gateId: 'Z', targetQubit: 0 },
@@ -621,7 +629,7 @@ export const LESSONS: LessonMeta[] = [
     prerequisites: [9, 11, 18],
     objective: 'Design hybrid classical-quantum loops for near-term quantum hardware.',
     xp: 400,
-    allowedGates: ['H', 'X', 'Z', 'S'],
+    allowedGates: ['RY', 'H'],
     challengeType: 'circuit',
     demoOps: [
       { gateId: 'H', targetQubit: 0 },
@@ -656,8 +664,8 @@ export const LESSONS: LessonMeta[] = [
     prerequisites: [21],
     objective: 'See how phase estimation turns eigenvalue information into useful algorithmic output.',
     xp: 450,
-    allowedGates: ['H', 'S', 'CNOT'],
-    challengeType: 'read',
+    allowedGates: ['H', 'X', 'Z', 'CZ'],
+    challengeType: 'circuit',
     demoOps: [
       { gateId: 'H', targetQubit: 0 },
       { gateId: 'S', targetQubit: 0 },
@@ -773,7 +781,7 @@ export const LESSONS: LessonMeta[] = [
     prerequisites: [20],
     objective: 'Estimate ground-state energies with a parameterized circuit and a classical optimizer.',
     xp: 500,
-    allowedGates: ['H', 'X', 'Y', 'Z', 'S'],
+    allowedGates: ['RY', 'H'],
     challengeType: 'circuit',
     quiz: getLessonQuiz(30),
     demoOps: [
@@ -830,8 +838,8 @@ export const LESSONS: LessonMeta[] = [
     prerequisites: [10, 22, 28],
     objective: 'Derive phase kickback as the mechanism behind several quantum algorithmic speedups.',
     xp: 400,
-    allowedGates: ['H', 'X', 'Z', 'CNOT'],
-    challengeType: 'read',
+    allowedGates: ['H', 'X', 'Z', 'CNOT', 'CZ'],
+    challengeType: 'circuit',
     quiz: getLessonQuiz(34),
   },
   {
@@ -869,8 +877,8 @@ export const LESSONS: LessonMeta[] = [
     prerequisites: [5, 9, 10],
     objective: 'See how an oracle and diffusion step amplify marked solutions in an unstructured search problem.',
     xp: 350,
-    allowedGates: ['H', 'X', 'Z', 'CNOT'],
-    challengeType: 'read',
+    allowedGates: ['H', 'X', 'Z', 'CNOT', 'CZ'],
+    challengeType: 'circuit',
     quiz: getLessonQuiz(37),
   },
   {
@@ -931,6 +939,15 @@ export const ORDERED_LESSONS: LessonMeta[] = CURRICULUM_ORDER.map((id) => {
 export function getDisplayLessonNumber(lessonId: number): number {
   const index = ORDERED_LESSONS.findIndex((lesson) => lesson.id === lessonId);
   return index >= 0 ? index + 1 : lessonId;
+}
+
+/**
+ * The learner's current lesson: the first lesson in curriculum order that is not
+ * yet completed. Deriving it (instead of storing "the lesson after the last one
+ * completed") keeps earlier lessons unlocked when someone jumps ahead by URL.
+ */
+export function getFirstIncompleteLesson(completedSlugs: string[]): LessonMeta | undefined {
+  return ORDERED_LESSONS.find((lesson) => !lesson.upcoming && !completedSlugs.includes(lesson.slug));
 }
 
 export function getNextLesson(lessonId: number): LessonMeta | undefined {

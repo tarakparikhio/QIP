@@ -18,7 +18,7 @@ export default function Lesson01Content() {
 
         <NotationBox.Item heading="Complex Numbers & Probability">
           <NotationBox.Text>
-            A complex number <InlineMath math="z = a + bi" /> has magnitude <InlineMath math="|z| = \sqrt{a^2 + b^2}" /> and phase <InlineMath math="\theta = \arctan(b/a)" />. The <strong>Born Rule</strong> bridges amplitudes to probabilities:
+            A complex number <InlineMath math="z = a + bi" /> has magnitude <InlineMath math="|z| = \sqrt{a^2 + b^2}" /> and phase <InlineMath math="\theta = \arg z" />, the angle of the point <InlineMath math="(a, b)" /> measured from the positive real axis. (The shortcut <InlineMath math="\arctan(b/a)" /> gives this angle only when <InlineMath math="a > 0" />; for <InlineMath math="z = -1" /> the phase is <InlineMath math="\pi" />, not 0.) The <strong>Born Rule</strong> bridges amplitudes to probabilities:
           </NotationBox.Text>
           <NotationBox.Formula math="P(\text{outcome}) = |\text{amplitude}|^2" />
         </NotationBox.Item>

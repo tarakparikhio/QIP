@@ -18,7 +18,14 @@ export default function AboutPage() {
       <div className="space-y-7 text-foreground/80 leading-relaxed">
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-2">How to use it</h2>
-          <p>Start with the lessons, use the supplied circuit example, then alter one gate at a time and observe the resulting state and probabilities. New lessons are planned in small batches, so the path can grow without making the foundation feel rushed.</p>
+          <p>The course has 40 lessons in three levels, from what a qubit is to Shor&apos;s algorithm, error correction, and real hardware. Each lesson follows the same pattern:</p>
+          <ol className="mt-3 list-decimal space-y-1.5 pl-5">
+            <li><strong className="text-foreground">Read</strong> the idea, with the math worked out step by step.</li>
+            <li><strong className="text-foreground">Build</strong> the circuit in the lesson&apos;s playground, predict the result, then run it.</li>
+            <li><strong className="text-foreground">Practice the math</strong> with short numeric problems. Each one connects the idea to probability and statistics you already know.</li>
+            <li><strong className="text-foreground">Check yourself</strong> with a three-question quiz. Credits reward first-try answers, and you can retake a check to raise your mastery.</li>
+          </ol>
+          <p className="mt-3">Your progress, credits, and streaks are saved in your browser only. Nothing is sent to a server, and there is no account to create.</p>
         </section>
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-2">What the simulator shows</h2>
@@ -26,7 +33,7 @@ export default function AboutPage() {
         </section>
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-2">Scope</h2>
-          <p>Lessons prioritize accurate intuition, core mathematics, and small circuits. Algorithm demonstrations are intentionally scaled down where a complete oracle, quantum Fourier transform, or error model would require more qubits and infrastructure than this beginner playground provides.</p>
+          <p>Lessons prioritize accurate intuition, core mathematics, and small circuits. Complete small instances run directly in the playground, including teleportation, a 3-qubit error-correcting code, two-qubit Grover search, Simon&apos;s algorithm, and phase estimation. Larger algorithms, such as Shor&apos;s period finding and a multi-qubit QFT, are shown in the Qiskit code labs, which run on your own computer. Every code lab is tested against Qiskit 2.x, and every practice answer is recomputed automatically.</p>
         </section>
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-2">Sources and independence</h2>
@@ -39,7 +46,7 @@ export default function AboutPage() {
         </section>
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-2">Feedback</h2>
-          <p>If something is unclear or mathematically misleading, please share it through the project&apos;s repository. Specific examples—lesson number, circuit, and expected outcome—are especially helpful.</p>
+          <p>If something is unclear or mathematically misleading, please <a href="https://github.com/tarakparikhio/QIP/issues/new" target="_blank" rel="noreferrer" className="text-primary hover:underline">open an issue on GitHub</a>. Every lesson also has a &ldquo;Report it on GitHub&rdquo; link that fills in the lesson for you. Specific examples, such as the lesson number, circuit, and expected outcome, are especially helpful.</p>
         </section>
       </div>
 

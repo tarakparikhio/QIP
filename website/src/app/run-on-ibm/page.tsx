@@ -95,7 +95,7 @@ export default function RunOnIBMPage() {
           Use this page beside a terminal. You will build a Bell-state circuit, test it locally, then submit the same idea to real IBM Quantum hardware.
         </p>
         <div className="mt-6 flex flex-wrap gap-3 text-sm">
-          <a href="https://quantum.ibm.com/" target="_blank" rel="noreferrer" className="rounded-lg bg-primary px-4 py-2 font-semibold text-white transition hover:bg-primary/90">Open IBM Quantum</a>
+          <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noreferrer" className="rounded-lg bg-primary px-4 py-2 font-semibold text-white transition hover:bg-primary/90">Open IBM Quantum</a>
           <Link href="/lessons/entanglement" className="rounded-lg border border-border px-4 py-2 text-muted transition hover:border-primary/50 hover:text-foreground">Review entanglement</Link>
         </div>
       </div>
@@ -139,12 +139,12 @@ export default function RunOnIBMPage() {
           <p className="mb-2 text-xs font-mono uppercase tracking-widest text-primary">Step 3</p>
           <h2 className="text-2xl font-semibold">Create an IBM Quantum account</h2>
           <ol className="mt-4 list-decimal space-y-3 pl-5 text-sm leading-relaxed text-foreground/80">
-            <li>Open <a href="https://quantum.ibm.com/" target="_blank" rel="noreferrer" className="text-primary hover:underline">IBM Quantum</a> and sign in or create an account.</li>
-            <li>Open your account or API-token settings and create a token.</li>
-            <li>Copy your instance name if IBM shows one. Access can depend on your account plan and instance.</li>
+            <li>Open <a href="https://quantum.cloud.ibm.com/" target="_blank" rel="noreferrer" className="text-primary hover:underline">IBM Quantum</a> and sign in or create an account.</li>
+            <li>On the dashboard, create an API key. Copy it somewhere safe: it is shown only once.</li>
+            <li>Open the Instances page and copy your instance&apos;s CRN (a long identifier starting with <code className="text-primary">crn:</code>). The free Open Plan includes a limited amount of hardware time each month.</li>
           </ol>
           <p className="mt-4 text-sm leading-relaxed text-muted">Set the values in your terminal. Replace the placeholder values only on your own machine:</p>
-          <div className="mt-4"><CodeBlock code={`export IBM_QUANTUM_TOKEN="paste-your-token-here"\nexport IBM_QUANTUM_INSTANCE="your/instance/name"`} label="Terminal" /></div>
+          <div className="mt-4"><CodeBlock code={`export IBM_QUANTUM_TOKEN="paste-your-token-here"\nexport IBM_QUANTUM_INSTANCE="crn:v1:your-instance-crn"`} label="Terminal" /></div>
         </section>
 
         <section>
@@ -188,7 +188,7 @@ export default function RunOnIBMPage() {
             <h3 className="font-semibold">Ecosystem note</h3>
             <p className="mt-2 text-sm leading-relaxed text-muted">Quantum Playground is an independent educational project, not an IBM product and not affiliated with IBM. Qiskit and IBM Quantum are one path into quantum programming; other active ecosystems include PennyLane, Cirq, Amazon Braket, Azure Quantum, CUDA-Q, and hardware providers such as Quantinuum and IonQ. The concepts transfer, but APIs, backends, pricing, and account requirements differ.</p>
             <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs">
-              <a href="https://docs.quantum.ibm.com/" target="_blank" rel="noreferrer" className="text-primary hover:underline">IBM Quantum docs</a>
+              <a href="https://quantum.cloud.ibm.com/docs" target="_blank" rel="noreferrer" className="text-primary hover:underline">IBM Quantum docs</a>
               <a href="https://qiskit.qotlabs.org/" target="_blank" rel="noreferrer" className="text-primary hover:underline">Qiskit docs</a>
               <a href="https://pennylane.ai/" target="_blank" rel="noreferrer" className="text-primary hover:underline">PennyLane</a>
               <a href="https://quantumai.google/cirq" target="_blank" rel="noreferrer" className="text-primary hover:underline">Cirq</a>

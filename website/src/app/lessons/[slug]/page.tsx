@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import { siteUrl } from '@/lib/site';
 import { getLessonBySlug, LESSONS } from '@/lib/lessons';
 import LessonPageClient from './LessonPageClient';
 import Lesson01 from '@/content/lessons/01-birth-of-quantum-information';
@@ -54,19 +55,26 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const title = `${lesson.title} — Quantum Playground`;
   const description = `${lesson.objective} Learn quantum computing step by step with interactive circuit simulations.`;
 
+  const path = `/lessons/${lesson.slug}/`;
+  const images = siteUrl ? [{ url: '/og-image.png', width: 1200, height: 630, alt: title }] : undefined;
+
   return {
     title,
     description,
+    alternates: siteUrl ? { canonical: path } : undefined,
     openGraph: {
       title,
       description,
       type: 'article',
       siteName: 'Quantum Playground',
+      url: siteUrl ? path : undefined,
+      images,
     },
     twitter: {
-      card: 'summary',
+      card: siteUrl ? 'summary_large_image' : 'summary',
       title,
       description,
+      images: siteUrl ? ['/og-image.png'] : undefined,
     },
   };
 }

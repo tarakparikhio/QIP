@@ -2,7 +2,7 @@
 import { InlineMath, BlockMath } from '@/components/math';
 import { NotationBox, TryIt } from '@/components/lesson';
 
-export default function Lesson07Content() {
+export default function Lesson06Content() {
   return (
     <>
       <NotationBox>

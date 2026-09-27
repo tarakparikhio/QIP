@@ -36,13 +36,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="min-h-screen flex flex-col">
           <nav className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-md">
             <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4">
-              <a href="/" className="flex items-center gap-2 group">
-                <div className="w-7 h-7 rounded-md bg-primary/20 border border-primary/40 flex items-center justify-center text-xs font-mono text-primary group-hover:glow-primary transition-all">
+              <a href="/" className="flex min-w-0 items-center gap-2 group">
+                <div className="w-7 h-7 shrink-0 rounded-md bg-primary/20 border border-primary/40 flex items-center justify-center text-xs font-mono text-primary group-hover:glow-primary transition-all">
                   ▶
                 </div>
-                <div>
+                <div className="min-w-0 whitespace-nowrap">
                   <span className="font-semibold text-sm tracking-wide">Quantum Playground</span>
-                  <span className="hidden sm:inline text-xs text-muted font-normal ml-2">A Beginner&apos;s Tool</span>
+                  <span className="hidden lg:inline text-xs text-muted font-normal ml-2">Learn quantum computing by doing</span>
                 </div>
               </a>
               <div className="hidden items-center gap-4 text-sm text-muted md:flex">
@@ -64,9 +64,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="flex-1">
             {children}
           </main>
-          <footer className="border-t border-border/30 py-6 text-center text-xs text-muted/60">
+          <footer className="border-t border-border/30 px-4 py-6 text-center text-xs text-muted">
             <div className="flex flex-col items-center gap-2">
-              <span>Quantum Playground — A Beginner&apos;s Tool for Interactive Quantum Computing</span>
+              <span>Quantum Playground: interactive lessons and a live circuit simulator for learning quantum computing</span>
               <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
                 <a href="/about" className="hover:text-foreground transition-colors">About, scope &amp; feedback</a>
                 <a href="/sources" className="hover:text-foreground transition-colors">Sources &amp; method</a>

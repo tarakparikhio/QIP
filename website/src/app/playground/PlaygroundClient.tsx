@@ -235,7 +235,7 @@ export default function PlaygroundClient() {
               className="text-xs font-mono px-3 py-1.5 rounded-lg border border-primary/20 bg-primary/5 text-primary/80 hover:bg-primary/15 hover:border-primary/50 transition-all"
             >
               {p.label}
-              <span className="ml-1.5 text-[10px] text-primary/50">{p.qubits}q</span>
+              <span className="ml-1.5 text-[11px] text-primary/50">{p.qubits}q</span>
             </button>
           ))}
         </div>

@@ -70,12 +70,12 @@ export default function GatePalette({ allowedGates, selectedGateId, onSelectGate
               >
                 {info.label}
               </motion.button>
-              <span className="text-[10px] text-muted/60 font-mono text-center max-w-[64px] leading-tight">{info.desc.split(' — ')[0]}</span>
+              <span className="text-[11px] text-muted/60 font-mono text-center max-w-[64px] leading-tight">{info.desc.split(' — ')[0]}</span>
             </motion.div>
           );
         })}
       </div>
-      <p className="text-xs text-muted/40 font-mono">
+      <p className="text-xs text-muted/60 font-mono">
         {selectedGateId ? `Selected ${selectedGateId}. Click a wire slot to place it.` : 'Right-click a gate in the circuit to remove it.'}
         {numQubits > 1 ? ' Controlled gates use the clicked wire as control.' : ''}
       </p>

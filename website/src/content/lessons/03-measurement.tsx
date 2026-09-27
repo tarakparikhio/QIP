@@ -1,5 +1,6 @@
 'use client';
 import { InlineMath, BlockMath } from '@/components/math';
+import ShotLab from '@/components/labs/ShotLab';
 
 export default function Lesson03Content() {
   return (
@@ -79,12 +80,25 @@ export default function Lesson03Content() {
         <li>Result: certain outcome, no randomness — the state was already a basis state in this measurement basis.</li>
       </ol>
 
-      <h2>3.4 — The No-Cloning Theorem</h2>
+      <h2>3.4 — Measurement Is Sampling</h2>
+      <p>
+        A single measurement returns one outcome, never the probabilities themselves. To learn <InlineMath math="P(1)" /> you repeat the preparation and measurement many times (each repetition is a <strong>shot</strong>) and count. This is exactly how you would estimate the bias of a coin.
+      </p>
+      <p>
+        If each shot gives 1 with probability <InlineMath math="p" />, the number of 1s in <InlineMath math="N" /> shots follows a binomial distribution. The estimate <InlineMath math="\hat p = k/N" /> is unbiased, and its standard error is:
+      </p>
+      <BlockMath math="\mathrm{SE}(\hat p) = \sqrt{\frac{p(1-p)}{N}}" />
+      <p>
+        For <InlineMath math="H|0\rangle" />, <InlineMath math="p = 0.5" />: with 100 shots, <InlineMath math="\hat p" /> typically lands within about <InlineMath math="\pm 0.10" /> of 0.5 (95% of the time); with 10,000 shots, within about <InlineMath math="\pm 0.01" />. Ten times more precision costs a hundred times more shots.
+      </p>
+      <ShotLab />
+
+      <h2>3.5 — The No-Cloning Theorem</h2>
       <p>
         It is <strong>impossible to copy an arbitrary unknown quantum state</strong> with one universal physical operation. If a unitary could map <InlineMath math="|\psi\rangle|0\rangle" /> to <InlineMath math="|\psi\rangle|\psi\rangle" /> for every <InlineMath math="|\psi\rangle" />, it would fail to preserve inner products. This is the No-Cloning Theorem; it is a consequence of linearity and unitarity, not merely of measurement disturbance.
       </p>
 
-      <h2>3.5 — Try It: Measure After H</h2>
+      <h2>3.6 — Try It: Measure After H</h2>
       <p>
         Apply <strong>H</strong> to the qubit, then observe the probability bars. The circuit simulator shows the theoretical probabilities. In a real quantum computer, each run produces a single outcome; only averaging many shots recovers the distribution.
       </p>

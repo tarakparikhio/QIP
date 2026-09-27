@@ -88,7 +88,12 @@ export interface BlochVector {
   x: number;
   y: number;
   z: number;
-  /** Length of the Bloch vector. 1 = pure state, <1 = mixed (entangled) qubit. */
+  /** Length |r| of the Bloch vector: 1 on the sphere surface, 0 at the center. */
+  length: number;
+  /**
+   * Purity Tr(rho^2) = (1 + |r|^2) / 2 of the reduced single-qubit state.
+   * 1 for a pure qubit, 0.5 for a maximally mixed one (e.g. half of a Bell pair).
+   */
   purity: number;
 }
 
@@ -132,9 +137,11 @@ export function computeQubitBlochVectors(amplitudes: Complex[], numQubits: numbe
     const x = 2 * rho01Re;
     const y = -2 * rho01Im;
     const z = rho00 - rho11;
-    const purity = Math.sqrt(x * x + y * y + z * z);
+    const lengthSq = x * x + y * y + z * z;
+    const length = Math.sqrt(lengthSq);
+    const purity = (1 + lengthSq) / 2;
 
-    result.push({ x, y, z, purity });
+    result.push({ x, y, z, length, purity });
   }
 
   return result;

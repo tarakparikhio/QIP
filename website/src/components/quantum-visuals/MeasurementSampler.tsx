@@ -51,13 +51,13 @@ export default function MeasurementSampler() {
             Sample the exact state locally as if the circuit were run repeatedly on a device.
           </p>
         </div>
-        <span className="rounded-full border border-accent/30 bg-accent/10 px-2 py-1 text-[10px] font-mono uppercase tracking-wider text-accent">
+        <span className="rounded-full border border-accent/30 bg-accent/10 px-2 py-1 text-[11px] font-mono uppercase tracking-wider text-accent">
           browser only
         </span>
       </div>
 
       <div className="flex flex-wrap items-end gap-3">
-        <label className="flex flex-col gap-1 text-[10px] font-mono uppercase tracking-wider text-muted">
+        <label className="flex flex-col gap-1 text-[11px] font-mono uppercase tracking-wider text-muted">
           Shots
           <select
             value={shots}
@@ -69,7 +69,7 @@ export default function MeasurementSampler() {
             ))}
           </select>
         </label>
-          <label className="flex flex-col gap-1 text-[10px] font-mono uppercase tracking-wider text-muted">
+          <label className="flex flex-col gap-1 text-[11px] font-mono uppercase tracking-wider text-muted">
             Basis
             <select
               value={basis}

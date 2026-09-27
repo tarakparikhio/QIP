@@ -88,7 +88,7 @@ export const LESSON_ORIENTATIONS: Record<number, LessonOrientation> = {
     definition: "Simon's algorithm uses repeated quantum samples to discover a hidden XOR relationship inside a two-to-one function.",
     softwareLens: 'Think of it as learning a hidden invariant from an API that hides its internal key. The quantum part produces equations; classical linear algebra solves them.',
     hardwareLens: 'The oracle requires coordinated multi-qubit operations, and repeated measurements must be reliable enough to collect independent constraints.',
-    mathBridge: 'Each sample gives a bit string y satisfying y dot s = 0 modulo 2. We emphasize the small toy circuit before the full linear-algebra workflow.',
+    mathBridge: 'Each sample gives a bit string y satisfying y dot s = 0 modulo 2. We run a complete two-bit instance, then scale the idea up with the birthday-problem comparison.',
   },
   15: {
     definition: "Shor's algorithm factors integers by turning modular arithmetic into a period-finding problem and solving that period with quantum interference.",
@@ -100,13 +100,13 @@ export const LESSON_ORIENTATIONS: Record<number, LessonOrientation> = {
     definition: 'Quantum error correction stores one logical qubit across several physical qubits so errors can be detected and corrected without directly reading the logical information.',
     softwareLens: 'This is redundancy with a quantum constraint: the system records an error syndrome while protecting the data state from direct inspection.',
     hardwareLens: 'A useful logical qubit needs many physical qubits, repeated syndrome measurements, fast feedback, and error rates below a threshold.',
-    mathBridge: 'We use code words, parity checks, and syndromes before introducing full stabilizer notation. The builder does not simulate a real code.',
+    mathBridge: 'We use code words, parity checks, and syndromes before introducing full stabilizer notation. The playground runs the full 3-qubit code with syndrome qubits.',
   },
   17: {
     definition: 'Quantum teleportation transfers an unknown qubit state using a shared entangled pair plus two ordinary classical bits; it does not transport matter or information faster than light.',
     softwareLens: 'It is a protocol with a shared resource, a local transformation, a classical message, and conditional operations at the receiver.',
     hardwareLens: 'The protocol needs an entangled pair, local two-qubit gates, measurement hardware, and classical feed-forward to apply corrections.',
-    mathBridge: 'We rewrite the joint state in the Bell basis to see why the receiver has one of four related states. The current builder shows the unitary skeleton only.',
+    mathBridge: 'We rewrite the joint state in the Bell basis to see why the receiver has one of four related states. The playground runs the whole protocol, with controlled corrections standing in for the classical message.',
   },
   18: {
     definition: 'A density matrix describes a quantum state when we need to represent uncertainty, mixtures, or a subsystem of an entangled larger system.',

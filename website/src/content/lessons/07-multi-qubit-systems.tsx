@@ -2,7 +2,7 @@
 import { InlineMath, BlockMath } from '@/components/math';
 import { NotationBox, TryIt } from '@/components/lesson';
 
-export default function Lesson08Content() {
+export default function Lesson07Content() {
   return (
     <>
       <NotationBox>
@@ -57,6 +57,9 @@ export default function Lesson08Content() {
       <BlockMath math="|01\rangle \equiv \text{qubit 0 is } |0\rangle \text{ and qubit 1 is } |1\rangle" />
       <p>
         This matches binary counting: <InlineMath math="|00\rangle = 0, |01\rangle = 1, |10\rangle = 2, |11\rangle = 3" />.
+      </p>
+      <p>
+        <strong>Watch out when you switch to Qiskit.</strong> Qiskit uses the opposite (little-endian) convention: qubit 0 is the <em>rightmost</em> bit. Both conventions describe the same physics; only the labels are reversed. If you apply X to qubit 0 of a two-qubit register, this playground shows <InlineMath math="|10\rangle" />, while Qiskit reports the outcome <code>01</code>. When comparing results, reverse the bitstring.
       </p>
       <p>
         A general 2-qubit state is a superposition of all four basis states:

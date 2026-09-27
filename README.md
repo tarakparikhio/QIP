@@ -1,6 +1,6 @@
-# QCML
+# QCML (Quantum Playground)
 
-QCML is a quantum-computing learning platform built to make difficult material structured, visual, and approachable for software engineers. The main deliverable is the static-exportable Next.js website in `website/`.
+QCML is the repository for **Quantum Playground**, a quantum-computing learning platform built to make difficult material structured, visual, and approachable for software engineers. The main deliverable is the static-exportable Next.js website in `website/`.
 
 The result is a productized learning system with 40 lessons, interactive circuit and state-vector tools, quizzes, equation explanations, Qiskit examples, and a clear explanation of simulator limitations.
 
@@ -16,6 +16,7 @@ For a recruiter or reviewer, this repo demonstrates product thinking, technical 
 
 - 40 lessons in the curriculum
 - 40 out of 40 lessons validated by the published-lesson checker
+- three-question lesson checks (120 questions), 121 verified practice problems with a statistics lens, and four interactive labs (interference, shots, energy, Trotter)
 - interactive circuit builder, Bloch sphere, state vectors, probabilities, and multi-qubit views
 - equation breakdowns and copyable Qiskit 2.x examples
 - local quiz validation and persistent learning progress
@@ -97,6 +98,7 @@ npm --prefix website run dev
 npm --prefix website run typecheck
 npm --prefix website run lint
 npm --prefix website run check:lessons
+npm --prefix website run test:engine
 npm --prefix website run build
 ```
 
@@ -104,11 +106,18 @@ Open `http://localhost:3000` after starting the dev server.
 
 ## Validation
 
-The release checks currently pass:
+The release checks, also run in CI (`.github/workflows/quick-validate.yml`):
+- quantum engine and practice tests (`npm run test:engine`): known states, Bloch vectors, the sampler, random circuits cross-checked against a dense-matrix reference, and an independent recomputation of every practice answer
+- 40-lesson coverage and KaTeX validation
 - TypeScript typecheck
 - Next.js lint
-- 40-lesson coverage and KaTeX validation
 - production static build
+
+## Conventions worth knowing
+
+- **Qubit order:** the playground writes qubit 0 as the left-most bit (`|q0 q1 ...>`). Qiskit writes qubit 0 as the right-most bit. Exported code prints both orders, and lessons call this out.
+- **Progress storage:** learner progress is stored in the browser under the `qcpath-progress` key. Renaming that key would reset every learner's progress.
+- **Site URL:** `website/.env.production` sets `NEXT_PUBLIC_SITE_URL`, which drives canonical links, Open Graph images, and `sitemap.xml`. Update it if the site moves to a custom domain.
 
 ## For Recruiters
 

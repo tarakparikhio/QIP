@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-09T06:31:15.250Z",
+  "generatedAt": "2026-09-27T05:29:44.428Z",
   "lessonCount": 40,
   "tagsByLesson": {
     "birth-of-quantum-information": [
@@ -58,6 +58,7 @@
       "strong"
     ],
     "multi-qubit-systems": [
+      "code",
       "em",
       "h2",
       "li",
@@ -87,15 +88,26 @@
       "strong"
     ],
     "quantum-teleportation": [
-      "h2",
-      "p",
-      "strong"
-    ],
-    "no-cloning-theorem": [
+      "div",
       "h2",
       "li",
       "ol",
-      "p"
+      "p",
+      "strong",
+      "table",
+      "tbody",
+      "td",
+      "th",
+      "thead",
+      "tr"
+    ],
+    "no-cloning-theorem": [
+      "em",
+      "h2",
+      "li",
+      "ol",
+      "p",
+      "strong"
     ],
     "phase-kickback": [
       "h2",
@@ -106,82 +118,120 @@
     ],
     "decoherence": [
       "h2",
+      "li",
+      "ol",
       "p",
-      "pre",
       "strong"
     ],
     "quantum-noise-and-errors": [
       "h2",
+      "li",
+      "ol",
       "p",
-      "pre",
       "strong"
     ],
     "density-matrices": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
     "measurement-theory-deep": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
     "universal-gate-sets": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
     "quantum-error-correction": [
+      "div",
       "h2",
+      "li",
+      "ol",
       "p",
-      "strong"
+      "strong",
+      "table",
+      "tbody",
+      "td",
+      "th",
+      "thead",
+      "tr"
     ],
     "deutsch-jozsa": [
+      "em",
       "h2",
       "p",
       "strong"
     ],
     "simons-algorithm": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
     "grovers-search-algorithm": [
+      "em",
       "h2",
-      "p"
+      "li",
+      "ol",
+      "p",
+      "strong"
     ],
     "quantum-fourier-transform": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
     "quantum-fourier-transform-qft": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
     "qft-circuit-implementation": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
     "phase-estimation": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
     "phase-estimation-deep": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
     "shors-algorithm": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
     "quantum-complexity": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
@@ -192,16 +242,22 @@
     ],
     "variational-quantum-eigensolver-vqe": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
     "quantum-approximate-optimization-algorithm-qaoa": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
     "hamiltonian-simulation": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
@@ -212,33 +268,53 @@
     ],
     "quantum-annealing": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
     "adiabatic-quantum-computation": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
     "quantum-cryptography-bb84": [
+      "div",
       "h2",
-      "p"
+      "p",
+      "table",
+      "tbody",
+      "td",
+      "th",
+      "thead",
+      "tr"
     ],
     "quantum-hardware-platforms": [
       "h2",
-      "p"
+      "p",
+      "strong"
     ],
     "quantum-compilation-and-transpilation": [
+      "em",
       "h2",
-      "p"
+      "li",
+      "ol",
+      "p",
+      "strong"
     ],
     "phase-kickback-advanced": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ],
     "phase-amplitude-and-interference-advanced-view": [
       "h2",
+      "li",
+      "ol",
       "p",
       "strong"
     ]
@@ -328,16 +404,19 @@
     ],
     "measurement-theory-deep": [
       "BlockMath",
+      "InlineMath",
       "NotationBox",
       "TryIt"
     ],
     "universal-gate-sets": [
       "BlockMath",
+      "InlineMath",
       "NotationBox",
       "TryIt"
     ],
     "quantum-error-correction": [
       "BlockMath",
+      "InlineMath",
       "NotationBox",
       "TryIt"
     ],
@@ -366,21 +445,25 @@
     ],
     "quantum-fourier-transform-qft": [
       "BlockMath",
+      "InlineMath",
       "NotationBox",
       "TryIt"
     ],
     "qft-circuit-implementation": [
       "BlockMath",
+      "InlineMath",
       "NotationBox",
       "TryIt"
     ],
     "phase-estimation": [
       "BlockMath",
+      "InlineMath",
       "NotationBox",
       "TryIt"
     ],
     "phase-estimation-deep": [
       "BlockMath",
+      "InlineMath",
       "NotationBox",
       "TryIt"
     ],
@@ -404,31 +487,37 @@
     ],
     "variational-quantum-eigensolver-vqe": [
       "BlockMath",
+      "InlineMath",
       "NotationBox",
       "TryIt"
     ],
     "quantum-approximate-optimization-algorithm-qaoa": [
       "BlockMath",
+      "InlineMath",
       "NotationBox",
       "TryIt"
     ],
     "hamiltonian-simulation": [
       "BlockMath",
+      "InlineMath",
       "NotationBox",
       "TryIt"
     ],
     "hamiltonian-simulation-deep": [
       "BlockMath",
+      "InlineMath",
       "NotationBox",
       "TryIt"
     ],
     "quantum-annealing": [
       "BlockMath",
+      "InlineMath",
       "NotationBox",
       "TryIt"
     ],
     "adiabatic-quantum-computation": [
       "BlockMath",
+      "InlineMath",
       "NotationBox",
       "TryIt"
     ],
@@ -438,20 +527,26 @@
       "NotationBox"
     ],
     "quantum-hardware-platforms": [
-      "NotationBox"
+      "BlockMath",
+      "InlineMath",
+      "NotationBox",
+      "TryIt"
     ],
     "quantum-compilation-and-transpilation": [
       "BlockMath",
+      "InlineMath",
       "NotationBox",
       "TryIt"
     ],
     "phase-kickback-advanced": [
       "BlockMath",
+      "InlineMath",
       "NotationBox",
       "TryIt"
     ],
     "phase-amplitude-and-interference-advanced-view": [
       "BlockMath",
+      "InlineMath",
       "NotationBox",
       "TryIt"
     ]

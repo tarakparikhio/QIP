@@ -1,7 +1,7 @@
 'use client';
 import { InlineMath, BlockMath } from '@/components/math';
 
-export default function Lesson04Content() {
+export default function Lesson08Content() {
   return (
     <>
       {/* Foundational Context Section */}
@@ -87,7 +87,26 @@ export default function Lesson04Content() {
       </p>
       <BlockMath math="|\Phi^\pm\rangle = \frac{|00\rangle \pm |11\rangle}{\sqrt{2}}, \quad |\Psi^\pm\rangle = \frac{|01\rangle \pm |10\rangle}{\sqrt{2}}" />
 
-      <h2>8.4 — Try It: Build a Bell State</h2>
+      <h2>8.4 — Measuring What Classical Correlation Cannot Do</h2>
+      <p>
+        Perfect agreement in one basis is not yet proof of anything quantum: two coins glued together also always agree. The difference appears when each side can choose between two measurement settings. Measure qubit A along a direction at angle <InlineMath math="\alpha" /> in the x–z plane of the Bloch sphere, and qubit B at angle <InlineMath math="\beta" />. Each result is <InlineMath math="\pm1" />. For <InlineMath math="|\Phi^+\rangle" /> the average product of the two results is:
+      </p>
+      <BlockMath math="E(\alpha,\beta) = \langle A_\alpha \otimes B_\beta\rangle = \cos(\alpha-\beta)" />
+      <p>
+        This follows from <InlineMath math="\langle Z\otimes Z\rangle = \langle X\otimes X\rangle = 1" /> and <InlineMath math="\langle Z\otimes X\rangle = \langle X\otimes Z\rangle = 0" /> for this state, with <InlineMath math="A_\alpha = \cos\alpha\,Z + \sin\alpha\,X" />.
+      </p>
+      <p>
+        The CHSH test combines four settings: A uses <InlineMath math="\alpha \in \{0^\circ, 90^\circ\}" /> and B uses <InlineMath math="\beta \in \{45^\circ, -45^\circ\}" />:
+      </p>
+      <BlockMath math="S = E(\alpha,\beta) + E(\alpha,\beta') + E(\alpha',\beta) - E(\alpha',\beta') = 3\cos 45^\circ - \cos 135^\circ = 2\sqrt2 \approx 2.83" />
+      <p>
+        Any model in which each qubit carries pre-set answers for both settings (like the gloves) satisfies <InlineMath math="|S| \le 2" />, whatever the correlations. The reason is short: for pre-set values <InlineMath math="a, a', b, b' = \pm1" />, <InlineMath math="ab + ab' + a'b - a'b' = a(b+b') + a'(b-b')" />, and one bracket is 0 while the other is <InlineMath math="\pm 2" />. Averaging values that are always <InlineMath math="\pm 2" /> can never exceed 2.
+      </p>
+      <p>
+        <strong>Statistics lens:</strong> each <InlineMath math="E" /> is a sample mean of <InlineMath math="\pm1" /> products, so a real experiment estimates <InlineMath math="S" /> with a standard error. Experiments since the 1980s, and loophole-free tests in 2015, measured <InlineMath math="S" /> above 2 by many standard errors. As before, none of this sends a signal: each side alone still sees 50/50 outcomes.
+      </p>
+
+      <h2>8.5 — Try It: Build a Bell State</h2>
       <p>
         In the playground: apply <strong>H</strong> to qubit 0, then <strong>CNOT</strong>. The state probabilities will show 50% on <InlineMath math="|00\rangle" /> and 50% on <InlineMath math="|11\rangle" /> — with 0% on <InlineMath math="|01\rangle" /> and <InlineMath math="|10\rangle" />.
       </p>

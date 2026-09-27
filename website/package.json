@@ -1,6 +1,6 @@
 {
   "name": "qcml-v2",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -10,12 +10,11 @@
     "typecheck": "tsc --noEmit",
     "content:audit": "node scripts/generate-lesson-content-audit.mjs",
     "check:lessons": "node scripts/validate-published-lessons.mjs",
-    "check:quick": "npm run typecheck && next build --no-lint",
-    "check:full": "npm run typecheck && npm run lint && npm run build"
+    "test:engine": "node scripts/test-quantum-engine.mjs && node scripts/test-practice-answers.mjs",
+    "check:quick": "npm run test:engine && npm run check:lessons && npm run typecheck && next build --no-lint",
+    "check:full": "npm run test:engine && npm run check:lessons && npm run typecheck && npm run lint && npm run build"
   },
   "dependencies": {
-    "@mdx-js/loader": "^3.0.1",
-    "@mdx-js/react": "^3.0.1",
     "@react-three/drei": "^9.122.0",
     "@react-three/fiber": "^8.18.0",
     "@types/three": "^0.184.0",
@@ -25,7 +24,6 @@
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
-    "react-katex": "^3.0.1",
     "tailwind-merge": "^2.3.0",
     "three": "^0.184.0",
     "zustand": "^4.5.2"

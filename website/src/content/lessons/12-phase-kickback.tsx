@@ -2,7 +2,7 @@
 import { InlineMath, BlockMath } from '@/components/math';
 import { NotationBox, TryIt } from '@/components/lesson';
 
-export default function Lesson10Content() {
+export default function Lesson12Content() {
   return (
     <>
       <NotationBox>
@@ -112,7 +112,7 @@ export default function Lesson10Content() {
           <li>Apply H to qubit 0. It becomes <InlineMath math="|1\rangle" />, so the phase is visible in the measurement basis.</li>
         </ol>
         <p>
-          For an arbitrary control state, this <strong>H → CNOT → H</strong> sequence on q0, with q1 fixed in <InlineMath math="|{-}\rangle" />, implements a Z gate on q0.
+          For an arbitrary control state, this <strong>H → CNOT → H</strong> sequence on q0, with q1 fixed in <InlineMath math="|{-}\rangle" />, implements <InlineMath math="HZH = X" /> on q0. The CNOT by itself acts as <InlineMath math="Z" /> on the control (that is the kickback), and the surrounding Hadamards turn that <InlineMath math="Z" /> into <InlineMath math="X" />. Check it: from <InlineMath math="|0\rangle" /> the sequence gives <InlineMath math="|1\rangle" />, exactly what <InlineMath math="X" /> does.
         </p>
       </TryIt>
     </>

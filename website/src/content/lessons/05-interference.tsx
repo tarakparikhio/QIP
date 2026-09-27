@@ -1,5 +1,6 @@
 'use client';
 import { InlineMath, BlockMath } from '@/components/math';
+import InterferenceLab from '@/components/labs/InterferenceLab';
 
 export default function Lesson05Content() {
   return (
@@ -52,6 +53,11 @@ export default function Lesson05Content() {
         <li><strong>Phase structure:</strong> Different paths must have different complex phases so they can constructively or destructively combine.</li>
       </ol>
 
+      <p>
+        The lab below isolates the one formula that separates quantum from classical probability. Set two equal routes and move the phase: at <InlineMath math="0^\circ" /> the outcome is twice as likely as the classical sum, and at <InlineMath math="180^\circ" /> it never happens at all.
+      </p>
+      <InterferenceLab />
+
       <h2>5.2 — Step-by-Step: H → Z → H Circuit</h2>
       <p>
         This three-gate circuit demonstrates destructive interference eliminating the <InlineMath math="|1\rangle" /> outcome:
@@ -73,7 +79,7 @@ export default function Lesson05Content() {
       </p>
       <BlockMath math="|0\rangle|1\rangle \xrightarrow{H^{\otimes 2}} |{+}\rangle|{-}\rangle \xrightarrow{U_f} \frac{(-1)^{f(0)}|0\rangle+(-1)^{f(1)}|1\rangle}{\sqrt{2}}|{-}\rangle \xrightarrow{H\otimes I} \text{constant or balanced result}" />
       <p>
-        Interference causes the output qubit&apos;s first register to be <InlineMath math="|0\rangle" /> if <InlineMath math="f" /> is constant, and <InlineMath math="|1\rangle" /> if balanced — with one oracle query under the problem&apos;s promise.
+        After the final Hadamard, interference leaves the first qubit in <InlineMath math="|0\rangle" /> if <InlineMath math="f" /> is constant, and <InlineMath math="|1\rangle" /> if balanced — with one oracle query under the problem&apos;s promise.
       </p>
 
       <h2>5.4 — Phase Kickback (Advanced)</h2>

@@ -1,21 +1,25 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { LessonMeta, getDisplayLessonNumber, getNextLesson, getPreviousLesson } from '@/lib/lessons';
+import { LessonMeta, getDisplayLessonNumber, getLessonById, getNextLesson, getPreviousLesson } from '@/lib/lessons';
 import LessonQuiz from '@/components/lesson/LessonQuiz';
 import EquationBreakdown from '@/components/lesson/EquationBreakdown';
 import LessonQiskitSnippet from '@/components/lesson/LessonQiskitSnippet';
 import AnalogyPanel from '@/components/lesson/AnalogyPanel';
 import { useProgressStore } from '@/lib/store/progressStore';
+import { experimentBonusCredits, maxLessonCredits } from '@/lib/credits';
 import { EQUATION_BREAKDOWNS } from '@/lib/equationBreakdowns';
 import { LESSON_QISKIT_SNIPPETS } from '@/lib/lessonQiskitSnippets';
 import { LESSON_ANALOGIES } from '@/lib/lessonAnalogies';
 import { LESSON_EXPERIMENTS } from '@/lib/lessonExperiments';
 import { LESSON_ORIENTATIONS } from '@/lib/lessonOrientations';
 import { cn } from '@/lib/utils';
+import { lessonIssueUrl, siteUrl } from '@/lib/site';
 import ExperimentGuide from '@/components/lesson/ExperimentGuide';
+import MathPractice from '@/components/lesson/MathPractice';
+import { LESSON_PRACTICE } from '@/lib/lessonPractice';
 import LessonOrientation from '@/components/lesson/LessonOrientation';
 import LessonEvidence from '@/components/lesson/LessonEvidence';
 import LessonVisual from '@/components/lesson/LessonVisual';
@@ -34,22 +38,30 @@ const DIFFICULTY_COLOR: Record<string, string> = {
 };
 
 export default function LessonPageClient({ lesson, children }: Props) {
-  const { completedModules, completeModule, quizResults } = useProgressStore();
+  const { completedModules, recordLessonScore, awardExperimentBonus, experimentBonuses, lessonScores } = useProgressStore();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   const isCompleted = mounted && completedModules.includes(lesson.slug);
 
   const nextLesson = getNextLesson(lesson.id);
   const prevLesson = getPreviousLesson(lesson.id);
-  const quizPassed = lesson.quiz ? quizResults[lesson.slug] === true : true;
+  const missingPrerequisites = mounted
+    ? lesson.prerequisites
+        .map((id) => getLessonById(id))
+        .filter((prerequisite): prerequisite is LessonMeta => Boolean(prerequisite) && !completedModules.includes(prerequisite!.slug))
+    : [];
   const experiment = LESSON_EXPERIMENTS[lesson.id];
   const experimentOps = experiment?.mode === 'circuit' ? (experiment.ops ?? lesson.demoOps) : undefined;
 
-  useEffect(() => {
-    if (mounted && lesson.quiz && quizPassed && !isCompleted) {
-      completeModule(lesson.slug, nextLesson?.slug ?? lesson.slug, lesson.xp);
-    }
-  }, [completeModule, isCompleted, lesson.quiz, lesson.slug, lesson.xp, mounted, nextLesson?.slug, quizPassed]);
+  const bonusCredits = experimentBonusCredits(lesson);
+  const bonusAwarded = mounted && experimentBonuses[lesson.slug] !== undefined;
+  const bestScore = mounted ? lessonScores[lesson.slug] : undefined;
+  const targetReward = useMemo(
+    () => (bonusCredits > 0 && experimentOps && experimentOps.length > 0
+      ? { credits: bonusCredits, alreadyAwarded: bonusAwarded, onReached: () => awardExperimentBonus(lesson.slug, bonusCredits) }
+      : undefined),
+    [awardExperimentBonus, bonusAwarded, bonusCredits, experimentOps, lesson.slug],
+  );
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
@@ -67,7 +79,12 @@ export default function LessonPageClient({ lesson, children }: Props) {
             {lesson.difficulty}
           </span>
           <span className="text-xs text-muted font-mono">{lesson.stage}</span>
-          <span className="text-xs text-primary font-mono">+{lesson.xp} credits</span>
+          <span className="text-xs text-primary font-mono">up to {maxLessonCredits(lesson)} credits</span>
+          {bestScore && (
+            <span className="text-xs text-muted font-mono">
+              earned {bestScore.earned + (mounted ? experimentBonuses[lesson.slug] ?? 0 : 0)} · {Math.round((bestScore.earned / bestScore.max) * 100)}% mastery
+            </span>
+          )}
           {isCompleted && (
             <span className="text-xs px-2 py-0.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 font-mono">
               ✓ Completed
@@ -77,6 +94,24 @@ export default function LessonPageClient({ lesson, children }: Props) {
         <h1 className="text-4xl font-bold mb-3">{lesson.title}</h1>
         <p className="text-muted text-base">{lesson.objective}</p>
       </motion.div>
+
+      {missingPrerequisites.length > 0 && !isCompleted && (
+        <aside className="mb-8 rounded-xl border border-amber-500/30 bg-amber-500/5 px-4 py-3 text-sm text-foreground/80" aria-label="Recommended prerequisites">
+          <p className="font-semibold text-amber-300">You are ahead of your learning path.</p>
+          <p className="mt-1 text-muted">
+            This lesson builds on:{' '}
+            {missingPrerequisites.map((prerequisite, index) => (
+              <span key={prerequisite.slug}>
+                {index > 0 && ', '}
+                <Link href={`/lessons/${prerequisite.slug}`} className="text-primary hover:underline">
+                  Lesson {getDisplayLessonNumber(prerequisite.id)}: {prerequisite.title}
+                </Link>
+              </span>
+            ))}
+            . You can keep reading, but those lessons will make this one easier.
+          </p>
+        </aside>
+      )}
 
       {LESSON_ORIENTATIONS[lesson.id] && (
         <LessonOrientation lessonId={getDisplayLessonNumber(lesson.id)} data={LESSON_ORIENTATIONS[lesson.id]} />
@@ -136,6 +171,7 @@ export default function LessonPageClient({ lesson, children }: Props) {
             title={`Playground — ${lesson.title}`}
             demoOps={experimentOps}
             experiment={experiment?.mode === 'circuit' ? experiment : undefined}
+            targetReward={targetReward}
           />
         </section>
       ) : (
@@ -145,6 +181,8 @@ export default function LessonPageClient({ lesson, children }: Props) {
           </section>
         )
       )}
+
+      {LESSON_PRACTICE[lesson.id] && <MathPractice problems={LESSON_PRACTICE[lesson.id]} />}
 
       {/* Quiz is the final lesson gate and completes the lesson automatically. */}
       {lesson.quiz && <LessonQuiz lesson={lesson} />}
@@ -157,7 +195,7 @@ export default function LessonPageClient({ lesson, children }: Props) {
           className="mt-12 flex flex-col items-center gap-3"
         >
           <button
-            onClick={() => completeModule(lesson.slug, nextLesson?.slug ?? lesson.slug, lesson.xp)}
+            onClick={() => recordLessonScore(lesson.slug, lesson.xp, lesson.xp)}
             className={cn(
               'px-8 py-3 rounded-xl font-semibold text-base transition-all',
               'bg-primary text-white hover:bg-primary/90 glow-primary'
@@ -168,8 +206,21 @@ export default function LessonPageClient({ lesson, children }: Props) {
         </motion.div>
       )}
 
+      <p className="mt-12 text-sm text-muted">
+        Spot a mistake or something unclear?{' '}
+        <a
+          href={lessonIssueUrl(getDisplayLessonNumber(lesson.id), lesson.title, siteUrl ? `${siteUrl}/lessons/${lesson.slug}/` : undefined)}
+          target="_blank"
+          rel="noreferrer"
+          className="text-primary hover:underline"
+        >
+          Report it on GitHub
+        </a>
+        . Corrections with a source are especially welcome.
+      </p>
+
       {/* Navigation */}
-      <div className="mt-16 flex justify-between text-sm border-t border-border/30 pt-8">
+      <nav className="mt-16 flex flex-wrap items-start justify-between gap-4 text-sm border-t border-border/30 pt-8" aria-label="Lesson navigation">
         {prevLesson ? (
           <Link href={`/lessons/${prevLesson.slug}`} className="text-muted hover:text-foreground transition-colors">
             ← {prevLesson.title}
@@ -180,7 +231,20 @@ export default function LessonPageClient({ lesson, children }: Props) {
             {nextLesson.title} →
           </Link>
         )}
-      </div>
+        {nextLesson && !isCompleted && (
+          <div className="flex flex-col items-end gap-1 text-right">
+            <Link
+              href={`/lessons/${nextLesson.slug}`}
+              className="rounded-lg border border-border/50 px-4 py-2 text-muted transition-colors hover:border-primary/40 hover:text-foreground"
+            >
+              Skip for now: {nextLesson.title} →
+            </Link>
+            <span className="max-w-xs text-xs text-muted/70">
+              Skipping earns no credits. This lesson stays next in your path, so you can come back to finish it.
+            </span>
+          </div>
+        )}
+      </nav>
     </div>
   );
 }

@@ -2,7 +2,7 @@
 import { InlineMath, BlockMath } from '@/components/math';
 import { NotationBox, TryIt } from '@/components/lesson';
 
-export default function Lesson13Content() {
+export default function Lesson19Content() {
   return (
     <>
       <NotationBox>
@@ -53,7 +53,18 @@ export default function Lesson13Content() {
         For a constant-zero oracle, omit the CNOT. The final Hadamard returns q0 to <InlineMath math="|0\rangle" />.
       </p>
 
-      <TryIt heading="19.5 — Try It: Constant or Balanced?">
+      <h2>19.5 — How Big Is the Advantage, Really?</h2>
+      <p>
+        A deterministic classical algorithm must be certain, and in the worst case the first <InlineMath math="2^{n-1}" /> inputs it checks all agree, which is still consistent with a balanced function. It needs <InlineMath math="2^{n-1} + 1" /> queries: 5 for <InlineMath math="n = 3" />, over 500 billion for <InlineMath math="n = 40" />.
+      </p>
+      <p>
+        A <strong>randomized</strong> classical algorithm does far better. Query <InlineMath math="k" /> random inputs; if they all agree, guess &ldquo;constant.&rdquo; A balanced function makes all <InlineMath math="k" /> answers agree with probability <InlineMath math="2 \cdot (1/2)^k" />, so 10 queries already give an error chance below 0.2%, whatever <InlineMath math="n" /> is.
+      </p>
+      <p>
+        So the honest summary is: Deutsch–Jozsa is exponentially better than <em>exact</em> classical algorithms, but only modestly better than classical algorithms that tolerate a tiny error. Its value is conceptual. It is the cleanest demonstration of phase kickback plus interference, and the same pattern powers Simon&apos;s and Shor&apos;s algorithms, where the advantage survives randomness.
+      </p>
+
+      <TryIt heading="19.6 — Try It: Constant or Balanced?">
         <p>
           Load the example, then inspect q0&apos;s final measurement probabilities. Remove the CNOT and load/run again. The q0 result changes from 1 (balanced) to 0 (constant), even though the oracle was queried just once.
         </p>

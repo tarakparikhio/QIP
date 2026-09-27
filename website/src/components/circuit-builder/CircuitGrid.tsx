@@ -121,7 +121,7 @@ export default function CircuitGrid({ selectedGateId }: Props) {
               })()}
 
               {/* Measure symbol */}
-              <div className="relative z-10 w-9 h-9 shrink-0 rounded-md border border-muted/30 flex items-center justify-center text-muted/50 text-xs font-mono">
+              <div className="relative z-10 w-9 h-9 shrink-0 rounded-md border border-muted/30 flex items-center justify-center text-muted/70 text-xs font-mono">
                 M
               </div>
             </div>
@@ -130,7 +130,7 @@ export default function CircuitGrid({ selectedGateId }: Props) {
       </div>
 
       {operations.length === 0 && (
-        <p className="text-center text-xs text-muted/40 mt-3 pb-1">
+        <p className="text-center text-xs text-muted/60 mt-3 pb-1">
           Add gates from the palette to build a circuit
         </p>
       )}

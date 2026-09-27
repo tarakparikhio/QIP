@@ -2,7 +2,7 @@
 import { InlineMath, BlockMath } from '@/components/math';
 import { NotationBox, TryIt } from '@/components/lesson';
 
-export default function Lesson15Content() {
+export default function Lesson27Content() {
   return (
     <>
       <NotationBox>
@@ -48,12 +48,31 @@ export default function Lesson15Content() {
         Some choices of <InlineMath math="a" /> or measurements fail the checks, so the algorithm is repeated. Its speedup comes from period finding, not from making every individual run succeed.
       </p>
 
-      <h2>27.4 — A Tiny Period-Finding Skeleton</h2>
+      <h2>27.4 — Worked Example: Factoring 15</h2>
+      <p>
+        Take <InlineMath math="N=15" /> and pick <InlineMath math="a=7" />. First, <InlineMath math="\gcd(7,15)=1" />, so no factor comes for free. The function <InlineMath math="f(x)=7^x\bmod 15" /> repeats with period 4:
+      </p>
+      <BlockMath math="7^0,7^1,7^2,7^3,7^4,\ldots \equiv 1,\;7,\;4,\;13,\;1,\ldots \pmod{15}\quad\Rightarrow\quad r=4" />
+      <p>
+        The quantum part finds <InlineMath math="r" /> without listing these values. For illustration, use a 4-qubit input register, so <InlineMath math="Q=16" />:
+      </p>
+      <ol>
+        <li><strong>Superpose and compute:</strong> prepare <InlineMath math="\tfrac14\sum_{x=0}^{15}|x\rangle|7^x\bmod 15\rangle" />.</li>
+        <li><strong>Look at one output value:</strong> if the output register holds 7, the input register is left in an equal superposition of <InlineMath math="x=1,5,9,13" />. These values are spaced by exactly <InlineMath math="r=4" />, but measuring now would give just one of them and reveal nothing about the spacing.</li>
+        <li><strong>Inverse QFT:</strong> the evenly spaced pattern turns into peaks at multiples of <InlineMath math="Q/r=4" />. The input register now reads 0, 4, 8, or 12, each with probability <InlineMath math="\tfrac14" />.</li>
+        <li><strong>Classical post-processing:</strong> a reading of 12 gives <InlineMath math="12/16=3/4" />, so the denominator suggests <InlineMath math="r=4" />. A reading of 4 gives <InlineMath math="1/4" /> and the same answer. A reading of 8 gives <InlineMath math="1/2" />, which suggests only <InlineMath math="r=2" />; checking <InlineMath math="7^2\equiv4\not\equiv1" /> shows that candidate is wrong, so you run again. A reading of 0 carries no information.</li>
+        <li><strong>Extract factors:</strong> <InlineMath math="r=4" /> is even and <InlineMath math="7^2\equiv4\not\equiv-1\pmod{15}" />, so <InlineMath math="\gcd(4-1,15)=3" /> and <InlineMath math="\gcd(4+1,15)=5" />. Indeed <InlineMath math="15=3\times5" />.</li>
+      </ol>
+      <p>
+        Here <InlineMath math="r" /> divides <InlineMath math="Q" /> exactly, so the peaks are perfectly sharp. For general <InlineMath math="N" />, the input register uses <InlineMath math="Q\ge N^2" />, the peaks are only approximately sharp, and continued fractions recover <InlineMath math="r" /> from the nearest fraction.
+      </p>
+
+      <h2>27.5 — A Tiny Period-Finding Skeleton</h2>
       <p>
         Full modular exponentiation and the QFT need more qubits than this introductory playground provides. The example <strong>H on q0 → CNOT to q1 → H on q0</strong> is a two-wire interference skeleton: it creates a simple correlation pattern and then uses a Hadamard as the smallest Fourier-like basis change to expose it. It is a toy sketch of the idea, not a full implementation of Shor&apos;s algorithm.
       </p>
 
-      <TryIt heading="27.5 — Try It: Interference Is the Resource">
+      <TryIt heading="27.6 — Try It: Interference Is the Resource">
         <p>
           Load the example, run it, and then remove the final H on q0. The final basis change is what turns hidden phase and correlation into a readable probability pattern—the same role played by the inverse QFT in Shor&apos;s full algorithm.
         </p>

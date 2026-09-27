@@ -1,8 +1,9 @@
 'use client';
 import { InlineMath, BlockMath } from '@/components/math';
 import { NotationBox } from '@/components/lesson';
+import ShotLab from '@/components/labs/ShotLab';
 
-export default function Lesson38Content() {
+export default function Lesson36Content() {
   return (
     <>
       <NotationBox>
@@ -42,7 +43,44 @@ export default function Lesson38Content() {
         The value above is for the simple idealized attack and standard BB84 basis choices. Real security analysis also includes channel noise, finite samples, authentication, privacy amplification, and device assumptions.
       </p>
 
-      <h2>36.3 - What quantum mechanics contributes</h2>
+      <p>
+        Where the 1/4 comes from: on a kept bit, Alice and Bob used the same basis. Eve guesses that basis wrong half the time. When she is wrong, the state she resends is a superposition in Bob&apos;s basis, so Bob&apos;s result is a coin flip and wrong half the time. So the error rate is <InlineMath math="\tfrac12 \times \tfrac12 = \tfrac14" />. If Eve attacks only a fraction <InlineMath math="f" /> of the signals, it is <InlineMath math="f/4" />.
+      </p>
+
+      <h2>36.3 - A worked run of eight signals</h2>
+      <div className="not-prose my-6 overflow-x-auto">
+        <table className="w-full min-w-[560px] border-collapse text-sm">
+          <thead>
+            <tr className="border-b border-border/60 text-left text-xs font-mono uppercase tracking-wider text-muted">
+              <th className="py-2 pr-3">#</th><th className="py-2 pr-3">Alice bit</th><th className="py-2 pr-3">Alice basis</th><th className="py-2 pr-3">State sent</th><th className="py-2 pr-3">Bob basis</th><th className="py-2 pr-3">Bob result</th><th className="py-2">Kept?</th>
+            </tr>
+          </thead>
+          <tbody className="font-mono text-foreground/85">
+            <tr className="border-b border-border/30"><td className="py-1.5 pr-3">1</td><td>0</td><td>Z</td><td><InlineMath math="|0\rangle" /></td><td>Z</td><td>0</td><td>yes</td></tr>
+            <tr className="border-b border-border/30"><td className="py-1.5 pr-3">2</td><td>1</td><td>X</td><td><InlineMath math="|-\rangle" /></td><td>Z</td><td>random</td><td>no</td></tr>
+            <tr className="border-b border-border/30"><td className="py-1.5 pr-3">3</td><td>1</td><td>Z</td><td><InlineMath math="|1\rangle" /></td><td>X</td><td>random</td><td>no</td></tr>
+            <tr className="border-b border-border/30"><td className="py-1.5 pr-3">4</td><td>0</td><td>X</td><td><InlineMath math="|+\rangle" /></td><td>X</td><td>0</td><td>yes</td></tr>
+            <tr className="border-b border-border/30"><td className="py-1.5 pr-3">5</td><td>1</td><td>Z</td><td><InlineMath math="|1\rangle" /></td><td>Z</td><td>1</td><td>yes</td></tr>
+            <tr className="border-b border-border/30"><td className="py-1.5 pr-3">6</td><td>0</td><td>Z</td><td><InlineMath math="|0\rangle" /></td><td>X</td><td>random</td><td>no</td></tr>
+            <tr className="border-b border-border/30"><td className="py-1.5 pr-3">7</td><td>1</td><td>X</td><td><InlineMath math="|-\rangle" /></td><td>X</td><td>1</td><td>yes</td></tr>
+            <tr><td className="py-1.5 pr-3">8</td><td>0</td><td>X</td><td><InlineMath math="|+\rangle" /></td><td>Z</td><td>random</td><td>no</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        After announcing bases (not bits), they keep rounds 1, 4, 5, and 7, giving the shared key 0011. On average half the rounds survive, since bases match with probability 1/2. Now imagine Eve measured round 5 in the X basis: she gets a random result and resends <InlineMath math="|+\rangle" /> or <InlineMath math="|-\rangle" />, so Bob&apos;s Z measurement gives 1 only half the time. That is the disturbance Alice and Bob look for.
+      </p>
+
+      <h2>36.4 - Estimating the error rate is a statistics problem</h2>
+      <p>
+        Alice and Bob sacrifice a random sample of <InlineMath math="n" /> kept bits and compare them publicly. The observed error fraction <InlineMath math="\hat p" /> estimates the true quantum bit error rate (QBER) with standard error <InlineMath math="\sqrt{\hat p(1-\hat p)/n}" />. For example, 22 errors in 200 checked bits gives <InlineMath math="\hat p = 0.11 \pm 0.043" /> at 95% confidence.
+      </p>
+      <p>
+        For BB84 with standard one-way post-processing, a secure key can be distilled only if the QBER is below about 11% (the Shor–Preskill bound). Near that line, a small sample cannot tell &ldquo;safe&rdquo; from &ldquo;abort,&rdquo; so real systems check thousands of bits, and security proofs explicitly account for this finite-sample uncertainty. Use the lab to see how many checked bits it takes to pin the error rate down.
+      </p>
+      <ShotLab eventName="error" title="How many bits must you check?" />
+
+      <h2>36.5 - What quantum mechanics contributes</h2>
       <p>
         The protocol does not depend on a mysterious ability to hide a message from all observation. It depends on incompatible measurements and the fact that an unknown quantum state cannot be copied perfectly. The parties test for disturbance before treating the remaining bits as usable key material.
       </p>

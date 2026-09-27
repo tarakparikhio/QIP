@@ -23,7 +23,7 @@ export default function CodeBlock({ code, label = 'Code' }: CodeBlockProps) {
   return (
     <div className="not-prose overflow-hidden rounded-xl border border-border/60 bg-[#0b1020]">
       <div className="flex items-center justify-between border-b border-border/50 px-3 py-2">
-        <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-muted">{label}</span>
+        <span className="text-[11px] font-mono uppercase tracking-[0.16em] text-muted">{label}</span>
         <button
           type="button"
           onClick={copyCode}

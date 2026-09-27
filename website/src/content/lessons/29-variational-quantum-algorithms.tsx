@@ -1,49 +1,65 @@
 'use client';
 import { InlineMath, BlockMath } from '@/components/math';
 import { NotationBox, TryIt } from '@/components/lesson';
+import EnergyLab from '@/components/labs/EnergyLab';
 
-export default function Lesson20Content() {
+export default function Lesson29Content() {
   return (
     <>
       <NotationBox>
-        <NotationBox.Item heading="Hybrid Loop">
+        <NotationBox.Item heading="The hybrid loop">
           <NotationBox.Text>
-            Variational algorithms run a parameterized circuit on a quantum device and update the parameters using a classical optimizer.
+            A parameterized circuit prepares <InlineMath math="|\psi(\boldsymbol\theta)\rangle" />. The quantum device estimates a cost from measurements; a classical optimizer updates <InlineMath math="\boldsymbol\theta" />.
           </NotationBox.Text>
+          <NotationBox.Formula math="\boldsymbol\theta^* = \arg\min_{\boldsymbol\theta}\; C(\boldsymbol\theta), \qquad C(\boldsymbol\theta) = \langle\psi(\boldsymbol\theta)|H|\psi(\boldsymbol\theta)\rangle" note="Each evaluation of C is itself a statistical estimate." />
         </NotationBox.Item>
-        <NotationBox.Item heading="Objective">
-          <NotationBox.Code>
-            <NotationBox.Row math="C(\theta) = \langle \psi(\theta) | H | \psi(\theta) \rangle" label="cost function" />
-            <NotationBox.Row math="\theta_{new} = \theta_{old} - \eta \nabla C" label="parameter update" />
-          </NotationBox.Code>
+        <NotationBox.Item heading="Key terms">
+          <NotationBox.List items={[
+            { term: 'Ansatz', description: 'The chosen circuit shape, with adjustable rotation angles.' },
+            { term: 'Parameter-shift rule', description: <>An exact gradient from two shifted cost evaluations: <InlineMath math="\partial_\theta C = \tfrac12[C(\theta + \tfrac\pi2) - C(\theta - \tfrac\pi2)]" /> for rotation gates.</> },
+            { term: 'Barren plateau', description: 'A landscape so flat that gradients are exponentially small in the number of qubits.' },
+          ]} />
         </NotationBox.Item>
       </NotationBox>
 
-      <h2>29.1 — The Core Idea</h2>
+      <h2>29.1 — Why a Hybrid Loop?</h2>
       <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
-        <strong>Study takeaway:</strong> variational algorithms use a hybrid loop of quantum state preparation and classical optimization, which makes them practical for near-term hardware.
+        <strong>Study takeaway:</strong> variational algorithms run short circuits many times and let a classical optimizer tune them. Every cost and gradient is estimated from shots, so training is stochastic optimization, with the same trade-offs as noisy gradient descent.
       </p>
       <p>
-        Variational quantum algorithms are designed for near-term devices where full-scale fault tolerance is not yet available. A short parameterized circuit is executed, its output is evaluated by a cost function, and a classical optimizer nudges the parameters toward better values.
-      </p>
-      <p>
-        The simulator here is only a conceptual entry point: it illustrates how a small circuit can change a state and how a cost landscape can be explored, but it does not represent the full training loop of a real variational algorithm.
+        Current devices can run only shallow circuits before noise wins. Variational algorithms accept that limit: keep the circuit short, and move as much work as possible to a classical computer. The quantum device does one thing well, preparing a state and measuring it, and the optimizer does the rest.
       </p>
 
-      <h2>29.2 — Why This Works</h2>
+      <h2>29.2 — A One-Parameter Example</h2>
       <p>
-        The circuit prepares a family of trial states <InlineMath math="|\psi(\theta)\rangle" />. By measuring expectation values, we can estimate a cost landscape and search it using classical methods. The quantum computer is used for sampling and state preparation, while the classical computer handles the optimization loop.
+        Take one qubit, the ansatz <InlineMath math="R_Y(\theta)|0\rangle = \cos\tfrac\theta2|0\rangle + \sin\tfrac\theta2|1\rangle" />, and the cost <InlineMath math="H = Z + 0.5X" />. Then <InlineMath math="\langle Z\rangle = \cos\theta" /> and <InlineMath math="\langle X\rangle = \sin\theta" />, so
       </p>
-      <BlockMath math="\min_\theta C(\theta) = \min_\theta \langle \psi(\theta) | H | \psi(\theta) \rangle" />
-
-      <h2>29.3 — Where They Are Useful</h2>
+      <BlockMath math="C(\theta) = \cos\theta + 0.5\sin\theta" />
       <p>
-        These methods are especially relevant for chemistry, optimization, and small-scale machine learning. Their appeal is that they can make productive use of today&apos;s hardware even when circuit depth and qubit counts are limited.
+        On hardware, <InlineMath math="\langle Z\rangle" /> is estimated by measuring and averaging <InlineMath math="\pm1" /> outcomes, and <InlineMath math="\langle X\rangle" /> by applying H first. Each average has standard error <InlineMath math="\sqrt{(1 - \langle P\rangle^2)/N}" />, so the optimizer sees a noisy version of the curve. The lab below lets you feel this directly.
+      </p>
+      <EnergyLab />
+
+      <h2>29.3 — Exact Gradients From Two Measurements</h2>
+      <p>
+        For gates of the form <InlineMath math="e^{-i\theta P/2}" /> with <InlineMath math="P" /> a Pauli operator, the cost is a sinusoid in <InlineMath math="\theta" />: <InlineMath math="C(\theta) = a\cos\theta + b\sin\theta + c" />. Then
+      </p>
+      <BlockMath math="\frac{C(\theta + \frac\pi2) - C(\theta - \frac\pi2)}{2} = -a\sin\theta + b\cos\theta = \frac{dC}{d\theta}" />
+      <p>
+        exactly, not as a finite-difference approximation. For the example, at <InlineMath math="\theta = \pi/3" /> with <InlineMath math="C = \cos\theta" /> alone, the shift rule gives <InlineMath math="-\sin(\pi/3) \approx -0.866" />. With <InlineMath math="m" /> parameters, a full gradient needs <InlineMath math="2m" /> cost estimates, each from many shots. That makes training a form of stochastic gradient descent: the gradients are unbiased but noisy, and more shots buy less noise at a <InlineMath math="1/\sqrt N" /> rate.
       </p>
 
-      <TryIt heading="29.4 — Try It: Think About the Loop">
+      <h2>29.4 — Barren Plateaus and Other Obstacles</h2>
+      <p>
+        For deep, randomly initialized circuits on many qubits, the gradient&apos;s variance across the landscape shrinks exponentially with the number of qubits (McClean and colleagues, 2018). Gradients are then so small that estimating their sign needs exponentially many shots, since the standard error must fall below the signal. That is a barren plateau. Mitigations include shallow or problem-inspired ansätze, local cost functions, and careful initialization.
+      </p>
+      <p>
+        Noise adds a second problem: it biases estimates and flattens the landscape further. And there is no general guarantee that the optimizer reaches the global minimum. Variational methods are practical tools for near-term experiments, not guaranteed speedups.
+      </p>
+
+      <TryIt heading="29.5 — Try It: Train With Noisy Measurements">
         <p>
-          If the cost decreases after an update, what does that suggest about the new parameter settings? Why might the optimizer need to balance exploration and exploitation when the circuit is noisy?
+          In the energy lab, start at <InlineMath math="\theta \approx 34^\circ" /> and take gradient steps. Then set the shots to 20 and re-measure a few times: the energy estimate jumps around, even though the gradient steps (computed exactly here) still head downhill. How many shots would you need before the error bar is smaller than the remaining gap to the ground energy?
         </p>
       </TryIt>
     </>

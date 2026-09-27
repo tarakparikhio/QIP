@@ -1,85 +1,100 @@
 import Link from 'next/link';
-import { LESSONS, ORDERED_LESSONS } from '@/lib/lessons';
+import { LESSONS, ORDERED_LESSONS, getLessonQuestions } from '@/lib/lessons';
+import { LESSON_PRACTICE } from '@/lib/lessonPractice';
+import InteractiveHero from './home/InteractiveHero';
+import WaveBackground from './home/WaveBackground';
+import WelcomeBack from './home/WelcomeBack';
+import BlochStory from './home/BlochStory';
+import LabShowcase from './home/LabShowcase';
+import LessonMap from './home/LessonMap';
+import DailyQuestion from './home/DailyQuestion';
 
 export default function HomePage() {
   const firstLesson = ORDERED_LESSONS[0];
   const publishedLessons = LESSONS.filter((lesson) => !lesson.upcoming);
-  const foundationLessons = publishedLessons.filter((lesson) => lesson.stage === 'foundation');
+  const quizQuestions = publishedLessons.reduce((sum, lesson) => sum + getLessonQuestions(lesson.id).length, 0);
+  const practiceProblems = Object.values(LESSON_PRACTICE).reduce((sum, problems) => sum + problems.length, 0);
+
+  const stats = [
+    { value: String(publishedLessons.length), label: 'Lessons' },
+    { value: String(practiceProblems), label: 'Practice problems' },
+    { value: String(quizQuestions), label: 'Check questions' },
+    { value: '4', label: 'Interactive labs' },
+  ];
 
   return (
-    <div className="relative min-h-[calc(100vh-56px)] overflow-hidden px-4 py-10 sm:px-6 lg:px-10">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_15%,hsl(var(--primary)/0.16),transparent_30%),radial-gradient(circle_at_85%_75%,hsl(var(--accent)/0.10),transparent_28%)]" />
-      <div className="relative mx-auto max-w-6xl">
-        <div className="mb-8 flex items-center justify-between gap-4 border-b border-border/60 pb-5">
-          <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.18em] text-muted">
-            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_hsl(142_70%_50%/.7)]" />
-            Learn by doing
+    <div className="relative overflow-x-clip px-4 pb-20 sm:px-6 lg:px-10">
+      {/* Hero */}
+      <div className="relative -mx-4 overflow-hidden px-4 pb-6 pt-10 sm:-mx-6 sm:px-6 lg:-mx-10 lg:px-10">
+        <WaveBackground />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_15%_15%,hsl(var(--primary)/0.14),transparent_35%),radial-gradient(circle_at_85%_75%,hsl(var(--accent)/0.08),transparent_30%)]" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-background" />
+        <div className="relative mx-auto max-w-6xl">
+          <div className="mb-8 flex items-center justify-between gap-4 border-b border-border/60 pb-5">
+            <div className="flex items-center gap-3 text-xs font-mono uppercase tracking-[0.18em] text-muted">
+              <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_hsl(142_70%_50%/.7)]" />
+              Learn by doing
+            </div>
+            <span className="hidden text-xs font-mono text-muted sm:block">Free · no account · progress saved in your browser</span>
           </div>
-          <span className="hidden text-xs font-mono text-muted sm:block">{publishedLessons.length} lessons · ideal simulator</span>
-        </div>
 
-        <div className="grid items-end gap-10 lg:grid-cols-[1.15fr_0.85fr]">
-          <section>
-            <p className="mb-5 max-w-xl text-sm font-mono uppercase tracking-[0.22em] text-primary">An interactive quantum computing course</p>
-            <h1 className="max-w-4xl text-5xl font-semibold leading-[0.98] tracking-tight text-foreground sm:text-7xl">
-              Learn the idea.
-              <span className="block text-primary">Run the circuit.</span>
-            </h1>
-            <p className="mt-7 max-w-2xl text-lg leading-relaxed text-muted">
-              Short lessons take you from qubits and measurement to algorithms and hardware. Make a prediction, run it in the simulator, and see where the math shows up.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href={`/lessons/${firstLesson.slug}`} className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary/90 glow-primary">
-                Start learning
-              </Link>
-              <Link href="/playground" className="inline-flex items-center justify-center rounded-lg border border-accent/50 bg-accent/10 px-6 py-3 text-sm font-semibold text-accent transition hover:border-accent hover:text-foreground">
-                Open the playground
-              </Link>
-            </div>
-            <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted">
-              <Link href="/lessons" className="hover:text-primary">Browse all lessons <span aria-hidden="true">→</span></Link>
-              <Link href="/roadmap" className="hover:text-primary">View the self-paced roadmap <span aria-hidden="true">→</span></Link>
-            </div>
-          </section>
-
-          <aside className="border-l border-primary/30 pl-6 lg:mb-2">
-            <p className="text-xs font-mono uppercase tracking-[0.2em] text-muted">Start here</p>
-            <div className="mt-4 border-y border-border/60 py-5">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="text-xs font-mono text-primary">01 / {String(publishedLessons.length).padStart(2, '0')}</p>
-                  <h2 className="mt-2 text-2xl font-semibold">{firstLesson.title}</h2>
-                </div>
-                <span className="rounded border border-border/70 px-2 py-1 text-xs text-muted">{firstLesson.difficulty}</span>
+          <div className="grid items-center gap-10 lg:grid-cols-[1fr_1fr]">
+            <section>
+              <p className="mb-5 max-w-xl text-sm font-mono uppercase tracking-[0.22em] text-primary">An interactive quantum computing course</p>
+              <h1 className="max-w-4xl text-4xl font-semibold leading-[1.02] tracking-tight text-foreground sm:text-6xl lg:text-[3.6rem] xl:text-7xl">
+                Learn the idea.
+                <span className="block text-primary">Run the circuit.</span>
+              </h1>
+              <p className="mt-7 max-w-xl text-lg leading-relaxed text-muted">
+                Forty short lessons take you from a single qubit to Shor&apos;s algorithm, error correction, and real hardware. Predict, build the circuit, check the math, and see where probability and statistics show up.
+              </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Link href={`/lessons/${firstLesson.slug}`} className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary/90 glow-primary">
+                  Start lesson 1
+                </Link>
+                <Link href="/lessons" className="inline-flex items-center justify-center rounded-lg border border-accent/50 bg-accent/10 px-6 py-3 text-sm font-semibold text-accent transition hover:border-accent hover:text-foreground">
+                  Browse all 40 lessons
+                </Link>
               </div>
-              <p className="mt-4 text-sm leading-relaxed text-muted">{firstLesson.objective}</p>
-              <Link href={`/lessons/${firstLesson.slug}`} className="mt-5 inline-block text-sm font-semibold text-primary hover:text-foreground">
-                Open lesson 01 <span aria-hidden="true">→</span>
-              </Link>
-            </div>
-          </aside>
-        </div>
-
-        <div className="mt-16 grid gap-px overflow-hidden border border-border/60 bg-border/60 sm:grid-cols-3">
-          <div className="bg-background/80 p-5">
-            <p className="text-3xl font-semibold text-foreground">{publishedLessons.length}</p>
-            <p className="mt-1 text-xs font-mono uppercase tracking-[0.16em] text-muted">Published lessons</p>
+              <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted">
+                <Link href="/playground" className="hover:text-primary">Open the playground <span aria-hidden="true">→</span></Link>
+                <Link href="/roadmap" className="hover:text-primary">See the roadmap <span aria-hidden="true">→</span></Link>
+              </div>
+            </section>
+            <InteractiveHero />
           </div>
-          <div className="bg-background/80 p-5">
-            <p className="text-3xl font-semibold text-foreground">{foundationLessons.length}</p>
-            <p className="mt-1 text-xs font-mono uppercase tracking-[0.16em] text-muted">Foundation checkpoints</p>
-          </div>
-          <div className="bg-background/80 p-5">
-            <p className="text-3xl font-semibold text-foreground">Live</p>
-            <p className="mt-1 text-xs font-mono uppercase tracking-[0.16em] text-muted">Circuit simulator</p>
-          </div>
-        </div>
-
-        <div className="mt-12 flex flex-col justify-between gap-5 border-t border-border/60 pt-5 sm:flex-row sm:items-center">
-          <p className="max-w-xl text-sm leading-relaxed text-muted">The simulator is an ideal state-vector model. Use it to build intuition, then keep hardware noise and measurement limits in view.</p>
-          <Link href="/gates" className="text-sm font-semibold text-primary hover:text-foreground">Check the gate reference <span aria-hidden="true">→</span></Link>
         </div>
       </div>
+
+      <WelcomeBack />
+
+      {/* Stats */}
+      <div className="mx-auto mt-12 grid max-w-6xl gap-px overflow-hidden rounded-2xl border border-border/60 bg-border/60 grid-cols-2 lg:grid-cols-4">
+        {stats.map((stat) => (
+          <div key={stat.label} className="bg-background/90 p-5">
+            <p className="text-3xl font-semibold text-foreground">{stat.value}</p>
+            <p className="mt-1 text-xs font-mono uppercase tracking-[0.14em] text-muted">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+
+      <BlochStory />
+      <LabShowcase />
+      <LessonMap />
+      <DailyQuestion />
+
+      {/* Closing */}
+      <section className="mx-auto mt-24 max-w-6xl rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 via-card/40 to-accent/10 p-8 text-center sm:p-12" aria-labelledby="closing-heading">
+        <h2 id="closing-heading" className="text-3xl font-semibold tracking-tight sm:text-4xl">Ready for your first qubit?</h2>
+        <p className="mx-auto mt-3 max-w-xl text-muted">Lesson 1 takes about 10 to 15 minutes. Everything runs in your browser, with no sign-up.</p>
+        <div className="mt-6 flex flex-col justify-center gap-3 sm:flex-row">
+          <Link href={`/lessons/${firstLesson.slug}`} className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white transition hover:bg-primary/90 glow-primary">Start lesson 1</Link>
+          <Link href="/gates" className="inline-flex items-center justify-center rounded-lg border border-border/60 px-6 py-3 text-sm font-semibold text-foreground/85 transition hover:border-primary/50">Browse the gate reference</Link>
+        </div>
+        <p className="mx-auto mt-6 max-w-2xl text-xs text-muted">
+          The simulator is an ideal state-vector model. Lessons say where real hardware differs, and the <Link href="/sources" className="text-primary hover:underline">sources page</Link> explains what is modeled and what is left out.
+        </p>
+      </section>
     </div>
   );
 }

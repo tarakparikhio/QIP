@@ -1,4 +1,4 @@
-import { Complex, Matrix, tensorProductMatrix } from './math';
+import { Complex, Matrix } from './math';
 import { QuantumState } from './state';
 import { Gates } from './gates';
 
@@ -27,6 +27,17 @@ export function sampleMeasurementCounts(probabilities: number[], shots: number):
   return counts;
 }
 
+const CONTROLLED_GATES = new Set(['CNOT', 'CZ', 'SWAP']);
+
+/**
+ * Ideal state-vector simulator.
+ *
+ * Convention: qubit 0 is the most-significant bit of the basis-state index
+ * (the left-most label in |q0 q1 ... >), matching the playground display.
+ *
+ * Gates are applied directly to the amplitude arrays in O(2^n) time per gate,
+ * instead of building a dense 2^n x 2^n matrix for every operation.
+ */
 export class CircuitRunner {
   public state: QuantumState;
   public numQubits: number;
@@ -36,124 +47,83 @@ export class CircuitRunner {
     this.state = new QuantumState(numQubits);
   }
 
-  /**
-   * Build a global unitary matrix for a single-qubit gate.
-   * Assumes Qubit 0 is the MSB / left-most in the tensor product.
-   */
-  private buildSingleQubitUnitary(targetQubit: number, gateMatrix: Matrix): Matrix {
-    let result = targetQubit === 0 ? gateMatrix : Gates.I;
-    for (let i = 1; i < this.numQubits; i++) {
-      const nextGate = i === targetQubit ? gateMatrix : Gates.I;
-      result = tensorProductMatrix(result, nextGate);
+  private bitMask(qubit: number): number {
+    return 1 << (this.numQubits - 1 - qubit);
+  }
+
+  private applySingleQubit(re: Float64Array, im: Float64Array, target: number, gate: Matrix) {
+    const mask = this.bitMask(target);
+    const [[g00, g01], [g10, g11]] = gate;
+    for (let i = 0; i < re.length; i++) {
+      if (i & mask) continue; // visit each |..0..>, |..1..> pair once
+      const j = i | mask;
+      const aRe = re[i], aIm = im[i], bRe = re[j], bIm = im[j];
+      re[i] = g00.re * aRe - g00.im * aIm + g01.re * bRe - g01.im * bIm;
+      im[i] = g00.re * aIm + g00.im * aRe + g01.re * bIm + g01.im * bRe;
+      re[j] = g10.re * aRe - g10.im * aIm + g11.re * bRe - g11.im * bIm;
+      im[j] = g10.re * aIm + g10.im * aRe + g11.re * bIm + g11.im * bRe;
     }
-    return result;
+  }
+
+  private applyCNOT(re: Float64Array, im: Float64Array, control: number, target: number) {
+    const c = this.bitMask(control), t = this.bitMask(target);
+    for (let i = 0; i < re.length; i++) {
+      if (!(i & c) || (i & t)) continue; // control = 1, target = 0: swap with target = 1
+      const j = i | t;
+      [re[i], re[j]] = [re[j], re[i]];
+      [im[i], im[j]] = [im[j], im[i]];
+    }
+  }
+
+  private applyCZ(re: Float64Array, im: Float64Array, control: number, target: number) {
+    const both = this.bitMask(control) | this.bitMask(target);
+    for (let i = 0; i < re.length; i++) {
+      if ((i & both) === both) { re[i] = -re[i]; im[i] = -im[i]; }
+    }
+  }
+
+  private applySwap(re: Float64Array, im: Float64Array, first: number, second: number) {
+    const a = this.bitMask(first), b = this.bitMask(second);
+    for (let i = 0; i < re.length; i++) {
+      if (!(i & a) || (i & b)) continue; // first = 1, second = 0 <-> first = 0, second = 1
+      const j = (i & ~a) | b;
+      [re[i], re[j]] = [re[j], re[i]];
+      [im[i], im[j]] = [im[j], im[i]];
+    }
   }
 
   /**
-   * Build an n-qubit CNOT (permutation matrix) for arbitrary control and target qubits.
-   * Qubit 0 = MSB convention.
-   */
-  private buildCNOTUnitary(control: number, target: number): Matrix {
-    const dim = 1 << this.numQubits;
-    const controlBitPos = this.numQubits - 1 - control;
-    const targetBitPos  = this.numQubits - 1 - target;
-
-    // Initialise dim×dim zero matrix
-    const matrix: Matrix = Array.from({ length: dim }, () =>
-      Array.from({ length: dim }, () => new Complex(0, 0))
-    );
-
-    for (let i = 0; i < dim; i++) {
-      const controlIsOne = (i >> controlBitPos) & 1;
-      if (controlIsOne) {
-        const j = i ^ (1 << targetBitPos); // flip target bit
-        matrix[j][i] = new Complex(1, 0);
-      } else {
-        matrix[i][i] = new Complex(1, 0);
-      }
-    }
-    return matrix;
-  }
-
-  /**
-   * Build an n-qubit CZ gate for arbitrary control and target.
-   * Qubit 0 = MSB convention.
-   */
-  private buildCZUnitary(control: number, target: number): Matrix {
-    const dim = 1 << this.numQubits;
-    const controlBitPos = this.numQubits - 1 - control;
-    const targetBitPos = this.numQubits - 1 - target;
-
-    const matrix: Matrix = Array.from({ length: dim }, () =>
-      Array.from({ length: dim }, () => new Complex(0, 0))
-    );
-
-    for (let i = 0; i < dim; i++) {
-      const controlIsOne = (i >> controlBitPos) & 1;
-      const targetIsOne = (i >> targetBitPos) & 1;
-      matrix[i][i] = new Complex(controlIsOne && targetIsOne ? -1 : 1, 0);
-    }
-
-    return matrix;
-  }
-
-  /**
-   * Build an n-qubit SWAP gate for arbitrary qubit pair.
-   * Qubit 0 = MSB convention.
-   */
-  private buildSwapUnitary(firstQubit: number, secondQubit: number): Matrix {
-    const dim = 1 << this.numQubits;
-    const firstBitPos = this.numQubits - 1 - firstQubit;
-    const secondBitPos = this.numQubits - 1 - secondQubit;
-
-    const matrix: Matrix = Array.from({ length: dim }, () =>
-      Array.from({ length: dim }, () => new Complex(0, 0))
-    );
-
-    for (let i = 0; i < dim; i++) {
-      const firstBit = (i >> firstBitPos) & 1;
-      const secondBit = (i >> secondBitPos) & 1;
-
-      let j = i;
-      if (firstBit !== secondBit) {
-        j = i ^ (1 << firstBitPos) ^ (1 << secondBitPos);
-      }
-      matrix[j][i] = new Complex(1, 0);
-    }
-
-    return matrix;
-  }
-
-  /**
-   * Run a sequence of operations
+   * Run a sequence of operations from |0...0>.
    */
   public run(operations: GateOperation[]) {
-    // Reset state before run
-    this.state = new QuantumState(this.numQubits);
+    const dim = 1 << this.numQubits;
+    const re = new Float64Array(dim);
+    const im = new Float64Array(dim);
+    re[0] = 1;
 
     for (const op of operations) {
-      if ((op.gateId === 'CNOT' || op.gateId === 'CZ' || op.gateId === 'SWAP') && op.controlQubit !== undefined) {
+      if (CONTROLLED_GATES.has(op.gateId) && op.controlQubit !== undefined) {
         const control = op.controlQubit;
-        const target  = op.targetQubit;
+        const target = op.targetQubit;
         if (control === target || control < 0 || target < 0 || control >= this.numQubits || target >= this.numQubits) {
           console.warn(`${op.gateId}: invalid control=${control} target=${target} for numQubits=${this.numQubits}`);
           continue;
         }
-        if (op.gateId === 'CNOT') {
-          this.state.applyMatrix(this.buildCNOTUnitary(control, target));
-        } else if (op.gateId === 'CZ') {
-          this.state.applyMatrix(this.buildCZUnitary(control, target));
-        } else {
-          this.state.applyMatrix(this.buildSwapUnitary(control, target));
-        }
+        if (op.gateId === 'CNOT') this.applyCNOT(re, im, control, target);
+        else if (op.gateId === 'CZ') this.applyCZ(re, im, control, target);
+        else this.applySwap(re, im, control, target);
       } else {
-        // Single qubit gate
         const gateMatrix = Gates[op.gateId];
         if (!gateMatrix) throw new Error(`Gate ${op.gateId} not found`);
-        const globalUnitary = this.buildSingleQubitUnitary(op.targetQubit, gateMatrix);
-        this.state.applyMatrix(globalUnitary);
+        if (op.targetQubit < 0 || op.targetQubit >= this.numQubits) {
+          console.warn(`${op.gateId}: invalid target=${op.targetQubit} for numQubits=${this.numQubits}`);
+          continue;
+        }
+        this.applySingleQubit(re, im, op.targetQubit, gateMatrix);
       }
     }
+
+    this.state = new QuantumState(this.numQubits, Array.from(re, (value, index) => new Complex(value, im[index])));
   }
 
   public getProbabilities(): number[] {

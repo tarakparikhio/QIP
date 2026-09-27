@@ -1,9 +1,11 @@
 'use client';
 import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Line, Text } from '@react-three/drei';
+import { OrbitControls, Line } from '@react-three/drei';
 import * as THREE from 'three';
 import { useCircuitStore } from '@/lib/store/circuitStore';
+import AxisLabel from './AxisLabel';
+import { safeCanvasEvents } from '@/lib/safeCanvasEvents';
 import { BlochVector } from '@/lib/quantum-engine/math';
 import { usePersistentRatio } from '@/hooks/usePersistentRatio';
 
@@ -11,7 +13,7 @@ import { usePersistentRatio } from '@/hooks/usePersistentRatio';
 function MiniVector({ bloch }: { bloch: BlochVector }) {
   const vectorRef = useRef<THREE.ArrowHelper>(null);
 
-  const isMixed = bloch.purity < 0.05; // Nearly maximally mixed → no well-defined axis
+  const isMixed = bloch.length < 0.05; // Nearly maximally mixed → no well-defined axis
 
   // Map Bloch (x,y,z) → Three.js (x=bloch.x, y=bloch.z, z=bloch.y)
   const targetVec = useMemo(() => {
@@ -41,14 +43,15 @@ function MiniVector({ bloch }: { bloch: BlochVector }) {
 
 /** A self-contained mini Bloch sphere canvas for one qubit. */
 function QubitBlochCard({ qubitIndex, bloch, ratio }: { qubitIndex: number; bloch: BlochVector; ratio: number }) {
-  const purityPct = Math.round(bloch.purity * 100);
-  const isMixed = bloch.purity < 0.95;
+  // A qubit that is part of an entangled state has a mixed reduced state (|r| < 1).
+  const isMixed = bloch.length < 0.999;
 
   const cardWidth = Math.round(220 * ratio);
   const sphereHeight = Math.round(190 * ratio);
 
   const sphereCanvas = () => (
     <Canvas
+      events={safeCanvasEvents}
       camera={{ position: [2, 1.4, 2], fov: 42 }}
       gl={{ alpha: true }}
       style={{ background: 'transparent' }}
@@ -69,8 +72,8 @@ function QubitBlochCard({ qubitIndex, bloch, ratio }: { qubitIndex: number; bloc
         <ringGeometry args={[1, 1.01, 48]} />
         <meshBasicMaterial color="#374151" side={THREE.DoubleSide} />
       </mesh>
-      <Text position={[0, 1.3, 0]} fontSize={0.13} color="#f8fafc">|0⟩</Text>
-      <Text position={[0, -1.3, 0]} fontSize={0.13} color="#f8fafc">|1⟩</Text>
+      <AxisLabel position={[0, 1.3, 0]}>|0⟩</AxisLabel>
+      <AxisLabel position={[0, -1.3, 0]}>|1⟩</AxisLabel>
       <MiniVector bloch={bloch} />
     </Canvas>
   );
@@ -80,22 +83,30 @@ function QubitBlochCard({ qubitIndex, bloch, ratio }: { qubitIndex: number; bloc
         {/* Header row */}
         <div className="flex items-center justify-between w-full">
           <span className="text-xs font-mono font-semibold text-primary">q{qubitIndex}</span>
-          <span className={`text-xs font-mono px-1.5 py-0.5 rounded-full border ${isMixed ? 'border-amber-500/40 bg-amber-500/10 text-amber-400' : 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400'}`}>
-            {isMixed ? `${purityPct}%` : 'pure'}
+          <span
+            className={`text-xs font-mono px-1.5 py-0.5 rounded-full border ${isMixed ? 'border-amber-500/40 bg-amber-500/10 text-amber-400' : 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400'}`}
+            title="Purity Tr(ρ²) of this qubit's reduced state: 1 = pure, 0.5 = maximally mixed"
+          >
+            {isMixed ? `mixed · Tr(ρ²)=${bloch.purity.toFixed(2)}` : 'pure'}
           </span>
         </div>
 
         {/* Mini sphere */}
-        <div className="w-full rounded-lg overflow-hidden cursor-move" style={{ height: `${sphereHeight}px` }}>
+        <div
+          className="w-full rounded-lg overflow-hidden cursor-move"
+          style={{ height: `${sphereHeight}px` }}
+          role="img"
+          aria-label={`Bloch sphere for qubit ${qubitIndex}: x ${bloch.x.toFixed(2)}, y ${bloch.y.toFixed(2)}, z ${bloch.z.toFixed(2)}, ${isMixed ? `mixed, purity ${bloch.purity.toFixed(2)}` : 'pure'}.`}
+        >
           {sphereCanvas()}
         </div>
 
         {/* Coordinates */}
         <div className="w-full grid grid-cols-4 gap-1 text-center">
-          {[{ label: 'x', val: bloch.x }, { label: 'y', val: bloch.y }, { label: 'z', val: bloch.z }, { label: '|r|', val: bloch.purity }].map(({ label, val }) => (
+          {[{ label: 'x', val: bloch.x }, { label: 'y', val: bloch.y }, { label: 'z', val: bloch.z }, { label: '|r|', val: bloch.length }].map(({ label, val }) => (
             <div key={label} className="flex flex-col">
-              <span className="text-[9px] font-mono text-muted uppercase">{label}</span>
-              <span className="text-[10px] font-mono text-foreground/70">{val.toFixed(2)}</span>
+              <span className="text-[10px] font-mono text-muted uppercase">{label}</span>
+              <span className="text-[11px] font-mono text-foreground/70">{val.toFixed(2)}</span>
             </div>
           ))}
         </div>
@@ -118,13 +129,14 @@ export default function MultiQubitBlochPanel() {
           <span className="text-xs text-muted font-mono">({numQubits} qubit{numQubits > 1 ? 's' : ''})</span>
           <button
             onClick={() => setRatio(ratio - 0.1)}
-            className="text-[10px] font-mono px-2 py-1 rounded border border-border/40 bg-card/60 text-muted hover:text-foreground hover:border-primary/40 transition-all"
-            title="Shrink Bloch cards"
+            className="text-[11px] font-mono px-2 py-1 rounded border border-border/40 bg-card/60 text-muted hover:text-foreground hover:border-primary/40 transition-all"
+            title="Shrink Bloch cards" aria-label="Shrink Bloch cards"
           >
             -
           </button>
           <input
             type="range"
+            aria-label="Bloch card size"
             min={min}
             max={max}
             step={0.05}
@@ -135,12 +147,12 @@ export default function MultiQubitBlochPanel() {
           />
           <button
             onClick={() => setRatio(ratio + 0.1)}
-            className="text-[10px] font-mono px-2 py-1 rounded border border-border/40 bg-card/60 text-muted hover:text-foreground hover:border-primary/40 transition-all"
-            title="Grow Bloch cards"
+            className="text-[11px] font-mono px-2 py-1 rounded border border-border/40 bg-card/60 text-muted hover:text-foreground hover:border-primary/40 transition-all"
+            title="Grow Bloch cards" aria-label="Grow Bloch cards"
           >
             +
           </button>
-          <span className="text-[10px] text-muted font-mono w-10 text-right">{Math.round(ratio * 100)}%</span>
+          <span className="text-[11px] text-muted font-mono w-10 text-right">{Math.round(ratio * 100)}%</span>
         </div>
       </div>
 
@@ -150,8 +162,8 @@ export default function MultiQubitBlochPanel() {
         ))}
       </div>
 
-      <p className="text-[10px] text-muted/60 font-mono leading-relaxed">
-        Purity = |r|, where r is the Bloch vector. 100% = pure qubit, less = entangled/mixed.
+      <p className="text-[11px] text-muted/60 font-mono leading-relaxed">
+        |r| is the Bloch vector length. Purity Tr(ρ²) = (1 + |r|²)/2: 1 for a pure qubit, 0.5 for a maximally mixed one, such as half of a Bell pair.
       </p>
     </div>
   );

@@ -1,16 +1,28 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import { LESSONS, getFirstIncompleteLesson } from '../lessons';
+
+export type LessonScore = {
+  /** Best quiz credits earned for this lesson. */
+  earned: number;
+  /** Quiz credits available for this lesson. */
+  max: number;
+};
 
 interface ProgressState {
   completedModules: string[];
   currentUnlockedModule: string;
+  /** Total credits: best quiz scores plus experiment bonuses. Derived; kept for display. */
   totalXP: number;
   quizResults: Record<string, boolean>;
+  lessonScores: Record<string, LessonScore>;
+  experimentBonuses: Record<string, number>;
 
   // Actions
-  completeModule: (moduleId: string, nextModuleId: string, xpEarned: number) => void;
-  completeSelectedModules: (modules: { moduleId: string; xpEarned: number }[], nextModuleId: string) => void;
-  markQuizResult: (moduleId: string, passed: boolean) => void;
+  recordLessonScore: (moduleId: string, earned: number, max: number) => void;
+  awardExperimentBonus: (moduleId: string, credits: number) => void;
+  /** Mark lessons as already known. This unlocks them but awards no credits. */
+  completeSelectedModules: (moduleIds: string[]) => void;
   resetProgress: () => void;
 }
 
@@ -19,50 +31,66 @@ const INITIAL_STATE = {
   currentUnlockedModule: 'birth-of-quantum-information',
   totalXP: 0,
   quizResults: {} as Record<string, boolean>,
+  lessonScores: {} as Record<string, LessonScore>,
+  experimentBonuses: {} as Record<string, number>,
 };
+
+function sumCredits(scores: Record<string, LessonScore>, bonuses: Record<string, number>): number {
+  const quiz = Object.values(scores).reduce((sum, score) => sum + score.earned, 0);
+  const bonus = Object.values(bonuses).reduce((sum, credits) => sum + credits, 0);
+  return quiz + bonus;
+}
+
+function withCompletion(completedModules: string[], moduleId: string) {
+  const next = completedModules.includes(moduleId) ? completedModules : [...completedModules, moduleId];
+  return {
+    completedModules: next,
+    currentUnlockedModule: getFirstIncompleteLesson(next)?.slug ?? moduleId,
+  };
+}
 
 export const useProgressStore = create<ProgressState>()(
   persist(
     (set) => ({
       ...INITIAL_STATE,
 
-      completeModule: (moduleId, nextModuleId, xpEarned) => {
+      recordLessonScore: (moduleId, earned, max) => {
         set((state) => {
-          if (state.completedModules.includes(moduleId)) return state;
+          const previous = state.lessonScores[moduleId];
+          const best = previous && previous.earned >= earned ? previous : { earned, max };
+          const lessonScores = { ...state.lessonScores, [moduleId]: best };
           return {
             ...state,
-            completedModules: [...state.completedModules, moduleId],
-            currentUnlockedModule: nextModuleId,
-            totalXP: state.totalXP + xpEarned,
+            ...withCompletion(state.completedModules, moduleId),
+            quizResults: { ...state.quizResults, [moduleId]: true },
+            lessonScores,
+            totalXP: sumCredits(lessonScores, state.experimentBonuses),
           };
         });
       },
 
-      completeSelectedModules: (modules, nextModuleId) => {
+      awardExperimentBonus: (moduleId, credits) => {
         set((state) => {
-          const newModules = modules.filter(({ moduleId }) => !state.completedModules.includes(moduleId));
+          if (state.experimentBonuses[moduleId] !== undefined || credits <= 0) return state;
+          const experimentBonuses = { ...state.experimentBonuses, [moduleId]: credits };
+          return { ...state, experimentBonuses, totalXP: sumCredits(state.lessonScores, experimentBonuses) };
+        });
+      },
+
+      completeSelectedModules: (moduleIds) => {
+        set((state) => {
+          const newModules = moduleIds.filter((moduleId) => !state.completedModules.includes(moduleId));
           if (newModules.length === 0) return state;
-
+          const completedModules = [...state.completedModules, ...newModules];
           return {
             ...state,
-            completedModules: [...state.completedModules, ...newModules.map(({ moduleId }) => moduleId)],
-            currentUnlockedModule: nextModuleId,
-            totalXP: state.totalXP + newModules.reduce((sum, { xpEarned }) => sum + xpEarned, 0),
+            completedModules,
+            currentUnlockedModule: getFirstIncompleteLesson(completedModules)?.slug ?? state.currentUnlockedModule,
           };
         });
       },
 
-      markQuizResult: (moduleId, passed) => {
-        set((state) => ({
-          ...state,
-          quizResults: {
-            ...state.quizResults,
-            [moduleId]: passed,
-          },
-        }));
-      },
-
-      resetProgress: () => set({ ...INITIAL_STATE, quizResults: {} }),
+      resetProgress: () => set({ ...INITIAL_STATE, quizResults: {}, lessonScores: {}, experimentBonuses: {} }),
     }),
     {
       name: 'qcpath-progress',
@@ -77,7 +105,28 @@ export const useProgressStore = create<ProgressState>()(
         }
         return localStorage;
       }),
-      version: 1,
+      version: 2,
+      // v1 stored only a running XP total. Keep learners' earned credits by giving each
+      // lesson completed under the old rules its full quiz credits.
+      migrate: (persisted, version) => {
+        const state = (persisted ?? {}) as Partial<ProgressState>;
+        if (version < 2) {
+          const completed = state.completedModules ?? [];
+          const lessonScores: Record<string, LessonScore> = {};
+          for (const slug of completed) {
+            const lesson = LESSONS.find((item) => item.slug === slug);
+            if (lesson) lessonScores[slug] = { earned: lesson.xp, max: lesson.xp };
+          }
+          return {
+            ...INITIAL_STATE,
+            ...state,
+            lessonScores,
+            experimentBonuses: {},
+            totalXP: sumCredits(lessonScores, {}),
+          } as ProgressState;
+        }
+        return state as ProgressState;
+      },
     }
   )
 );

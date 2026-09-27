@@ -24,7 +24,7 @@ const singleQubitGates: Gate[] = [
   { name: 'Pauli-Z', symbol: 'Z', family: 'Phase flip', action: 'Leaves |0⟩ unchanged and negates |1⟩.', equation: 'Z(\\alpha|0\\rangle+\\beta|1\\rangle)=\\alpha|0\\rangle-\\beta|1\\rangle', qiskit: 'circuit.z(0)' },
   { name: 'S', symbol: 'S', family: 'Quarter-turn phase', action: 'Adds a π/2 phase to the |1⟩ component.', equation: 'S=\\begin{pmatrix}1&0\\\\0&i\\end{pmatrix}', qiskit: 'circuit.s(0)' },
   { name: 'T', symbol: 'T', family: 'Eighth-turn phase', action: 'Adds a π/4 phase to the |1⟩ component.', equation: 'T=\\begin{pmatrix}1&0\\\\0&e^{i\\pi/4}\\end{pmatrix}', qiskit: 'circuit.t(0)' },
-  { name: 'RX / RY / RZ', symbol: 'R', family: 'Continuous rotations', action: 'Rotates a qubit around one Bloch-sphere axis.', equation: 'R_y(\\theta)=e^{-i\\theta Y/2}', qiskit: 'circuit.ry(0.7, 0)' },
+  { name: 'RX / RY / RZ', symbol: 'R', family: 'Continuous rotations', action: 'Rotates a qubit around one Bloch-sphere axis. In the playground these are fixed quarter turns (θ = π/2); in Qiskit you choose any angle.', equation: 'R_y(\\theta)=e^{-i\\theta Y/2}', qiskit: 'circuit.ry(0.7, 0)' },
 ];
 
 const multiQubitGates: Gate[] = [

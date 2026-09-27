@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { getDisplayLessonNumber, getNextLesson, LESSONS, ORDERED_LESSONS } from '@/lib/lessons';
+import { getDisplayLessonNumber, getFirstIncompleteLesson, LESSONS, ORDERED_LESSONS } from '@/lib/lessons';
+import { maxLessonCredits } from '@/lib/credits';
 import { useProgressStore } from '@/lib/store/progressStore';
 import { cn } from '@/lib/utils';
 
@@ -28,7 +29,7 @@ const DIFFICULTY_LABEL: Record<(typeof DIFFICULTY_ORDER)[number], string> = {
 };
 
 export default function LessonsClient() {
-  const { completedModules, currentUnlockedModule, totalXP, quizResults, completeSelectedModules } = useProgressStore();
+  const { completedModules, currentUnlockedModule, totalXP, quizResults, lessonScores, completeSelectedModules } = useProgressStore();
   const [mounted, setMounted] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [selectionMode, setSelectionMode] = useState(false);
@@ -37,10 +38,14 @@ export default function LessonsClient() {
 
   // Use safe defaults until client hydration is complete
   const completed = mounted ? completedModules : [];
-  const current = mounted ? currentUnlockedModule : 'birth-of-quantum-information';
+  // Derived from completions so older saved progress (which stored the lesson after the
+  // most recent completion) cannot lock lessons the learner has not finished.
+  const current = mounted
+    ? getFirstIncompleteLesson(completedModules)?.slug ?? currentUnlockedModule
+    : 'birth-of-quantum-information';
   const displayedXP = mounted ? totalXP : 0;
   const completedQuizCount = mounted ? Object.values(quizResults).filter(Boolean).length : 0;
-  const totalPossibleXP = LESSONS.filter((lesson) => !lesson.upcoming).reduce((sum, lesson) => sum + lesson.xp, 0);
+  const totalPossibleXP = LESSONS.filter((lesson) => !lesson.upcoming).reduce((sum, lesson) => sum + maxLessonCredits(lesson), 0);
 
   const available = ORDERED_LESSONS.filter((l) => !l.upcoming);
   const upcoming = LESSONS.filter((l) => l.upcoming);
@@ -69,12 +74,7 @@ export default function LessonsClient() {
     const selected = available.filter((lesson) => selectedLessons.includes(lesson.slug));
     if (selected.length === 0) return;
 
-    const lastSelected = selected[selected.length - 1];
-    const nextLesson = getNextLesson(lastSelected.id);
-    completeSelectedModules(
-      selected.map((lesson) => ({ moduleId: lesson.slug, xpEarned: lesson.xp })),
-      nextLesson?.slug ?? lastSelected.slug,
-    );
+    completeSelectedModules(selected.map((lesson) => lesson.slug));
     setSelectedLessons([]);
     setSelectionMode(false);
     setSettingsOpen(false);
@@ -117,10 +117,13 @@ export default function LessonsClient() {
                   type="button"
                   disabled={selectedLessons.length === 0}
                   onClick={handleCompleteSelected}
-                  className="w-full rounded-lg px-3 py-2 text-left text-xs text-foreground transition hover:bg-primary/10 disabled:cursor-not-allowed disabled:text-muted/50"
+                  className="w-full rounded-lg px-3 py-2 text-left text-xs text-foreground transition hover:bg-primary/10 disabled:cursor-not-allowed disabled:text-muted/70"
                 >
-                  complete selected ({selectedLessons.length})
+                  mark as already known ({selectedLessons.length})
                 </button>
+                <p className="px-3 pb-2 pt-1 text-[11px] leading-snug text-muted">
+                  Marked lessons are unlocked but earn no credits. Take their checks any time to earn them.
+                </p>
               </div>
             )}
           </div>
@@ -136,15 +139,15 @@ export default function LessonsClient() {
       <section className="mb-12 grid grid-cols-3 divide-x divide-border/40 rounded-2xl border border-primary/20 bg-primary/5 px-3 py-4 sm:px-6" aria-label="Learning progress summary">
         <div className="px-2 text-center sm:px-4">
           <p className="text-xl font-semibold text-foreground">{completed.length}<span className="text-sm text-muted">/{available.length}</span></p>
-          <p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-muted">Lessons</p>
+          <p className="mt-1 text-[11px] font-mono uppercase tracking-wider text-muted">Lessons</p>
         </div>
         <div className="px-2 text-center sm:px-4">
           <p className="text-xl font-semibold text-primary">{displayedXP}<span className="text-sm text-muted">/{totalPossibleXP}</span></p>
-          <p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-muted">Credits</p>
+          <p className="mt-1 text-[11px] font-mono uppercase tracking-wider text-muted">Credits</p>
         </div>
         <div className="px-2 text-center sm:px-4">
           <p className="text-xl font-semibold text-emerald-400">{completedQuizCount}<span className="text-sm text-muted">/{available.length}</span></p>
-          <p className="mt-1 text-[10px] font-mono uppercase tracking-wider text-muted">Quizzes</p>
+          <p className="mt-1 text-[11px] font-mono uppercase tracking-wider text-muted">Quizzes</p>
         </div>
       </section>
 
@@ -191,15 +194,15 @@ export default function LessonsClient() {
                   </label>
                 )}
                 <Link
-                  href={isLocked ? '#' : `/lessons/${lesson.slug}`}
+                  href={`/lessons/${lesson.slug}`}
+                  aria-label={isLocked ? `${lesson.title} (ahead of your path)` : undefined}
                   className={cn(
                     'relative flex min-w-0 flex-1 items-start gap-4 rounded-xl border px-4 py-4 transition-all duration-200',
                     isCompleted && 'border-emerald-500/40 bg-emerald-500/5 hover:border-emerald-500/60',
                     isCurrent && 'border-primary/50 bg-primary/5 hover:border-primary/80 glow-primary',
-                    isLocked && 'border-border/30 bg-card/30 opacity-50 cursor-not-allowed',
+                    isLocked && 'border-border/40 bg-card/30 hover:border-border/80 hover:bg-card/50',
                     isSelected && 'ring-1 ring-primary/70',
                   )}
-                  onClick={(e) => isLocked && e.preventDefault()}
                 >
                   <div
                     className={cn(
@@ -217,16 +220,25 @@ export default function LessonsClient() {
                       <span className={cn('text-xs font-mono', DIFFICULTY_COLOR[lesson.difficulty])}>
                         {lesson.difficulty}
                       </span>
-                      <span className="text-xs text-muted/50">·</span>
-                      <span className="text-xs text-muted/70 font-mono">{lesson.xp} XP</span>
+                      <span className="text-xs text-muted/70">·</span>
+                      <span className="text-xs text-muted font-mono">{maxLessonCredits(lesson)} credits</span>
+                      {isCompleted && lessonScores[lesson.slug] && (
+                        <>
+                          <span className="text-xs text-muted/60">·</span>
+                          <span className="text-xs font-mono text-emerald-400">
+                            {Math.round((lessonScores[lesson.slug].earned / lessonScores[lesson.slug].max) * 100)}% mastery
+                          </span>
+                        </>
+                      )}
+                      {isLocked && <span className="ml-auto text-[11px] font-mono text-muted">ahead</span>}
                     </div>
                     <h3 className={cn(
                       'font-semibold text-sm',
-                      isLocked ? 'text-muted' : 'text-foreground'
+                      isLocked ? 'text-foreground/75' : 'text-foreground'
                     )}>
                       {lesson.title}
                     </h3>
-                    <p className="text-xs text-muted/70 mt-0.5 line-clamp-2">{lesson.objective}</p>
+                    <p className="text-xs text-muted mt-0.5 line-clamp-2">{lesson.objective}</p>
                     {isCurrent && (
                       <div className="mt-2 flex items-center gap-1.5">
                         <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
@@ -235,9 +247,7 @@ export default function LessonsClient() {
                     )}
                   </div>
 
-                  {!isLocked && (
-                    <div className="text-muted/40 text-lg self-center">→</div>
-                  )}
+                  <div className="text-muted/70 text-lg self-center" aria-hidden="true">→</div>
                 </Link>
               </motion.div>
             );
@@ -248,16 +258,17 @@ export default function LessonsClient() {
       </div>
 
       {/* ── Upcoming lessons ── */}
+      {upcoming.length > 0 && (
       <div className="space-y-10">
         <div className="flex items-center gap-3">
           <div className="flex-1 h-px bg-border/30" />
-          <span className="text-xs font-mono text-muted/50 uppercase tracking-widest">Coming Soon</span>
+          <span className="text-xs font-mono text-muted/70 uppercase tracking-widest">Coming Soon</span>
           <div className="flex-1 h-px bg-border/30" />
         </div>
 
         {Object.entries(upcomingByStage).map(([stage, lessons]) => (
           <div key={stage}>
-            <div className="text-xs font-mono text-muted/50 uppercase tracking-widest mb-3 ml-1">
+            <div className="text-xs font-mono text-muted/70 uppercase tracking-widest mb-3 ml-1">
               {STAGE_LABEL[stage] ?? stage}
             </div>
             <div className="flex flex-col gap-3">
@@ -274,9 +285,9 @@ export default function LessonsClient() {
                       <span className={cn('text-xs font-mono', DIFFICULTY_COLOR[lesson.difficulty])}>
                         {lesson.difficulty}
                       </span>
-                      <span className="text-xs text-muted/50">·</span>
-                      <span className="text-xs text-muted/70 font-mono">{lesson.xp} XP</span>
-                      <span className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-[10px] font-mono font-semibold uppercase tracking-wider">
+                      <span className="text-xs text-muted/70">·</span>
+                      <span className="text-xs text-muted font-mono">{maxLessonCredits(lesson)} credits</span>
+                      <span className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-[11px] font-mono font-semibold uppercase tracking-wider">
                         <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-400/60" />
                         upcoming
                       </span>
@@ -284,7 +295,7 @@ export default function LessonsClient() {
                     <h3 className="font-semibold text-sm text-muted/60">
                       {getDisplayLessonNumber(lesson.id)}. {lesson.title}
                     </h3>
-                    <p className="text-xs text-muted/40 mt-0.5 line-clamp-1">{lesson.objective}</p>
+                    <p className="text-xs text-muted/60 mt-0.5 line-clamp-1">{lesson.objective}</p>
                   </div>
                 </motion.div>
               ))}
@@ -292,6 +303,7 @@ export default function LessonsClient() {
           </div>
         ))}
       </div>
+      )}
     </div>
   );
 }

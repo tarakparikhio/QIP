@@ -39,6 +39,20 @@ function buildCircuitBody(operations: GateOperation[]): string {
     : '# Add gates in the Playground to generate circuit code';
 }
 
+// Qiskit orders bitstrings little-endian (qubit 0 is the rightmost bit), while this
+// playground writes qubit 0 on the left. For multi-qubit circuits the exported code
+// prints both orderings so learners can match Qiskit output to the playground labels.
+function buildCountsOutput(numQubits: number, countsExpr: string): string {
+  if (numQubits < 2) return `print(${countsExpr})`;
+  const last = numQubits - 1;
+  return `counts = ${countsExpr}
+# Qiskit prints bitstrings right-to-left: the RIGHTMOST bit is qubit 0.
+# This playground writes qubit 0 on the LEFT, so reverse each key to match it.
+playground_counts = {bits[::-1]: n for bits, n in counts.items()}
+print("Qiskit order     (q${last}...q0):", counts)
+print("Playground order (q0...q${last}):", playground_counts)`;
+}
+
 function buildCode(numQubits: number, operations: GateOperation[], tab: CodeTab): string {
   const body = buildCircuitBody(operations);
 
@@ -54,7 +68,7 @@ circuit.measure_all()
 sampler = StatevectorSampler()
 result = sampler.run([circuit], shots=1024).result()[0]
 print(circuit)
-print(result.data.meas.get_counts())`;
+${buildCountsOutput(numQubits, 'result.data.meas.get_counts()')}`;
   }
 
   return `import os
@@ -82,7 +96,7 @@ sampler = Sampler(mode=backend)
 job = sampler.run([isa_circuit], shots=1024)
 print(f"Backend: {backend.name}")
 print(f"Job ID: {job.job_id()}")
-print(job.result()[0].data.meas.get_counts())`;
+${buildCountsOutput(numQubits, 'job.result()[0].data.meas.get_counts()')}`;
 }
 
 export default function QuantumCodePanel({ numQubits, operations }: Props) {
@@ -119,6 +133,11 @@ export default function QuantumCodePanel({ numQubits, operations }: Props) {
         </div>
       </div>
       <CodeBlock code={code} label={tab === 'local' ? 'qiskit_local.py' : 'run_on_ibm.py'} />
+      {numQubits > 1 && (
+        <p className="mt-2 text-xs leading-relaxed text-muted/80">
+          <strong className="text-foreground/80">Bit order differs in Qiskit.</strong> The gate indices above are identical to your circuit, but Qiskit prints results with qubit 0 as the <em>rightmost</em> bit. This playground shows qubit 0 on the <em>left</em>. For example, X on q0 appears here as <code className="text-primary">|10&gt;</code> but Qiskit prints <code className="text-primary">01</code>. The code prints both orders so you can compare.
+        </p>
+      )}
       {tab === 'ibm' && (
         <p className="mt-2 text-xs leading-relaxed text-muted/70">
           Before running, set <code className="text-primary">IBM_QUANTUM_TOKEN</code> and <code className="text-primary">IBM_QUANTUM_INSTANCE</code> in your terminal. Never put your token in this code.

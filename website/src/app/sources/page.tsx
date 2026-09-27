@@ -30,7 +30,7 @@ export default function SourcesPage() {
           <h2 className="text-2xl font-semibold">What the playground actually computes</h2>
           <div className="mt-5 space-y-4 text-sm leading-relaxed text-foreground/80">
             <p>The circuit builder applies ideal gate matrices to a state vector and calculates exact computational-basis probabilities. It is useful for inspecting small circuits and building intuition about amplitudes, phase, and interference.</p>
-            <p>It does not simulate a physical qubit. In particular, it does not include finite-shot variation, relaxation, dephasing, crosstalk, calibration drift, readout error, device connectivity, transpilation, queue time, or provider-specific behavior. A displayed probability is therefore a theoretical result for the model, not a hardware measurement.</p>
+            <p>It does not simulate a physical qubit. The optional measurement sampler adds finite-shot variation, but the model does not include relaxation, dephasing, crosstalk, calibration drift, readout error, device connectivity, transpilation, queue time, or provider-specific behavior. A displayed probability is therefore a theoretical result for the model, not a hardware measurement.</p>
             <p>Some advanced lessons intentionally reduce an algorithm to a small circuit or conceptual experiment. Their source links describe the full result; the lesson should not be read as an implementation benchmark or a security proof.</p>
           </div>
         </section>
@@ -43,6 +43,7 @@ export default function SourcesPage() {
             <li><strong className="text-foreground">Ideal versus real labels:</strong> simulator output, finite-shot sampling, and hardware behavior are described as different things.</li>
             <li><strong className="text-foreground">Primary and official reading:</strong> lesson panels link to original papers, university notes, standards-oriented public material, or maintained provider documentation where appropriate.</li>
             <li><strong className="text-foreground">Version awareness:</strong> the copyable examples target Qiskit 2.x, while provider APIs, account flows, pricing, and backend availability can change.</li>
+            <li><strong className="text-foreground">Automated checks:</strong> every practice answer is recomputed independently, every Qiskit code lab is run against Qiskit 2.x, and the simulator is tested against a separate dense-matrix implementation on random circuits.</li>
             <li><strong className="text-foreground">Correction over certainty:</strong> a specific report with the lesson, equation, circuit, and expected result is more useful than a general disagreement.</li>
           </ul>
         </section>

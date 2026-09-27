@@ -2,7 +2,7 @@
 import { InlineMath, BlockMath } from '@/components/math';
 import { NotationBox } from '@/components/lesson';
 
-export default function Lesson37Content() {
+export default function Lesson21Content() {
   return (
     <>
       <NotationBox>
@@ -36,14 +36,37 @@ export default function Lesson37Content() {
 
       <h2>21.2 - Mark, then reflect</h2>
       <p>
-        The oracle marks a solution by changing its phase. Because a global phase cannot be observed by itself, the oracle is followed by the diffusion operator, which compares amplitudes against their average.
+        The oracle marks a solution by flipping the sign of its amplitude: <InlineMath math="O|x\rangle=-|x\rangle" /> for the marked <InlineMath math="x" /> and <InlineMath math="O|x\rangle=|x\rangle" /> otherwise. This is a <em>relative</em> phase between the marked state and the rest, so it is physically real, but it does not change any computational-basis probability yet. Measuring right after the oracle would still give every candidate with equal probability.
+      </p>
+      <p>
+        The diffusion operator turns that hidden sign difference into a probability difference. It reflects every amplitude about the average amplitude: a value <InlineMath math="a" /> becomes <InlineMath math="2\bar a-a" />. Because the marked amplitude is now negative, it sits far below the average and is reflected far above it.
       </p>
       <BlockMath math="G=(2|s\rangle\langle s|-I)O" />
       <p>
         Repeating <InlineMath math="G" /> rotates the state toward the marked subspace. The measurement probability rises and then falls if the iterations continue too long, so amplification must be stopped at the right time.
       </p>
 
-      <h2>21.3 - What the advantage means</h2>
+      <h2>21.3 - Worked example: search four items with two qubits</h2>
+      <p>
+        With <InlineMath math="n=2" /> qubits there are <InlineMath math="N=4" /> candidates. Suppose the marked item is <InlineMath math="|11\rangle" />. Track the four amplitudes in the order <InlineMath math="|00\rangle,|01\rangle,|10\rangle,|11\rangle" />:
+      </p>
+      <ol>
+        <li><strong>H on both qubits:</strong> <InlineMath math="(\tfrac12,\tfrac12,\tfrac12,\tfrac12)" />. Every probability is <InlineMath math="\tfrac14" />.</li>
+        <li><strong>Oracle = CZ:</strong> CZ multiplies only <InlineMath math="|11\rangle" /> by <InlineMath math="-1" />, giving <InlineMath math="(\tfrac12,\tfrac12,\tfrac12,-\tfrac12)" />. Probabilities are still all <InlineMath math="\tfrac14" />.</li>
+        <li><strong>Diffusion:</strong> the average amplitude is <InlineMath math="\bar a=\tfrac14" />. Reflecting each value, <InlineMath math="2\bar a-a" />, gives <InlineMath math="(0,0,0,1)" />.</li>
+        <li><strong>Measure:</strong> the result is <InlineMath math="11" /> with probability 1.</li>
+      </ol>
+      <p>
+        One iteration is exactly right for <InlineMath math="N=4" />. Geometrically, the start state makes an angle <InlineMath math="\theta" /> with the unmarked subspace where <InlineMath math="\sin\theta=1/\sqrt N=\tfrac12" />, so <InlineMath math="\theta=30^\circ" />. Each iteration rotates by <InlineMath math="2\theta" />, and <InlineMath math="30^\circ+60^\circ=90^\circ" /> lands exactly on the marked state.
+      </p>
+      <p>
+        The diffusion step uses only gates in this playground: <strong>H on both → X on both → CZ → X on both → H on both</strong>. The middle <strong>X, CZ, X</strong> block flips the sign of <InlineMath math="|00\rangle" />, which equals <InlineMath math="-(2|00\rangle\langle00|-I)" />. The extra overall minus sign is a <em>global</em> phase, so it has no observable effect; this is exactly where the global-versus-relative distinction matters.
+      </p>
+      <p>
+        Build the full circuit in the playground below and watch the state vector after each block. Then mark a different item: to mark <InlineMath math="|01\rangle" /> (qubit 0 is <InlineMath math="0" />, qubit 1 is <InlineMath math="1" />), surround the oracle CZ with X on q0 so that CZ acts on the pattern you want.
+      </p>
+
+      <h2>21.4 - What the advantage means</h2>
       <p>
         Classical black-box search needs order <InlineMath math="N" /> oracle queries in the worst case. Grover&apos;s algorithm needs order <InlineMath math="\sqrt{N}" /> queries under its oracle model. The quantum circuit still needs an oracle implementation, gates, and measurement repetitions.
       </p>
@@ -51,12 +74,12 @@ export default function Lesson37Content() {
         This is a quadratic query improvement, not an exponential improvement. The result is valuable, but it does not make arbitrary database lookup instant or remove the cost of loading and verifying data.
       </p>
 
-      <h2>21.4 - Why this playground stops at the idea</h2>
+      <h2>21.5 - Beyond two qubits</h2>
       <p>
-        The current playground can show H, X, Z, and CNOT patterns, but it does not provide a general phase oracle, multi-qubit diffusion operator, or repeated shot sampling. A small fixed circuit would illustrate interference, not a complete Grover search, so this lesson keeps the algorithmic boundary explicit.
+        For larger <InlineMath math="N" />, the optimal number of iterations is about <InlineMath math="\frac{\pi}{4}\sqrt N" />, and the success probability is high but usually not exactly 1. Larger searches need multi-controlled phase gates for both the oracle and the diffusion step, which this playground does not provide as single gates.
       </p>
       <p>
-        The oracle is the non-trivial problem-specific part: it must recognize a marked input reversibly and encode that answer as a phase without measuring the search register. The diffusion step can then amplify that phase-marked subspace.
+        The oracle is the non-trivial problem-specific part: it must recognize a marked input reversibly and encode that answer as a phase without measuring the search register. In the two-qubit example, CZ happens to be the oracle for <InlineMath math="|11\rangle" />; for a real problem, building that oracle is where most of the cost lives.
       </p>
     </>
   );

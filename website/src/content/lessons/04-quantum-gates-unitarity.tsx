@@ -2,7 +2,7 @@
 import { InlineMath, BlockMath } from '@/components/math';
 import { NotationBox, TryIt } from '@/components/lesson';
 
-export default function Lesson06Content() {
+export default function Lesson04Content() {
   return (
     <>
       <NotationBox>
@@ -19,7 +19,7 @@ export default function Lesson06Content() {
 
         <NotationBox.Item heading="Pauli Matrices">
           <NotationBox.Text>
-            The three Pauli matrices form the basis of all single-qubit gates. Each squares to the identity and has eigenvalues <InlineMath math="\pm 1" />.
+            Together with the identity, the three Pauli matrices form a basis for all <InlineMath math="2\times2" /> matrices, so every single-qubit gate is a combination of <InlineMath math="I, X, Y, Z" />. Each Pauli squares to the identity and has eigenvalues <InlineMath math="\pm 1" />.
           </NotationBox.Text>
           <NotationBox.Code>
             <NotationBox.Row math="X = \begin{pmatrix}0&1\\1&0\end{pmatrix}" label="bit flip" />
@@ -57,7 +57,7 @@ export default function Lesson06Content() {
 
       <h2>4.2 — The Pauli Gates</h2>
       <p>
-        The three Pauli gates — X, Y, Z — are the most fundamental single-qubit operations. Each is both Hermitian (<InlineMath math="U = U^\dagger" />) and unitary (<InlineMath math="U^2 = I" />), meaning they are self-inverse.
+        The three Pauli gates — X, Y, Z — are the most fundamental single-qubit operations. Each is both Hermitian (<InlineMath math="U = U^\dagger" />) and unitary (<InlineMath math="U^\dagger U = I" />). Combining the two gives <InlineMath math="U^2 = U^\dagger U = I" />, so each Pauli gate is its own inverse. (Unitary alone does not imply this: <InlineMath math="S" /> is unitary but <InlineMath math="S^2 = Z \neq I" />.)
       </p>
       <p>
         <strong>The X gate</strong> (Pauli-X, bit flip) swaps the <InlineMath math="|0\rangle" /> and <InlineMath math="|1\rangle" /> amplitudes:

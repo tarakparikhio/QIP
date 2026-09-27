@@ -1,12 +1,28 @@
 export type ProjectUpdate = {
   date: string;
-  commit: string;
+  /** Short commit hash, when the change has been committed. */
+  commit?: string;
   title: string;
   summary: string;
 };
 
 // Static by design: Firebase Hosting serves the site without a runtime Git dependency.
 export const PROJECT_UPDATES: ProjectUpdate[] = [
+  {
+    date: '2026-09-27',
+    title: 'Interactive homepage and share cards',
+    summary: 'Added a hands-on circuit and measurement tally to the homepage, a map of all 40 lessons, a scroll-through Bloch sphere story, a lab showcase, a welcome-back panel with a daily practice question, and shareable result cards for completed lessons.',
+  },
+  {
+    date: '2026-09-27',
+    title: 'Accuracy pass and statistics-first practice',
+    summary: 'Corrected five lesson errors, rewrote or deepened 25 lessons with worked examples, added 121 verified practice problems and four interactive labs, and made every Qiskit code lab run under Qiskit 2.x.',
+  },
+  {
+    date: '2026-09-27',
+    title: 'Mastery-based credits and learning-path fixes',
+    summary: 'Credits now reward first-try answers and keep the best retake, lessons show mastery, skipping is supported, and jumping ahead no longer locks earlier lessons. The simulator became about 600 times faster at 10 qubits.',
+  },
   {
     date: '2026-08-09',
     commit: '7f03cbf',
@@ -35,7 +51,7 @@ export const PROJECT_UPDATES: ProjectUpdate[] = [
     date: '2026-08-01',
     commit: '84d9431',
     title: 'Merged quiz-gated lesson progress',
-    summary: 'Connected lesson quizzes, completion state, XP, and unlock progression into the learning path.',
+    summary: 'Connected lesson quizzes, completion state, credits, and unlock progression into the learning path.',
   },
   {
     date: '2026-08-01',

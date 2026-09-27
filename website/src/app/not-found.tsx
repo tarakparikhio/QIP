@@ -79,7 +79,7 @@ export default function NotFound() {
 
       {/* Probability readout */}
       <div className="w-64 mb-8 bg-card border border-border/50 rounded-lg p-4 font-mono text-xs">
-        <p className="text-muted uppercase tracking-widest mb-3 text-[10px]">State Probabilities</p>
+        <p className="text-muted uppercase tracking-widest mb-3 text-[11px]">State Probabilities</p>
         <div className="space-y-2">
           <div className="flex items-center gap-2">
             <span className="text-foreground/60 w-12">|page⟩</span>
@@ -102,7 +102,7 @@ export default function NotFound() {
             <span className="text-foreground/60 w-10 text-right">{(prob1 * 100).toFixed(1)}%</span>
           </div>
         </div>
-        <p className="text-muted/50 text-[10px] mt-3 italic">
+        <p className="text-muted/70 text-[11px] mt-3 italic">
           Measurement outcome: <span className="text-rose-400">|void⟩</span>
         </p>
       </div>
@@ -132,7 +132,7 @@ export default function NotFound() {
       </div>
 
       {/* Footer note */}
-      <p className="mt-12 text-muted/40 text-xs font-mono">
+      <p className="mt-12 text-muted/60 text-xs font-mono">
         Error code: <span className="text-primary/60">DECOHERENCE_404</span> · No qubits were harmed
       </p>
     </div>

@@ -2,8 +2,28 @@
 
 All notable project changes are recorded here. Dates and commit identifiers are taken from the repository history; the `Unreleased` section describes the current release-preparation work in the working tree.
 
-## Unreleased
+## 2.1.0 - 2026-09-27
 
+- Accuracy pass across all 40 lessons: fixed errors in lessons 1, 4, 12, 26, and 33; rewrote or substantially deepened 25 lessons (teleportation, decoherence, noise, density matrices, measurement theory, universal gates, error correction, Simon, both QFT lessons, both phase-estimation lessons, complexity, variational algorithms, VQE, both Hamiltonian-simulation lessons, adiabatic computation, BB84, hardware, compilation, and the two advanced lessons) with worked examples and checked numbers.
+- Add "Practice the math": 121 fill-in-the-number problems with hints, worked solutions, and a statistics lens that ties each idea to probability, sampling, and error bars. Every answer is recomputed by `scripts/test-practice-answers.mjs`.
+- Add four interactive labs: Interference (adding amplitudes versus chances), Shot (sampling, confidence intervals, sample size), Energy (VQE with shot noise and the parameter-shift rule), and Trotter (product-formula error scaling).
+- New buildable experiments: full teleportation (deferred measurement), the 3-qubit bit-flip code with syndrome qubits, a complete n = 2 Simon instance, one-qubit phase estimation, mixed reduced states, and eigenstate versus superposition kickback.
+- All 40 Qiskit code labs now run under Qiskit 2.x and demonstrate what their titles claim (for example, Shor period finding for 15, a verified QFT, single-edge QAOA, and teleportation with a fidelity check).
+- Make credits reflect understanding: each question pays full credit on the first try, half on the second, a quarter after that; retakes keep the best score; lesson cards and pages show mastery %; building an experiment's target state yourself pays a one-time 10% bonus. Existing learners keep their earned credits. "XP" and "credits" are now one term.
+- Add "Skip for now" at the bottom of unfinished lessons (no credits; the lesson stays next in the path) and make lessons ahead of the path readable and clickable in the catalog.
+- Add a live Bell-state demo to the homepage, a one-line header on phones, higher-contrast secondary text and larger small labels, and a clearer tagline.
+- Add a "Report it on GitHub" link to every lesson with a prefilled issue template.
+- Fix the lesson circuit builder disappearing while 3D label fonts download from a CDN (and permanently where the CDN is blocked): Bloch sphere labels now render as HTML with no network dependency.
+- Explain the playground-versus-Qiskit qubit ordering in exported code, lesson code labs, and the Multi-Qubit Systems lesson; exported code prints both bit orders.
+- Rewrite the Grover lesson: correct the relative-phase explanation and add a complete, runnable two-qubit Grover search with a guided experiment.
+- Expand every lesson check to three questions (80 new questions, including predict-the-output items) and stop revealing the explanation before a correct answer.
+- Add worked examples to Shor (factoring 15), the QFT circuit (two-qubit QFT), QAOA (single-edge MaxCut), and quantum annealing (two-spin Ising problem); correct the QAOA p=1 performance claim.
+- Replace dense-matrix simulation with direct state-vector updates (10 qubits: about 1.8 s to 3 ms per recalculation).
+- Derive the current lesson from completed lessons so jumping ahead by URL no longer locks earlier lessons; show missing prerequisites on lesson pages.
+- Report true single-qubit purity Tr(ρ²) in the Bloch panel and keep |r| as the vector length.
+- Add quantum engine tests; move CI to the repository root so it runs, and run tests, lesson validation, lint, and build in CI.
+- Set the production site URL so the sitemap, canonical links, and share images are generated; add share images to lesson pages; drop the catch-all Firebase rewrite so unknown URLs return the 404 page.
+- Remove unused MDX files and dependencies, the stale build log, and an unused quiz-answer map; align lesson component names with file numbers; add accessibility labels to the quiz and visualizations; correct stale "no shot sampling" statements.
 - Align the 40 lesson content filenames with the student-facing curriculum order while preserving stable lesson IDs, slugs, prerequisites, quizzes, and progress keys.
 - Add a static project updates page backed by meaningful commit history.
 - Add finite-shot browser measurement sampling with X, Y, and Z basis support for single-qubit circuits.

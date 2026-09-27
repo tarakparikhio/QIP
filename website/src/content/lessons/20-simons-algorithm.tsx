@@ -2,7 +2,7 @@
 import { InlineMath, BlockMath } from '@/components/math';
 import { NotationBox, TryIt } from '@/components/lesson';
 
-export default function Lesson14Content() {
+export default function Lesson20Content() {
   return (
     <>
       <NotationBox>
@@ -49,17 +49,40 @@ export default function Lesson14Content() {
       </p>
       <BlockMath math="(H^{\otimes n})(|x\rangle+|x\oplus s\rangle) \quad\Rightarrow\quad y\cdot s=0\pmod 2" />
 
-      <h2>20.4 — A One-Bit Toy Oracle</h2>
+      <h2>20.4 — Worked Example: n = 2, s = 11</h2>
       <p>
-        The playground cannot represent a full Simon oracle, but it can show the interference pattern behind it. Build <strong>H on q0 → CNOT from q0 to q1 → H on q0</strong>. The CNOT correlates the two wires; the last Hadamard converts the correlation into a measurement-basis pattern.
+        Let <InlineMath math="f(x_0x_1) = x_0 \oplus x_1" />. Then <InlineMath math="f(00) = f(11) = 0" /> and <InlineMath math="f(01) = f(10) = 1" />, so every output has exactly two inputs, and they differ by <InlineMath math="s = 11" />.
       </p>
+      <ol>
+        <li>Hadamards on the two input qubits, then the oracle writes <InlineMath math="f(x)" /> into an output qubit with two CNOTs.</li>
+        <li>Suppose the output reads 0. The inputs collapse to <InlineMath math="(|00\rangle + |11\rangle)/\sqrt2" />, a pair differing by <InlineMath math="s" />.</li>
+        <li>Hadamards on both inputs give <InlineMath math="(|00\rangle + |11\rangle)/\sqrt2" /> again. The outcomes 01 and 10 cancel.</li>
+        <li>Measuring gives <InlineMath math="y = 00" /> or <InlineMath math="y = 11" />, each with probability 1/2. Both satisfy <InlineMath math="y \cdot s = 0 \pmod 2" />.</li>
+        <li>The first time you see <InlineMath math="y = 11" />, the equation <InlineMath math="s_0 \oplus s_1 = 0" /> plus <InlineMath math="s \neq 00" /> forces <InlineMath math="s = 11" />.</li>
+      </ol>
       <p>
-        In the full algorithm, the measured output register selects a two-term input superposition, and the final input measurement supplies an equation rather than the secret directly.
+        The outcome <InlineMath math="y = 00" /> carries no information, and it happens half the time, so the number of runs until a useful equation is geometric with mean 2.
       </p>
 
-      <TryIt heading="20.5 — Try It: See Correlation Become Interference">
+      <h2>20.5 — Why Classical Algorithms Struggle: the Birthday Problem</h2>
+      <p>
+        Classically, the only way to learn <InlineMath math="s" /> is to find two inputs with the same output. Among <InlineMath math="k" /> random queries there are <InlineMath math="\binom{k}{2}" /> pairs, and each collides with probability about <InlineMath math="1/2^n" />. Collisions become likely only when <InlineMath math="k^2/2 \approx 2^n" />, so a classical algorithm needs about <InlineMath math="2^{n/2}" /> queries, the birthday paradox. For <InlineMath math="n = 100" />, that is about <InlineMath math="10^{15}" />.
+      </p>
+      <p>
+        Simon&apos;s algorithm needs about <InlineMath math="n" /> runs, each giving a random equation, plus classical linear algebra to solve them. That is an exponential separation, even against randomized algorithms, and it directly inspired Shor.
+      </p>
+
+      <h2>20.6 — Build It in the Playground</h2>
+      <p>
+        Use three qubits: q0 and q1 are the input register, q2 is the output. Build <strong>H on q0 and q1 → CNOT (q0 → q2) → CNOT (q1 → q2) → H on q0 and q1</strong>. The two CNOTs are the oracle <InlineMath math="f(x) = x_0 \oplus x_1" />.
+      </p>
+      <p>
+        Read only q0 and q1 in the probability bars: the input register shows 00 or 11, never 01 or 10, exactly the strings with <InlineMath math="y \cdot s = 0" /> for <InlineMath math="s = 11" />. The output qubit q2 is left random, as expected.
+      </p>
+
+      <TryIt heading="20.7 — Try It: Read the Hidden String">
         <p>
-          Load the example and compare it with <strong>H → H</strong> on q0 alone. The controlled operation creates correlations that change what the final Hadamard can reveal. This small circuit is the building block for Simon&apos;s larger hidden-XOR experiment.
+          Load the example and confirm that only 00 and 11 appear on q0 q1. Then change the oracle: delete the CNOT from q1, so <InlineMath math="f(x) = x_0" />. Now flipping <InlineMath math="x_1" /> never changes the output, so the hidden string is <InlineMath math="s = 01" />. Predict which input strings can appear (those with <InlineMath math="y_1 = 0" />), then check: you should see only 00 and 10.
         </p>
       </TryIt>
     </>
