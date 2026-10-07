@@ -59,6 +59,7 @@ export default function HomePage() {
               <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted">
                 <Link href="/playground" className="hover:text-primary">Open the playground <span aria-hidden="true">→</span></Link>
                 <Link href="/roadmap" className="hover:text-primary">See the roadmap <span aria-hidden="true">→</span></Link>
+                <Link href="/history" className="hover:text-primary">New here? Read how we got from bits to qubits <span aria-hidden="true">→</span></Link>
               </div>
             </section>
             <InteractiveHero />

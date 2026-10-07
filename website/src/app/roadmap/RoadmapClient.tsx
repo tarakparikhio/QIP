@@ -169,6 +169,9 @@ export default function RoadmapClient() {
           Work through the phases in order, pause when a concept needs more practice, and return to any section when your project raises a new question. The target is a strong beginner-to-entry-level foundation: enough theory, coding practice, and vocabulary to start contributing to quantum software, education, research support, or tooling work.
         </p>
         <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted/80">
+          New to the field? Start with <Link href="/history" className="text-primary hover:underline">From bits to qubits</Link>, a 10-minute history of how classical computing led to quantum computing.
+        </p>
+        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted/80">
           This is not a job guarantee. Professional readiness comes from pairing these lessons with Python, linear algebra, version control, clear writing, and a small reproducible portfolio.
         </p>
       </header>

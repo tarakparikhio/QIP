@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { InlineMath, BlockMath } from '@/components/math';
 import { NotationBox, TryIt } from '@/components/lesson';
 
@@ -33,6 +34,9 @@ export default function Lesson01Content() {
       </NotationBox>
 
       <h2>1.1 — From Classical Bits to Qubits</h2>
+      <p className="mb-4 text-sm text-muted">
+        Curious how we got here? <Link href="/history" className="text-primary hover:underline">From bits to qubits</Link> is a short, math-free history of the path from binary arithmetic to today&apos;s quantum hardware.
+      </p>
       <p className="mb-6 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm text-foreground/80">
         <strong>Study takeaway:</strong> a qubit is not just a two-state object; it carries complex amplitudes and phase information before measurement.
       </p>
