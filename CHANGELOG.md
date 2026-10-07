@@ -12,6 +12,7 @@ All notable project changes are recorded here. Dates and commit identifiers are 
 - Replace the header links with grouped Learn, Practice, and Explore menus on desktop and a full-width grouped menu on phones; Updates and Run on IBM Quantum moved from the settings menu into the navigation.
 - Link the history page from the home page, roadmap, and lesson 1, and the Logic lab from the gate guide; add the new pages to the sitemap.
 - Phone-width pass on the new pages: larger tap targets and no labels below 11px.
+- Add an MIT license for code and CC BY 4.0 for written material, a contributing guide, GitHub issue templates for content errors and bugs, and README badges and screenshots.
 
 ## 2.1.0 - 2026-09-27
 

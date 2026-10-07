@@ -1,0 +1,32 @@
+name: Bug report
+description: Something on the website is broken, such as a page, the playground, or progress tracking.
+labels: [bug]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Page URL
+      placeholder: https://qcmlbytarak.web.app/playground/
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open the playground
+        2. Add an H gate to qubit 0
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Browser and device
+      placeholder: Safari on iPhone 15, Chrome 129 on Windows

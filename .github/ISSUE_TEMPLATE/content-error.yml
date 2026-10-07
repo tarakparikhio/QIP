@@ -1,0 +1,34 @@
+name: Content error or confusing explanation
+description: Something in a lesson, analogy, quiz, or the history pages is wrong or hard to follow.
+labels: [lesson-feedback]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page or lesson
+      description: The lesson number and title, or the page URL.
+      placeholder: "Lesson 4: Entanglement"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong or unclear?
+      description: Quote the sentence, equation, or quiz question if you can.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect instead?
+      description: A correction, a source, or simply what confused you. All of these help.
+  - type: dropdown
+    id: background
+    attributes:
+      label: Your background (optional)
+      options:
+        - New to quantum computing
+        - Student
+        - Programmer
+        - Researcher or educator
+        - Prefer not to say

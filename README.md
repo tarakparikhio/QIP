@@ -2,11 +2,22 @@
 
 **Learn quantum computing from zero, one idea at a time.**
 
+[![Live site](https://img.shields.io/badge/live-qcmlbytarak.web.app-6366f1)](https://qcmlbytarak.web.app)
+[![Quick Validate](https://github.com/tarakparikhio/QIP/actions/workflows/quick-validate.yml/badge.svg)](https://github.com/tarakparikhio/QIP/actions/workflows/quick-validate.yml)
+[![Code: MIT](https://img.shields.io/badge/code-MIT-blue)](LICENSE)
+[![Content: CC BY 4.0](https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey)](LICENSE-CONTENT.md)
+
+![Quantum Playground home page: a two-qubit circuit with live probabilities next to the course introduction](docs/images/home.jpg)
+
 Quantum Playground is a free, self-paced website that teaches the fundamentals of quantum computing to people who have never studied it. Every concept is shown from several angles (an everyday analogy, a picture you can poke at, the math broken down line by line, and real code) so you can pick the explanation that clicks for you and check it against the others.
 
 **Start learning:** [qcmlbytarak.web.app](https://qcmlbytarak.web.app)
 
 No account, no install, no prior physics. Your progress is saved in your browser.
+
+| [From bits to qubits](https://qcmlbytarak.web.app/history) | [Logic lab](https://qcmlbytarak.web.app/logic) |
+| --- | --- |
+| ![History timeline from binary arithmetic to qubits](docs/images/history.jpg) | ![Logic lab gate explorer with an AND gate](docs/images/logic.jpg) |
 
 ## Who this is for
 
@@ -98,3 +109,7 @@ CI (`.github/workflows/quick-validate.yml`) runs the engine tests, lesson and Ka
 - `website/.env.production` sets `NEXT_PUBLIC_SITE_URL` for canonical links, Open Graph images, and the sitemap.
 
 See [website/README.md](website/README.md) for architecture and deployment details, and [CHANGELOG.md](CHANGELOG.md) for release notes.
+
+## License
+
+Code is released under the [MIT License](LICENSE). Lessons and other written material are released under [CC BY 4.0](LICENSE-CONTENT.md): reuse them freely with credit. See [CONTRIBUTING.md](CONTRIBUTING.md) to report a problem or suggest a change.
