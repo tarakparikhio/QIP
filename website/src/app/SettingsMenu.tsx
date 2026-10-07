@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
 import { useProgressStore } from '@/lib/store/progressStore';
 
@@ -41,22 +40,7 @@ export default function SettingsMenu() {
 
       {open && (
         <div id="site-settings" className="absolute right-0 top-11 z-50 w-56 rounded-xl border border-border/70 bg-card p-2 text-left shadow-xl">
-          <p className="px-3 pb-2 pt-1 text-[11px] font-mono uppercase tracking-widest text-muted/60">Project</p>
-          <Link
-            href="/updates"
-            onClick={() => setOpen(false)}
-            className="block rounded-lg px-3 py-2 text-xs text-foreground transition hover:bg-primary/10"
-          >
-            project updates
-          </Link>
-          <Link
-            href="/run-on-ibm"
-            onClick={() => setOpen(false)}
-            className="block rounded-lg px-3 py-2 text-xs text-foreground transition hover:bg-primary/10"
-          >
-            run on IBM Quantum
-          </Link>
-          <div className="my-2 border-t border-border/50" />
+          <p className="px-3 pb-2 pt-1 text-[11px] font-mono uppercase tracking-widest text-muted/60">Settings</p>
           <button
             type="button"
             onClick={handleReset}

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import BuyMeCoffee from './BuyMeCoffee';
+import DesktopNav from './DesktopNav';
 import HeaderProgress from './HeaderProgress';
 import MobileNav from './MobileNav';
 import SettingsMenu from './SettingsMenu';
@@ -34,33 +35,24 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="dark">
       <body className="bg-background text-foreground antialiased">
         <div className="min-h-screen flex flex-col">
-          <nav className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-md">
-            <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4">
+          <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-md">
+            <div className="mx-auto flex h-14 max-w-6xl items-center gap-3 px-4">
               <a href="/" className="flex min-w-0 items-center gap-2 group">
                 <div className="w-7 h-7 shrink-0 rounded-md bg-primary/20 border border-primary/40 flex items-center justify-center text-xs font-mono text-primary group-hover:glow-primary transition-all">
                   ▶
                 </div>
-                <div className="min-w-0 whitespace-nowrap">
-                  <span className="font-semibold text-sm tracking-wide">Quantum Playground</span>
-                  <span className="hidden lg:inline text-xs text-muted font-normal ml-2">Learn quantum computing by doing</span>
-                </div>
+                <span className="whitespace-nowrap font-semibold text-sm tracking-wide">Quantum Playground</span>
               </a>
-              <div className="hidden items-center gap-4 text-sm text-muted md:flex">
-                <HeaderProgress />
-                <a href="/lessons" className="hover:text-foreground transition-colors">Lessons</a>
-                <a href="/playground" className="hover:text-foreground transition-colors">Playground</a>
-                <a href="/gates" className="hover:text-foreground transition-colors">Gates</a>
-                <a href="/sources" className="hidden lg:inline hover:text-foreground transition-colors">Sources</a>
-                <a href="/about" className="hidden sm:inline hover:text-foreground transition-colors">About</a>
-                <SettingsMenu />
+              <div className="ml-2 hidden md:block lg:ml-6">
+                <DesktopNav />
               </div>
-              <div className="flex items-center gap-2 md:hidden">
+              <div className="ml-auto flex items-center gap-2">
                 <HeaderProgress />
                 <SettingsMenu />
                 <MobileNav />
               </div>
             </div>
-          </nav>
+          </header>
           <main className="flex-1">
             {children}
           </main>
