@@ -10,8 +10,39 @@ export type ProjectUpdate = {
 export const PROJECT_UPDATES: ProjectUpdate[] = [
   {
     date: '2026-10-08',
-    title: 'History, people, and the Logic lab',
-    summary: 'Added a math-free timeline from bits to qubits, profiles of 39 people behind the field, and a classical Logic lab with gate explorer, half adder, and challenges. Every lesson now has an everyday analogy, the home page lesson map is organized into six chapters, and the header groups pages into Learn, Practice, and Explore.',
+    commit: '31c4358',
+    title: 'Open license and contribution guide',
+    summary: 'The code is now MIT licensed and the lessons are CC BY 4.0, so anyone can reuse them with credit. GitHub has issue forms for content errors and bugs, and a short guide for contributors.',
+  },
+  {
+    date: '2026-10-08',
+    commit: '50d55dc',
+    title: 'From bits to qubits: history and people',
+    summary: 'Added a math-free, scroll-through timeline of 28 milestones from binary arithmetic to today’s quantum hardware, and profiles of 39 people behind the field, each linked to the timeline and the matching lessons.',
+  },
+  {
+    date: '2026-10-08',
+    commit: 'fcea2d4',
+    title: 'Classical Logic lab',
+    summary: 'Added a gate explorer for NOT, AND, OR, XOR, NAND, NOR, and XNOR with truth tables, a half adder, ten scored challenges, and a side-by-side comparison with quantum gates.',
+  },
+  {
+    date: '2026-10-08',
+    commit: 'ebba756',
+    title: 'Grouped navigation',
+    summary: 'The header now groups pages into Learn, Practice, and Explore menus on desktop and a full-width grouped menu on phones.',
+  },
+  {
+    date: '2026-10-08',
+    commit: '77f4055',
+    title: 'Lesson map in six chapters',
+    summary: 'The home page lesson map now follows the six roadmap chapters, with a per-chapter lesson path, progress, and what each lesson builds on and opens up.',
+  },
+  {
+    date: '2026-10-08',
+    commit: '21bfc97',
+    title: 'Everyday analogies for every lesson',
+    summary: 'All 40 lessons now have an everyday analogy with what it captures, where it breaks down, and the formal statement behind it.',
   },
   {
     date: '2026-09-27',

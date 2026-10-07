@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { repositoryUrl } from '@/lib/site';
 import { PROJECT_UPDATES } from '@/lib/updates';
 
 export const metadata: Metadata = {
@@ -25,7 +26,11 @@ export default function UpdatesPage() {
               <time className="text-xs font-mono text-muted" dateTime={update.date}>{update.date}</time>
             </div>
             <p className="mt-2 max-w-3xl text-sm leading-relaxed text-muted">{update.summary}</p>
-            {update.commit && <p className="mt-3 text-xs font-mono text-primary/80">commit {update.commit}</p>}
+            {update.commit && (
+              <a href={`${repositoryUrl}/commit/${update.commit}`} target="_blank" rel="noreferrer" className="mt-3 inline-flex min-h-8 items-center text-xs font-mono text-primary/80 hover:text-primary hover:underline">
+                commit {update.commit} <span aria-hidden="true">&nbsp;↗</span>
+              </a>
+            )}
           </article>
         ))}
       </section>
