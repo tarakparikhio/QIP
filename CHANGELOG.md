@@ -2,6 +2,17 @@
 
 All notable project changes are recorded here. Dates and commit identifiers are taken from the repository history; the `Unreleased` section describes the current release-preparation work in the working tree.
 
+## 2.2.0 - 2026-10-08
+
+- Add **From bits to qubits** (`/history`): a math-free, scroll-through timeline of 28 milestones in six chapters, from binary arithmetic and early quantum physics to today's hardware, with links into the matching lessons and a floating year tracker.
+- Add **The people behind the leap** (`/history/people`): 39 short profiles grouped by field, each linked to its timeline milestone and Wikipedia.
+- Add the **Logic lab** (`/logic`): a classical gate explorer (NOT, AND, OR, XOR, NAND, NOR, XNOR) with truth tables, a half adder, ten scored challenges stored separately from lesson credits, and a side-by-side comparison with quantum gates.
+- Add an everyday analogy to all 40 lessons, each with what it captures, where it breaks down, and the formal statement; fix analogies that were attached to the wrong lessons.
+- Redesign the home page lesson map as six chapters matching the roadmap, with a per-chapter lesson path, progress, and "read first" and "opens up" links for the selected lesson.
+- Replace the header links with grouped Learn, Practice, and Explore menus on desktop and a full-width grouped menu on phones; Updates and Run on IBM Quantum moved from the settings menu into the navigation.
+- Link the history page from the home page, roadmap, and lesson 1, and the Logic lab from the gate guide; add the new pages to the sitemap.
+- Phone-width pass on the new pages: larger tap targets and no labels below 11px.
+
 ## 2.1.0 - 2026-09-27
 
 - Accuracy pass across all 40 lessons: fixed errors in lessons 1, 4, 12, 26, and 33; rewrote or substantially deepened 25 lessons (teleportation, decoherence, noise, density matrices, measurement theory, universal gates, error correction, Simon, both QFT lessons, both phase-estimation lessons, complexity, variational algorithms, VQE, both Hamiltonian-simulation lessons, adiabatic computation, BB84, hardware, compilation, and the two advanced lessons) with worked examples and checked numbers.

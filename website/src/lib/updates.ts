@@ -9,6 +9,11 @@ export type ProjectUpdate = {
 // Static by design: Firebase Hosting serves the site without a runtime Git dependency.
 export const PROJECT_UPDATES: ProjectUpdate[] = [
   {
+    date: '2026-10-08',
+    title: 'History, people, and the Logic lab',
+    summary: 'Added a math-free timeline from bits to qubits, profiles of 39 people behind the field, and a classical Logic lab with gate explorer, half adder, and challenges. Every lesson now has an everyday analogy, the home page lesson map is organized into six chapters, and the header groups pages into Learn, Practice, and Explore.',
+  },
+  {
     date: '2026-09-27',
     title: 'Interactive homepage and share cards',
     summary: 'Added a hands-on circuit and measurement tally to the homepage, a map of all 40 lessons, a scroll-through Bloch sphere story, a lab showcase, a welcome-back panel with a daily practice question, and shareable result cards for completed lessons.',

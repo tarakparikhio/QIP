@@ -34,7 +34,7 @@ Each lesson combines several perspectives on the same idea:
 
 | Perspective | What you get |
 | --- | --- |
-| **Intuition** | A plain-language explanation and, for many lessons, an everyday analogy with notes on where the analogy breaks down. |
+| **Intuition** | A plain-language explanation and an everyday analogy for every lesson, with notes on where the analogy breaks down. |
 | **Visual** | Interactive circuits, the Bloch sphere, state vectors, and probability bars that update as you change things. |
 | **Math** | Key equations broken down term by term, so the notation stops being a wall. |
 | **Code** | Copyable [Qiskit](https://www.ibm.com/quantum/qiskit) examples you can run yourself. |
@@ -49,6 +49,8 @@ Four hands-on labs live inside the lessons they explain: the **Shot lab** (Measu
 3. Pass the short quiz at the end. That marks the lesson complete and moves you along your path.
 4. Whenever you want to experiment freely, open the [Playground](https://qcmlbytarak.web.app/playground) and build your own circuit.
 5. Keep the [Gate reference](https://qcmlbytarak.web.app/gates) open if you forget what a gate does.
+
+New to the whole field? Read [From bits to qubits](https://qcmlbytarak.web.app/history), a 10-minute, math-free history of how classical computing and quantum physics led to quantum computers, and meet [the people behind it](https://qcmlbytarak.web.app/history/people). If logic gates are new to you, warm up in the [Logic lab](https://qcmlbytarak.web.app/logic): flip the inputs of AND, OR, XOR and friends, solve short challenges, and see which ideas carry over to quantum gates.
 
 Lessons are meant to be taken in order, but nothing is locked: you can jump to any lesson you're curious about, and it will point you to the earlier lessons it builds on.
 
