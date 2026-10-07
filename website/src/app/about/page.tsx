@@ -46,7 +46,7 @@ export default function AboutPage() {
         </section>
         <section>
           <h2 className="text-xl font-semibold text-foreground mb-2">Feedback</h2>
-          <p>If something is unclear or mathematically misleading, please <a href="https://github.com/tarakparikhio/QIP/issues/new" target="_blank" rel="noreferrer" className="text-primary hover:underline">open an issue on GitHub</a>. Every lesson also has a &ldquo;Report it on GitHub&rdquo; link that fills in the lesson for you. Specific examples, such as the lesson number, circuit, and expected outcome, are especially helpful.</p>
+          <p>If something is unclear or mathematically misleading, please <a href="https://github.com/tarakparikhio/quantum-playground/issues/new" target="_blank" rel="noreferrer" className="text-primary hover:underline">open an issue on GitHub</a>. Every lesson also has a &ldquo;Report it on GitHub&rdquo; link that fills in the lesson for you. Specific examples, such as the lesson number, circuit, and expected outcome, are especially helpful.</p>
         </section>
       </div>
 

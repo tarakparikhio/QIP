@@ -3,7 +3,7 @@ const rawSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
 export const siteUrl = rawSiteUrl ? rawSiteUrl.replace(/\/$/, '') : undefined;
 
 /** Public GitHub repository, used for the per-lesson "report a mistake" links. */
-export const repositoryUrl = 'https://github.com/tarakparikhio/QIP';
+export const repositoryUrl = 'https://github.com/tarakparikhio/quantum-playground';
 
 export function lessonIssueUrl(lessonNumber: number, lessonTitle: string, pageUrl?: string): string {
   const title = `Lesson ${lessonNumber} (${lessonTitle}): `;

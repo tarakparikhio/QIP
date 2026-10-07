@@ -3,7 +3,7 @@
 **Learn quantum computing from zero, one idea at a time.**
 
 [![Live site](https://img.shields.io/badge/live-qcmlbytarak.web.app-6366f1)](https://qcmlbytarak.web.app)
-[![Quick Validate](https://github.com/tarakparikhio/QIP/actions/workflows/quick-validate.yml/badge.svg)](https://github.com/tarakparikhio/QIP/actions/workflows/quick-validate.yml)
+[![Quick Validate](https://github.com/tarakparikhio/quantum-playground/actions/workflows/quick-validate.yml/badge.svg)](https://github.com/tarakparikhio/quantum-playground/actions/workflows/quick-validate.yml)
 [![Code: MIT](https://img.shields.io/badge/code-MIT-blue)](LICENSE)
 [![Content: CC BY 4.0](https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey)](LICENSE-CONTENT.md)
 
@@ -85,7 +85,7 @@ The 40 lessons are grouped into six stages. The [Roadmap](https://qcmlbytarak.we
 - **The simulator is ideal.** It runs perfect, noise-free math in your browser. Real quantum computers add noise, errors, and other limits, and the lessons point these out where they matter.
 - **Qubit order:** the Playground writes qubit 0 as the left-most bit (`|q0 q1 ...⟩`). Qiskit writes it as the right-most bit. Exported code shows both, and the lessons call this out.
 - **Check what you learn.** Explanations aim to be accurate but simplified. The [Sources](https://qcmlbytarak.web.app/sources) page lists references for going deeper. Qiskit and IBM Quantum are used as familiar examples; this project is not affiliated with them.
-- **Feedback is welcome.** If something is confusing or wrong, please [open an issue](https://github.com/tarakparikhio/QIP/issues).
+- **Feedback is welcome.** If something is confusing or wrong, please [open an issue](https://github.com/tarakparikhio/quantum-playground/issues).
 
 ## For developers
 

@@ -4,8 +4,8 @@ Thanks for helping make quantum computing easier to learn. The most valuable con
 
 ## Report a problem
 
-- **A lesson is wrong or unclear:** use the "Report it on GitHub" link at the bottom of any lesson, or open a [content error](https://github.com/tarakparikhio/QIP/issues/new?template=content-error.yml) issue. Quote the sentence or equation and, if you can, point to a source.
-- **Something on the site is broken:** open a [bug report](https://github.com/tarakparikhio/QIP/issues/new?template=bug.yml) with the page URL and steps to reproduce.
+- **A lesson is wrong or unclear:** use the "Report it on GitHub" link at the bottom of any lesson, or open a [content error](https://github.com/tarakparikhio/quantum-playground/issues/new?template=content-error.yml) issue. Quote the sentence or equation and, if you can, point to a source.
+- **Something on the site is broken:** open a [bug report](https://github.com/tarakparikhio/quantum-playground/issues/new?template=bug.yml) with the page URL and steps to reproduce.
 
 ## Change the code or content
 
