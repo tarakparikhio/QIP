@@ -74,7 +74,7 @@ export default function GatesPage() {
         <CodeBlock code={`from qiskit import QuantumCircuit\n\ncircuit = QuantumCircuit(2)\ncircuit.h(0)\ncircuit.cx(0, 1)\nprint(circuit)`} label="A two-gate experiment" />
       </section>
 
-      <div className="mt-10 flex flex-wrap gap-3 text-sm"><Link href="/lessons" className="rounded-lg bg-primary px-4 py-2 font-semibold text-white hover:bg-primary/90">Open lessons</Link><Link href="/run-on-ibm" className="rounded-lg border border-accent/40 bg-accent/10 px-4 py-2 text-accent hover:border-accent/70">Run on IBM Quantum</Link></div>
+      <div className="mt-10 flex flex-wrap gap-3 text-sm"><Link href="/lessons" className="rounded-lg bg-primary px-4 py-2 font-semibold text-white hover:bg-primary/90">Open lessons</Link><Link href="/run-on-ibm" className="rounded-lg border border-accent/40 bg-accent/10 px-4 py-2 text-accent hover:border-accent/70">Run on IBM Quantum</Link><Link href="/logic" className="rounded-lg border border-border/60 px-4 py-2 text-muted hover:border-primary/50 hover:text-foreground">Compare with classical logic gates</Link></div>
     </div>
   );
 }
